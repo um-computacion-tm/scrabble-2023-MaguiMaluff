@@ -129,3 +129,17 @@ class Board:
             [None for _ in range (15)]
             for _ in range (15)
         ]
+
+class Cell:
+    def __init__(self, multiplier, multiplier_type):
+        self.multiplier = multiplier
+        self.multiplier_type = multiplier_type
+
+    def add_letter(self, letter):
+        self.letter = letter
+    
+    def calculate_value(self):
+        if self.multiplier_type == 'letter':
+            return self.letter.value * self.multiplier
+        if self.multiplier_type == 'word':
+            return sum(self.letter.value) * self.multiplier
