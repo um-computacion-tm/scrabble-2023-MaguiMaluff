@@ -109,7 +109,7 @@ class BagTiles:
             Tiles('White', 0),
         ]
         random.shuffle(self.tiles)
-    
+
     def take(self, count):
         tiles = []
         for _ in range(count):
@@ -119,3 +119,13 @@ class BagTiles:
     def put(self, tiles):
         self.tiles.extend(tiles)
 
+class Player:
+    def __init__(self):
+        self.tiles = []
+        
+class Board:
+    def __init__(self):
+        self.grid =[
+            [None for _ in range (15)]
+            for _ in range (15)
+        ]
