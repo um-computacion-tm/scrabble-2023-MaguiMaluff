@@ -126,7 +126,7 @@ class Player:
 class Board:
     def __init__(self):
         self.grid =[
-            [None for _ in range (15)]
+            [Cell(1,'') for _ in range(15)]
             for _ in range (15)
         ]
 
@@ -134,12 +134,15 @@ class Cell:
     def __init__(self, multiplier, multiplier_type):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
+        self.letter = None
 
     def add_letter(self, letter):
         self.letter = letter
     
     def calculate_value(self):
+        if self.letter is None:
+            return 0
         if self.multiplier_type == 'letter':
             return self.letter.value * self.multiplier
-        if self.multiplier_type == 'word':
-            return sum(self.letter.value) * self.multiplier
+        else:
+            return self.letter.value

@@ -1,5 +1,6 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Board, Cell
+from game.scrabble_game import ScrabbleGame
 from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
@@ -54,30 +55,41 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(board.grid),15,)
         self.assertEqual(len(board.grid[0]),15,)
 
+class TestScrabbleGame(unittest.TestCase):
+    def test_init(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        self.assertIsNotNone(scrabble_game.board)
+        self.assertEqual(
+            len(scrabble_game.players),
+            3,
+        )
+        self.assertIsNotNone(scrabble_game.bag_tiles)
+
 class TestCell(unittest.TestCase):
     def test_init(self):
         cell = Cell(multiplier = 2, multiplier_type = 'letter',)
         self.assertEqual(cell.multiplier, 2)
         self.assertEqual(cell.multiplier_type, 'letter')
-        self.assertIsNone(self.letter)
+        self.assertIsNone(cell.letter)
+        self.assertEqual(cell.calculate_value(),0,)
 
     def test_add_letter(self):
         cell = Cell(multiplier = 1, multiplier_type = 'letter')
         letter = Tiles(letter = 'P', value = 3)
         cell.add_letter(letter = letter)
-        self.assertEqual(cell.letter == letter)
+        self.assertEqual(cell.letter, letter)
 
     def test_cell_value(self):
-        cell = Cell(multiplier=1, multiplier_type='letter')
+        cell = Cell(multiplier = 2, multiplier_type='letter')
         letter = Tiles(letter = 'P', value = 3)
         cell.add_letter(letter = letter)
-        self.assertEqual(cell.calculate_value(),3,)
+        self.assertEqual(cell.calculate_value(),6)
 
     def test_multiplier_word(self):
         cell = Cell(multiplier = 2, multiplier_type= 'word')
         letter = Tiles(letter = 'P', value = 3)
         cell.add_letter(letter = letter)
-        self.assertEqual(cell.calculate_value(),6,)
+        self.assertEqual(cell.calculate_value(),3,)
 
 if __name__ == '__main__':
     unittest.main()

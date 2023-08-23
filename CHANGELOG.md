@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 2023-08-23 
 
 ### Added
--Class Board(grid) and class Player(tiles)
--Init test for both classes
+-Class Board(grid), Player(tiles), Cell(add_letter, calculate_value)
+-Init test classes
+-File scrabble_game, with class ScrabbleGame. Tests for ScrabbleGame
 
 2023-08-21
 
