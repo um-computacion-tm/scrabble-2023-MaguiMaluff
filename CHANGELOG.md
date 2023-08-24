@@ -2,6 +2,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-08-24
+
+### Added
+-env
+-Branch develop
+-.circleci and config.yml
+-requirements.txt
+
+### Fixed
+-config.yml file
+
 2023-08-23 
 
 ### Added
