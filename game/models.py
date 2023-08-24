@@ -122,13 +122,36 @@ class BagTiles:
 class Player:
     def __init__(self):
         self.tiles = []
-        
+
 class Board:
     def __init__(self):
-        self.grid =[
-            [Cell(1,'') for _ in range(15)]
-            for _ in range (15)
-        ]
+        self.grid =[[Cell(1, '') for _ in range(15)] for _ in range (15)]
+
+    def positions(self):
+        self.grid[0][0].multiplier = 3
+        self.grid[0][0].multiplier_type = 'word'
+        self.grid[7][0].multiplier = 3
+        self.grid[7][0].multiplier_type= 'word'
+        self.grid[14][0].multiplier = 3
+        self.grid[14][0].multiplier_type = 'word'
+
+        self.grid[0][7].multiplier = 3
+        self.grid[0][7].multiplier_type= 'word'
+        self.grid[0][14].multiplier = 3
+        self.grid[0][14].multiplier_type= 'word'
+
+        self.grid[7][14].multiplier = 3
+        self.grid[7][14].multiplier_type= 'word'
+        self.grid[14][14].multiplier = 3
+        self.grid[14][14].multiplier_type= 'word'
+
+        for i in range(14):
+            for j in range(14):
+                if i != 0 or i !=5 or i !=9 or i !=14 or i != 7:
+                    if [i] == [j] or i + j == 14:
+                        self.grid[i][j].multiplier = 2
+                        self.grid[i][j].multiplier_type = 'word'
+
 
 class Cell:
     def __init__(self, multiplier, multiplier_type):
