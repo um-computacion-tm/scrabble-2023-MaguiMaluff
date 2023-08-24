@@ -145,10 +145,11 @@ class Board:
         self.grid[14][14].multiplier = 3
         self.grid[14][14].multiplier_type= 'word'
 
-        for i in range(14):
+        for i in range(15):
             for j in range(14):
-                if i != 0 or i !=5 or i !=9 or i !=14 or i != 7:
-                    if [i] == [j] or i + j == 14:
+                not_there = [0, 5, 6, 7, 8, 9, 14]
+                if i == j or (i + j == 14):
+                    if (i and j) not in not_there:
                         self.grid[i][j].multiplier = 2
                         self.grid[i][j].multiplier_type = 'word'
 

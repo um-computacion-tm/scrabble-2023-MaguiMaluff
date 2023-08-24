@@ -62,6 +62,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[0][0].multiplier_type, 'word')
         self.assertEqual(board.grid[7][0].multiplier, 3)
         self.assertEqual(board.grid[7][0].multiplier_type, 'word')
+        self.assertEqual(board.grid[14][14].multiplier, 3)
+        self.assertEqual(board.grid[14][14].multiplier_type, 'word')
         self.assertNotEqual(board.grid[0][14], board.grid[5][7])
 
     def test_positions_2_word(self):
@@ -72,6 +74,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[11][3].multiplier, 2)
         self.assertEqual(board.grid[1][13].multiplier_type, 'word')
         self.assertNotEqual(board.grid[0][14].multiplier, 2)
+        self.assertNotEqual(board.grid[7][7].multiplier, 2)
+        self.assertNotEqual(board.grid[6][6].multiplier, 2)
 
 class TestScrabbleGame(unittest.TestCase):
     def test_init(self):

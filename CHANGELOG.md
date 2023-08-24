@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - config.yml file
+- Error in multipliers positions
 
 2023-08-23 
 
