@@ -153,6 +153,90 @@ class Board:
                         self.grid[i][j].multiplier = 2
                         self.grid[i][j].multiplier_type = 'word'
 
+        self.grid[3][0].multiplier = 2
+        self.grid[3][0].multiplier_type = 'letter'
+        self.grid[11][0].multiplier = 2
+        self.grid[11][0].multiplier_type = 'letter'
+
+        self.grid[6][2].multiplier = 2
+        self.grid[6][2].multiplier_type = 'letter'
+        self.grid[8][2].multiplier = 2
+        self.grid[8][2].multiplier_type= 'letter'
+
+        self.grid[0][3].multiplier = 2
+        self.grid[0][3].multiplier_type = 'letter'
+        self.grid[14][3].multiplier = 2
+        self.grid[14][3].multiplier_type= 'letter'
+        self.grid[7][3].multiplier = 2
+        self.grid[7][3].multiplier_type= 'letter'
+
+        self.grid[2][6].multiplier = 2
+        self.grid[2][6].multiplier_type = 'letter'
+        self.grid[6][6].multiplier = 2
+        self.grid[6][6].multiplier_type= 'letter'
+        self.grid[8][6].multiplier = 2
+        self.grid[8][6].multiplier_type= 'letter'
+        self.grid[12][6].multiplier = 2
+        self.grid[12][6].multiplier_type= 'letter'
+
+        self.grid[3][7].multiplier = 2
+        self.grid[3][7].multiplier_type= 'letter'
+        self.grid[11][7].multiplier = 2
+        self.grid[11][7].multiplier_type = 'letter'
+
+        self.grid[2][8].multiplier = 2
+        self.grid[2][8].multiplier_type = 'letter'
+        self.grid[6][8].multiplier = 2
+        self.grid[6][8].multiplier_type= 'letter'
+        self.grid[8][8].multiplier = 2
+        self.grid[8][8].multiplier_type= 'letter'
+        self.grid[12][8].multiplier = 2
+        self.grid[12][8].multiplier_type= 'letter'
+
+        self.grid[14][11].multiplier = 2
+        self.grid[14][11].multiplier_type = 'letter'
+        self.grid[0][11].multiplier = 2
+        self.grid[0][11].multiplier_type= 'letter'
+        self.grid[7][11].multiplier = 2
+        self.grid[7][11].multiplier_type= 'letter'
+
+        self.grid[6][12].multiplier = 2
+        self.grid[6][12].multiplier_type = 'letter'
+        self.grid[8][12].multiplier = 2
+        self.grid[8][12].multiplier_type= 'letter'
+
+        self.grid[11][14].multiplier = 2
+        self.grid[11][14].multiplier_type= 'letter'
+        self.grid[3][14].multiplier = 2
+        self.grid[3][14].multiplier_type = 'letter'
+
+        self.grid[1][5].multiplier = 3
+        self.grid[1][5].multiplier_type = 'letter'
+        self.grid[1][9].multiplier = 3
+        self.grid[1][9].multiplier_type= 'letter'
+
+        self.grid[5][1].multiplier = 3
+        self.grid[5][1].multiplier_type = 'letter'
+        self.grid[5][5].multiplier = 3
+        self.grid[5][5].multiplier_type= 'letter'
+        self.grid[5][9].multiplier = 3
+        self.grid[5][9].multiplier_type = 'letter'
+        self.grid[5][13].multiplier = 3
+        self.grid[5][13].multiplier_type= 'letter'
+
+        self.grid[9][1].multiplier = 3
+        self.grid[9][1].multiplier_type = 'letter'
+        self.grid[9][5].multiplier = 3
+        self.grid[9][5].multiplier_type= 'letter'
+        self.grid[9][9].multiplier = 3
+        self.grid[9][9].multiplier_type = 'letter'
+        self.grid[9][13].multiplier = 3
+        self.grid[9][13].multiplier_type= 'letter'
+
+        self.grid[13][5].multiplier = 3
+        self.grid[13][5].multiplier_type = 'letter'
+        self.grid[13][9].multiplier = 3
+        self.grid[13][9].multiplier_type= 'letter'
 
 class Cell:
     def __init__(self, multiplier, multiplier_type):
@@ -169,13 +253,15 @@ class Cell:
         if self.letter is None:
                 return 0
         if self.multiplier_type == 'letter':
-                counter = counter + self.letter.value * self.multiplier * word_multiplier
+                counter = counter + (self.letter.value * self.multiplier * word_multiplier)
         if self.multiplier_type == 'word' and word_multiplier == 1:
             counter = counter * word_multiplier
             word_multiplier = self.multiplier
             if self.multiplier_type == 'word' and word_multiplier != 1:
                     word_multiplier = word_multiplier * self.multiplier
+        print(counter)
         return counter
+    
 
     def used_cell(self):
         self.multiplier = 1

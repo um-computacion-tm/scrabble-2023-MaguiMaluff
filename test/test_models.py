@@ -75,7 +75,18 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[1][13].multiplier_type, 'word')
         self.assertNotEqual(board.grid[0][14].multiplier, 2)
         self.assertNotEqual(board.grid[7][7].multiplier, 2)
-        self.assertNotEqual(board.grid[6][6].multiplier, 2)
+        self.assertNotEqual(board.grid[6][7].multiplier, 2)
+
+    def test_positions_letter_2(self):
+        board = Board()
+        board.positions()
+        self.assertEqual(board.grid[0][3].multiplier, 2)
+        self.assertEqual(board.grid[0][3].multiplier_type, 'letter')
+        self.assertEqual(board.grid[6][6].multiplier, 2)
+        self.assertEqual(board.grid[6][6].multiplier_type, 'letter')
+        self.assertNotEqual(board.grid[0][14].multiplier, 2)
+        self.assertNotEqual(board.grid[7][7].multiplier, 2)
+        self.assertNotEqual(board.grid[6][1].multiplier, 2)
 
 class TestScrabbleGame(unittest.TestCase):
     def test_init(self):
@@ -116,17 +127,19 @@ class TestCell(unittest.TestCase):
         cell.add_letter(letter)
         self.assertEqual(cell.calculate_value(),9,)
 
-    def test_multiplier_word_po(self):
+
+class TestCalculateWordValue(unittest.TestCase):
+    def test_simple(self):
         board = Board()
         board.positions()
-        cell_1 = board.grid[14][0]
-        cell_2 = board.grid[14][1]
-        letter_1 = Tiles(letter = 'P', value = 3)
-        letter_2 = Tiles(letter = 'O', value = 1)
-        cell_1.add_letter(letter_1)
-        cell_2.add_letter(letter_2)
-        self.assertEqual(cell_1.calculate_value(),9,)
-        self.assertEqual(cell_2.calculate_value(),3)
+        word = [
+            Cell(Tiles('C', 1), board.grid[0][3] ),
+            Cell(Tiles('A', 1), board.grid[0][3]),
+            Cell(Tiles('S', 1), board.grid[0][3]),
+            Cell(Tiles('A', 1), board.grid[0][3]),
+        ]
+        value = calculate_value(word)
+        self.assertEqual(value, 5)
 
 if __name__ == '__main__':
     unittest.main()
