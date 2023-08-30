@@ -2,6 +2,11 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-08-28
+
+### Added
+- Tried to calculate word value, needs to be fixed
+
 2023-08-24
 
 ### Added

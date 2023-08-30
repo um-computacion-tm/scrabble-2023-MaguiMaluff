@@ -162,11 +162,21 @@ class Cell:
 
     def add_letter(self, letter):
         self.letter = letter
-    
+
     def calculate_value(self):
+        counter = 0
+        word_multiplier = 1
         if self.letter is None:
-            return 0
+                return 0
         if self.multiplier_type == 'letter':
-            return self.letter.value * self.multiplier
-        else:
-            return self.letter.value
+                counter = counter + self.letter.value * self.multiplier * word_multiplier
+        if self.multiplier_type == 'word' and word_multiplier == 1:
+            counter = counter * word_multiplier
+            word_multiplier = self.multiplier
+            if self.multiplier_type == 'word' and word_multiplier != 1:
+                    word_multiplier = word_multiplier * self.multiplier
+        return counter
+
+    def used_cell(self):
+        self.multiplier = 1
+        self.multiplier_type = ''

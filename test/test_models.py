@@ -66,7 +66,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[14][14].multiplier_type, 'word')
         self.assertNotEqual(board.grid[0][14], board.grid[5][7])
 
-    def test_positions_2_word(self):
+    def test_positions_word_3(self):
         board = Board()
         board.positions()
         self.assertEqual(board.grid[1][1].multiplier, 2)
@@ -98,21 +98,35 @@ class TestCell(unittest.TestCase):
     def test_add_letter(self):
         cell = Cell(multiplier = 1, multiplier_type = 'letter')
         letter = Tiles(letter = 'P', value = 3)
-        cell.add_letter(letter = letter)
+        cell.add_letter(letter)
         self.assertEqual(cell.letter, letter)
 
     def test_cell_value(self):
-        cell = Cell(multiplier = 2, multiplier_type='letter')
+        board = Board()
+        board.positions()
+        cell= board.grid[14][0]
+        print(cell.multiplier)
         letter = Tiles(letter = 'P', value = 3)
-        cell.add_letter(letter = letter)
+        cell.add_letter(letter)
         self.assertEqual(cell.calculate_value(),6)
 
     def test_multiplier_word(self):
-        cell = Cell(multiplier = 2, multiplier_type= 'word')
+        cell = Cell(multiplier = 3, multiplier_type= 'word')
         letter = Tiles(letter = 'P', value = 3)
-        cell.add_letter(letter = letter)
-        self.assertEqual(cell.calculate_value(),3,)
+        cell.add_letter(letter)
+        self.assertEqual(cell.calculate_value(),9,)
 
+    def test_multiplier_word_po(self):
+        board = Board()
+        board.positions()
+        cell_1 = board.grid[14][0]
+        cell_2 = board.grid[14][1]
+        letter_1 = Tiles(letter = 'P', value = 3)
+        letter_2 = Tiles(letter = 'O', value = 1)
+        cell_1.add_letter(letter_1)
+        cell_2.add_letter(letter_2)
+        self.assertEqual(cell_1.calculate_value(),9,)
+        self.assertEqual(cell_2.calculate_value(),3)
 
 if __name__ == '__main__':
     unittest.main()
