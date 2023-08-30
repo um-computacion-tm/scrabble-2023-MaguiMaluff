@@ -120,8 +120,9 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Player:
-    def __init__(self):
-        self.tiles = []
+    def __init__(self, bag_tiles):
+        self.tiles = bag_tiles.take(7)
+        self.bag_tiles = bag_tiles
 
 class Board:
     def __init__(self):
@@ -248,21 +249,15 @@ class Cell:
         self.letter = letter
 
     def calculate_value(self):
-        counter = 0
-        word_multiplier = 1
         if self.letter is None:
-                return 0
+            return 0
         if self.multiplier_type == 'letter':
-                counter = counter + (self.letter.value * self.multiplier * word_multiplier)
-        if self.multiplier_type == 'word' and word_multiplier == 1:
-            counter = counter * word_multiplier
-            word_multiplier = self.multiplier
-            if self.multiplier_type == 'word' and word_multiplier != 1:
-                    word_multiplier = word_multiplier * self.multiplier
-        print(counter)
-        return counter
-    
+            return self.letter.value * self.multiplier
+        else:
+            return self.letter.value
 
     def used_cell(self):
         self.multiplier = 1
         self.multiplier_type = ''
+
+

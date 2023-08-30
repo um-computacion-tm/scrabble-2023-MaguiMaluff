@@ -8,3 +8,5 @@ class ScrabbleGame:
         self.players = []
         for _ in range(players_count):
             self.players.append(Player())
+        self.turn = 0
+

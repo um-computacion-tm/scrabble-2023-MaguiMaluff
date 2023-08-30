@@ -2,6 +2,12 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-08-29
+
+### Added
+
+- Set letter multipliers positions on Board and tests
+
 2023-08-28
 
 ### Added
