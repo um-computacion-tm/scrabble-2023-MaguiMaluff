@@ -20,9 +20,8 @@ def calculate_word_value(word):
             if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
                 word_multiplier = cell.multiplier
                 counter = ((counter + cell.letter.value) * word_multiplier)
-                
+
             cell.used_cell() 
         return counter
-        
 
         
