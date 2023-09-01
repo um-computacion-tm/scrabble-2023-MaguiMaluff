@@ -2,6 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-09-01
+
+### Change
+
+- README.md, added CircleCi and CodeClimate badges
+
+### Fixed
+- Calculate_word_value and tests
+
+
 2023-08-29
 
 ### Added

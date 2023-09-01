@@ -126,7 +126,7 @@ class Player:
 
 class Board:
     def __init__(self):
-        self.grid =[[Cell(1, '') for _ in range(15)] for _ in range (15)]
+        self.grid =[[Cell(1, 'letter') for _ in range(15)] for _ in range (15)]
 
     def positions(self):
         self.grid[0][0].multiplier = 3
@@ -240,10 +240,11 @@ class Board:
         self.grid[13][9].multiplier_type= 'letter'
 
 class Cell:
-    def __init__(self, multiplier, multiplier_type):
+    def __init__(self, multiplier = 1, multiplier_type = 'letter', letter = None, state = True):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
+        self.letter = letter
+        self.state = state
 
     def add_letter(self, letter):
         self.letter = letter
@@ -258,6 +259,7 @@ class Cell:
 
     def used_cell(self):
         self.multiplier = 1
-        self.multiplier_type = ''
+        self.multiplier_type = 'letter'
+        self.state = False
 
 

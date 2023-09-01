@@ -9,9 +9,14 @@ def calculate_word_value(word):
                     return 0
             if cell.multiplier_type == 'letter':
                 counter = counter + (cell.letter.value * cell.multiplier * word_multiplier)
-            if cell.multiplier_type == 'word' and word_multiplier == 1:
-                counter = counter * word_multiplier
-                word_multiplier = cell.multiplier
             if cell.multiplier_type == 'word' and word_multiplier != 1:
-                    word_multiplier = word_multiplier * cell.multiplier
-            return counter
+                counter = ((counter + cell.letter.value) * word_multiplier)
+                word_multiplier = word_multiplier * cell.multiplier
+            if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
+                word_multiplier = cell.multiplier
+                counter = ((counter + cell.letter.value) * word_multiplier)
+            cell.used_cell() 
+        return counter
+        
+
+        
