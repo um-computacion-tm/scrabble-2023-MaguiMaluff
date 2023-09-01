@@ -11,3 +11,6 @@ env.bak/
 venv.bak/
 __init__.py
 __pycache__
+__pycache__.py
+__init__/*
+*/__init__/*
