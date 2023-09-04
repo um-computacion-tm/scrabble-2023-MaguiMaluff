@@ -10,18 +10,20 @@ def calculate_word_value(word):
 
             if cell.letter is None:
                     return 0
-            if cell.multiplier_type == 'letter':
+            
+            if cell.state == False:
+                 counter = counter + cell.letter.value
+            
+            if cell.multiplier_type == 'letter' and cell.state == True:
                 counter = counter + (cell.letter.value * cell.multiplier * word_multiplier)
 
-            if cell.multiplier_type == 'word' and word_multiplier != 1:
-                counter = ((counter + cell.letter.value) * word_multiplier)
-                word_multiplier = word_multiplier * cell.multiplier
+            if cell.multiplier_type == 'word' and word_multiplier != 1 and cell.state == True:
+                counter = (counter + (cell.letter.value * word_multiplier))
+                word_multiplier = cell.multiplier
+                counter = counter * word_multiplier
 
             if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
                 word_multiplier = cell.multiplier
                 counter = ((counter + cell.letter.value) * word_multiplier)
-
-            cell.used_cell() 
-        return counter
-
-        
+            cell.used_cell(cell)
+        return counter       
