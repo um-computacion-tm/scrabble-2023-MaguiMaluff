@@ -48,6 +48,7 @@ class Player:
     def __init__(self, bag_tiles):
         self.tiles = bag_tiles.take(7)
         self.bag_tiles = bag_tiles
+    
 
 class Board:
     def __init__(self):

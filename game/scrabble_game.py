@@ -13,3 +13,4 @@ class ScrabbleGame:
         return True
     def next_turn(self):
         turn += 1
+    

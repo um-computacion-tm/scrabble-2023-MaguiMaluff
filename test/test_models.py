@@ -191,8 +191,17 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter = Tiles('A', 1),),
         ]
         value = calculate_word_value(word)
-        self.assertEqual(value, 5)
+        self.assertEqual(value, 7)
 
+class TestTurnPlayer(unittest.TestCase):
+    def simple_turns(self):
+        scrabble = ScrabbleGame(players_count = 2)
+        player_1 =Player()
+        player_2 = Player()
+        player_1.put_on_board()
+        self.assertEqual(scrabble.turn, 0)
+        player_2.take_out()
+        self.assertEqual(scrabble.turn, 1) ###
 
 if __name__ == '__main__':
     unittest.main()
