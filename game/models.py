@@ -45,7 +45,7 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Player:
-    def __init__(self, bag_tiles):
+    def __init__(self, id:int, bag_tiles:BagTiles):
         self.tiles = bag_tiles.take(7)
         self.bag_tiles = bag_tiles
     
@@ -99,6 +99,24 @@ class Board:
     def positions(self):
         self.set_letter_multiplier()
         self.set_word_multiplier()
+    
+    def validate_word_inside_board(self, word, location, orientation):
+        word_list = []
+        for letra in word:
+            word_list.append(letra)
+        
+        i = location[0]
+        j = location[1]
+
+        if orientation == "V":
+            j += len(word_list)
+        if orientation == "H":
+            i += len(word_list)
+
+        if i > 14 or j > 14:
+            return False
+        else:
+            return True
 
 class Cell:
     def __init__(self, multiplier = 1, multiplier_type = 'letter', letter = None, state = True):

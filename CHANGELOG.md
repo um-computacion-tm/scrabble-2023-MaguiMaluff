@@ -2,6 +2,20 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-09-07
+
+### Added
+
+- Next_turn to class ScrabbleGame.
+
+- Tests for the mentioned addition.
+
+- Validate_word_inside_board to class Board. Now the game is able to determine if a word would fit on the board.
+
+### Change
+
+-Main
+
 2023-09-01
 
 ### Change
