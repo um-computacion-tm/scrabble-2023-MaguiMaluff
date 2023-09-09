@@ -1,23 +1,26 @@
 from game.models import Board, Player, BagTiles
 
 class ScrabbleGame:
-    def __init__(self, players_count):
+    def __init__(self, players_count, current_player = None):
         self.board = Board()
         self.board.positions()
         self.bag_tiles = BagTiles()
         self.players = []
+        self.current_player = current_player
         for id in range(players_count):
             self.players.append(Player(id = id, bag_tiles = self.bag_tiles))
-        self.current_player = None
+
 
     def next_turn(self):
         if self.current_player is None:
             self.current_player = self.players[0]
         else:
-            turn = self.players.index(self.current_player) + 1
-            self.current_player = self.players[turn]
-            if turn == len(self.players):
+            turn = self.players.index(self.current_player)
+            if turn == (len(self.players) - 1):
                 self.current_player = self.players[0]
+            else:
+                self.current_player = self.players[turn + 1]
+
 
     def validate_word(self, word, location, orientation):
 

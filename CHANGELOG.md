@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Print function to Board
 
+### Fixed
+
+- Scrabble Game Next Turn. Now it works.
+
 ### Deleted
 
 - Calculate word value file, and function on its own. Added to cell Board.

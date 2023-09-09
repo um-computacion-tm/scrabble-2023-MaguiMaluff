@@ -124,14 +124,13 @@ class TestScrabbleGame(unittest.TestCase):
 
     def test_next_turn_when_player_is_not_the_first(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player == scrabble_game.players[0]
-        print(scrabble_game.current_player)
+        scrabble_game.current_player = scrabble_game.players[0]
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[1]
 
     def test_next_turn_player_is_last(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player == scrabble_game.players[2]
+        scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
 
@@ -227,7 +226,6 @@ class TestCalculateWordValue(unittest.TestCase):
         ]
         value = board.calculate_word_value(word)
         self.assertEqual(value, 7)
-
 
 if __name__ == '__main__':
     unittest.main()
