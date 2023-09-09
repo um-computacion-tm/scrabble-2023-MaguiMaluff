@@ -118,6 +118,16 @@ class Board:
         else:
             return True
 
+    def print_board(self):
+        for row in self.grid:
+            row_str = ""
+            for cell in row:
+                if cell.letter == None:
+                    row_str += str(cell.multiplier) + " "
+                if cell.letter != None:
+                    row_str += str(cell.letter.letter) + " "
+            print(row_str)
+
 class Cell:
     def __init__(self, multiplier = 1, multiplier_type = 'letter', letter = None, state = True):
         self.multiplier = multiplier

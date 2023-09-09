@@ -2,6 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-09-08
+
+### Added
+
+- Print function to Board
+
+### Deleted
+
+- Calculate word value file, and function on its own. Added to cell class.
+
 2023-09-07
 
 ### Added
