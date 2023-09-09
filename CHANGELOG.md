@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Deleted
 
-- Calculate word value file, and function on its own. Added to cell class.
+- Calculate word value file, and function on its own. Added to cell Board.
 
 2023-09-07
 

@@ -1,6 +1,5 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Board, Cell
-from game.value import calculate_word_value
 from game.scrabble_game import ScrabbleGame
 from unittest.mock import patch
 
@@ -170,7 +169,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter = Tiles('S', 2),),
             Cell(letter = Tiles('A', 1),),
         ]
-        value = calculate_word_value(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 5)
 
     def test_with_letter_multiplier(self):
@@ -182,7 +181,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
             Cell(letter = Tiles('A', 1), multiplier = board.grid[9][1].multiplier,  multiplier_type = board.grid[9][1].multiplier_type) ,
         ]
-        value = calculate_word_value(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 7)
 
     def test_with_word_multiplier(self):
@@ -194,7 +193,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
             Cell(letter = Tiles('A', 1), multiplier = board.grid[11][3].multiplier, multiplier_type = board.grid[11][3].multiplier_type) ,
         ]
-        value = calculate_word_value(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 10)
 
     def test_with_letter_word_multiplier(self):
@@ -206,11 +205,10 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter = Tiles('S', 2), multiplier = board.grid[3][3].multiplier, multiplier_type = board.grid[3][3].multiplier_type),
             Cell(letter = Tiles('A', 1)),
         ]
-        value = calculate_word_value(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 14)
 
     def test_with_letter_word_multiplier_no_active(self):
-        # QUE HACEMOS CON EL ACTIVE ????
         board = Board()
         board.positions()
         word = [
@@ -227,7 +225,7 @@ class TestCalculateWordValue(unittest.TestCase):
             ),
             Cell(letter = Tiles('A', 1),),
         ]
-        value = calculate_word_value(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 7)
 
 
