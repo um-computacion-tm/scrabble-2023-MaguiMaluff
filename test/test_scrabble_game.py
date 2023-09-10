@@ -55,9 +55,33 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
-        board = Board()
         word = "HOLA"
         location = (14, 4)
         orientation = "H"
         validation = scrabble_game.validate_word(word, location, orientation)
         self.assertEqual(validation, False)
+
+    def test_word_validation_out_of_range(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        word = "HOLA"
+        location = (14, 4)
+        orientation = "H"
+        validation = scrabble_game.validate_word(word, location, orientation)
+        self.assertEqual(validation, False)
+    
+    def test_get_word_dictionary(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        word = "Noche"
+        valor = scrabble_game.get_word(word)
+        assert valor == True 
+
+    def test_get_word_dictionary_not(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        word = "oicnowebcouwb"
+        valor = scrabble_game.get_word(word)
+        assert valor == False
+
+if __name__ == '__main__':
+    unittest.main()

@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 
 - File test_scrabble_game.
 
+- pyrae, and function get_word, now the game can validate if the word is in the RAE dictionary
+
 ### Delete
 
 - Class TestScrabbleGame from test_models, moved to test_scrabble_game

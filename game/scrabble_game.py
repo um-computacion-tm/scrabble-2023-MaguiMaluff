@@ -1,4 +1,6 @@
 from game.models import Board, Player, BagTiles
+from pyrae import dle
+
 
 class ScrabbleGame:
     def __init__(self, players_count, current_player = None):
@@ -44,13 +46,15 @@ class ScrabbleGame:
 
         return validation
 
-        """
-        1 - las letras estan en la bolsa del usuario
-        2 - la locacation y orientacion no se pasa del tablero
-        3 - es una palabra valida
-        """
+    def get_word(self, word):
+        res = dle.search_by_word(word)
+        res = res.to_dict()
+        if res == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
+            return False
+        else:
+            return True
 
-    def get_word():
+
         """
         obtener un diccionario (desde el doc de google)
         y tener la lista para verificar las palabras
