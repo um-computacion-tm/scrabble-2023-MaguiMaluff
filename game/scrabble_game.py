@@ -23,6 +23,26 @@ class ScrabbleGame:
 
 
     def validate_word(self, word, location, orientation):
+        validation = True
+        letritas = []
+        letritas_user = []
+        validation = self.board.validate_word_inside_board(word, location, orientation)
+
+        if validation == False:
+            return False
+        
+        for i in word:
+            letritas.append(i)
+        for j in self.current_player.bag_tiles:
+            letritas_user.append(j.letter)
+        for w in range(len(letritas)):
+            if letritas[w] in letritas_user:
+                posicion = letritas_user.index(letritas[w])
+                letritas_user.pop(posicion)
+            else:
+                validation = False
+
+        return validation
 
         """
         1 - las letras estan en la bolsa del usuario

@@ -1,6 +1,5 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Board, Cell
-from game.scrabble_game import ScrabbleGame
 from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
@@ -105,34 +104,6 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
         
         assert word_is_valid == False
-
-
-class TestScrabbleGame(unittest.TestCase):
-    def test_init(self):
-        scrabble_game = ScrabbleGame(players_count=3)
-        self.assertIsNotNone(scrabble_game.board)
-        self.assertEqual(
-            len(scrabble_game.players),
-            3,
-        )
-        self.assertIsNotNone(scrabble_game.bag_tiles)
-
-    def test_next_turn_when_game_is_starting(self):
-        scrabble_game = ScrabbleGame(players_count = 3)
-        scrabble_game.next_turn()
-        assert scrabble_game.current_player == scrabble_game.players[0]
-
-    def test_next_turn_when_player_is_not_the_first(self):
-        scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player = scrabble_game.players[0]
-        scrabble_game.next_turn()
-        assert scrabble_game.current_player == scrabble_game.players[1]
-
-    def test_next_turn_player_is_last(self):
-        scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.next_turn()
-        assert scrabble_game.current_player == scrabble_game.players[0]
 
 
 class TestCell(unittest.TestCase):

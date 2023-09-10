@@ -2,6 +2,18 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-10-09
+
+### Added
+
+- Validate word on Scrabble Game. And tests
+
+- File test_scrabble_game.
+
+### Delete
+
+- Class TestScrabbleGame from test_models, moved to test_scrabble_game
+
 2023-09-08
 
 ### Added
