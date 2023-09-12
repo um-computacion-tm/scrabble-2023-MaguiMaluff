@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    environment:
+  environment:
       CC_TEST_REPORTER_ID: YOUR_REPO_CC_TEST_REPORTER_ID
     docker:
       - image: cimg/python:3.10.1
@@ -23,4 +23,4 @@ jobs:
       - run:
           name: Update CodeClimate coverage report
           command: |
-              ./cc-test-reporter after-build
+              ./cc-test-reporter after-build --id CCIPAT_Xay71GUimSNtnVriyQahCv_c2b49d3cbdd1cf6b74fc29eff3a87d5988cfe4ff
