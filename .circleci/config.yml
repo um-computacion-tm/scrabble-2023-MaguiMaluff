@@ -19,10 +19,9 @@ jobs:
           name: Running Tests
           command: coverage run -m unittest && coverage xml && coverage report -m
       - run:
-                name: Send coverage report to Code Climate
-                command:
-                    ./cc-test-reporter after-build -t lcov
-                when: always
+            name: Send coverage report to Code Climate
+            command:
+            ./cc-test-reporter after-build -t lcov
       - run:
           name: Update CodeClimate coverage report
           command: |
