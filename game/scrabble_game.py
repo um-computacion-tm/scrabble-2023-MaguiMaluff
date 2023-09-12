@@ -29,21 +29,24 @@ class ScrabbleGame:
         validation = True
         letritas = []
         letritas_user = []
-        validation = self.board.validate_word_inside_board(word, location, orientation)
-
-        if validation == False:
-            return False
-        
         for i in word:
             letritas.append(i)
         for j in self.current_player.bag_tiles:
             letritas_user.append(j.letter)
-        for w in range(len(letritas)):
-            if letritas[w] in letritas_user:
-                posicion = letritas_user.index(letritas[w])
-                letritas_user.pop(posicion)
-            else:
-                validation = False
+        
+        validation = self.board.validate_word_inside_board(word, location, orientation)
+
+        if validation == False:
+            return False
+        else:
+            for w in range(len(letritas)):
+                if letritas[w] in letritas_user:
+                    posicion = letritas_user.index(letritas[w])
+                    letritas_user.pop(posicion)
+                else:
+                    validation = False
+        if validation == True:
+            validation = self.get_word(word)
 
         return validation
 
@@ -55,13 +58,12 @@ class ScrabbleGame:
         else:
             return True
 
-
-        """
-        obtener un diccionario (desde el doc de google)
-        y tener la lista para verificar las palabras
-        """
-
-    def put_word():
-        """
-        modificar que el tablero con la palabra que ya esta validada
-        """
+    def put_word(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        if orientation == "H":
+            for j in range(len(word)):
+                self.board.grid[f][c + j].letter = word[j]
+        if orientation == "V":
+            for i in range(len(word)):
+                self.board.grid[f + i][c].letter = word[i]

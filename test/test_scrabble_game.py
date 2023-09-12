@@ -84,5 +84,42 @@ class TestScrabbleGame(unittest.TestCase):
         valor = scrabble_game.get_word(word)
         assert valor == False
 
+    def test_validate_everything(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        word = "HOLA"
+        location = (0, 0)
+        orientation = "H"
+        validation = scrabble_game.validate_word(word, location, orientation)
+        self.assertEqual(validation, True)
+    
+    def test_put_simple_word(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        word = "Banana"
+        location = (0,0)
+        orientation = "H"
+        scrabble_game.put_word(word, location, orientation)
+        self.assertEqual(scrabble_game.board.grid[0][0].letter, "B")
+        self.assertEqual(scrabble_game.board.grid[0][1].letter, "a")
+        self.assertEqual(scrabble_game.board.grid[0][2].letter, "n")
+        self.assertEqual(scrabble_game.board.grid[0][3].letter, "a")
+        self.assertEqual(scrabble_game.board.grid[0][4].letter, "n")
+        self.assertEqual(scrabble_game.board.grid[0][5].letter, "a")
+
+    def test_put_simple_word(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        word = "zapato"
+        location = (4,5)
+        orientation = "V"
+        scrabble_game.put_word(word, location, orientation)
+        self.assertEqual(scrabble_game.board.grid[4][5].letter, "z")
+        self.assertEqual(scrabble_game.board.grid[5][5].letter, "a")
+        self.assertEqual(scrabble_game.board.grid[6][5].letter, "p")
+        self.assertEqual(scrabble_game.board.grid[7][5].letter, "a")
+        self.assertEqual(scrabble_game.board.grid[8][5].letter, "t")
+        self.assertEqual(scrabble_game.board.grid[9][5].letter, "o")
 if __name__ == '__main__':
     unittest.main()

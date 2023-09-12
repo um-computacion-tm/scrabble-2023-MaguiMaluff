@@ -8,11 +8,17 @@ All notable changes to this project will be documented in this file.
 
 - Files test_board and board
 
+- put_word on scrabble_game
+
 ### Delete 
 
 - Class Board from models
 
 - Class TestBoard from test_models
+
+### Fixed
+
+- validate_word on scrabble_game, fixed validation method and added the validation of the word in the dictonary
 
 2023-10-09
 
