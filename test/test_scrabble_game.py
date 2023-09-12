@@ -97,94 +97,98 @@ class TestScrabbleGame(unittest.TestCase):
     def test_put_simple_word_h(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        word = "Banana"
+        scrabble_game.current_player.tiles = [Tiles("B", 1), Tiles("A", 2), Tiles("N", 3), Tiles("A", 4), Tiles("N", 3), Tiles("A", 4)]
+        word = "BANANA"
         location = (0,0)
         orientation = "H"
         scrabble_game.put_word(word, location, orientation)
-        self.assertEqual(scrabble_game.board.grid[0][0].letter, "B")
-        self.assertEqual(scrabble_game.board.grid[0][1].letter, "a")
-        self.assertEqual(scrabble_game.board.grid[0][2].letter, "n")
-        self.assertEqual(scrabble_game.board.grid[0][3].letter, "a")
-        self.assertEqual(scrabble_game.board.grid[0][4].letter, "n")
-        self.assertEqual(scrabble_game.board.grid[0][5].letter, "a")
+        self.assertEqual(scrabble_game.board.grid[0][0].letter.letter, "B")
+        self.assertEqual(scrabble_game.board.grid[0][1].letter.letter, "A")
+        self.assertEqual(scrabble_game.board.grid[0][2].letter.letter, "N")
+        self.assertEqual(scrabble_game.board.grid[0][3].letter.letter, "A")
+        self.assertEqual(scrabble_game.board.grid[0][4].letter.letter, "N")
+        self.assertEqual(scrabble_game.board.grid[0][5].letter.letter, "A")
 
     def test_put_simple_word_v(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        word = "zapato"
+        scrabble_game.current_player.tiles = [Tiles("Z", 1), Tiles("A", 2), Tiles("P", 3), Tiles("A", 4), Tiles("T", 3), Tiles("O", 4)]
+        word = "ZAPATO"
         location = (4,5)
         orientation = "V"
         scrabble_game.put_word(word, location, orientation)
-        self.assertEqual(scrabble_game.board.grid[4][5].letter, "z")
-        self.assertEqual(scrabble_game.board.grid[5][5].letter, "a")
-        self.assertEqual(scrabble_game.board.grid[6][5].letter, "p")
-        self.assertEqual(scrabble_game.board.grid[7][5].letter, "a")
-        self.assertEqual(scrabble_game.board.grid[8][5].letter, "t")
-        self.assertEqual(scrabble_game.board.grid[9][5].letter, "o")
+        self.assertEqual(scrabble_game.board.grid[4][5].letter.letter, "Z")
+        self.assertEqual(scrabble_game.board.grid[5][5].letter.letter, "A")
+        self.assertEqual(scrabble_game.board.grid[6][5].letter.letter, "P")
+        self.assertEqual(scrabble_game.board.grid[7][5].letter.letter, "A")
+        self.assertEqual(scrabble_game.board.grid[8][5].letter.letter, "T")
+        self.assertEqual(scrabble_game.board.grid[9][5].letter.letter, "O")
 
 class TestCalculateWordValue(unittest.TestCase):
     def test_simple(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        word = "casa"
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = "CASA"
         orientation = "V"
-        location = (0,0)
+        location = (7,7)
         value = scrabble_game.calculate_word_value(word, location, orientation)
-        self.assertEqual(value, 12)
+        self.assertEqual(value, 5)
 
     def test_with_letter_multiplier(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        word = [
-            Cell(letter = Tiles('C', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[9][1].multiplier,  multiplier_type = board.grid[9][1].multiplier_type) ,
-        ]
-        value = scrabble_game.calculate_word_value(word)
-        self.assertEqual(value, 7)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = "CASA"
+        orientation = "H"
+        location = (8,7)
+        value = scrabble_game.calculate_word_value(word, location, orientation)
+        self.assertEqual(value, 6)
 
     def test_with_word_multiplier(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        word = [
-            Cell(letter = Tiles('C', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[11][3].multiplier, multiplier_type = board.grid[11][3].multiplier_type) ,
-        ]
-        value = scrabble_game.calculate_word_value(word)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = "CASA"
+        orientation = "H"
+        location = (1,1)
+        value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 10)
 
     def test_with_letter_word_multiplier(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        word = [
-            Cell(multiplier = board.grid[5][1].multiplier, multiplier_type = board.grid[5][1].multiplier_type, letter = Tiles('C', 1)),
-            Cell(letter = Tiles('A', 1)),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[3][3].multiplier, multiplier_type = board.grid[3][3].multiplier_type),
-            Cell(letter = Tiles('A', 1)),
-        ]
-        value = scrabble_game.calculate_word_value(word)
-        self.assertEqual(value, 14)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = "CASA"
+        orientation = "V"
+        location = (0,0)
+        value = scrabble_game.calculate_word_value(word, location, orientation)
+        self.assertEqual(value, 18)
 
     def test_with_letter_word_multiplier_no_active(self):
         scrabble_game = ScrabbleGame(players_count=3)
-        word = [
-                Cell(
-                multiplier=3,
-                multiplier_type='letter',
-                letter=Tiles('C', 1)
-            ),
-            Cell(letter=Tiles('A', 1)),
-            Cell(
-                letter=Tiles('S', 2),
-                multiplier=2,
-                multiplier_type='word', state = False
-            ),
-            Cell(letter = Tiles('A', 1),),
-        ]
-        value = scrabble_game.calculate_word_value(word)
-        self.assertEqual(value, 7)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = "CASA"
+        orientation = "V"
+        location = (8,7)
+        scrabble_game.board.grid[11][7].state = False
+        value = scrabble_game.calculate_word_value(word, location, orientation)
+        self.assertEqual(value, 5)
+    
+    def test_get_tile(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        tile = scrabble_game.get_tile_from_player(players_tiles, "A")
+        self.assertEqual(tile, scrabble_game.current_player.tiles[1])
+    
+    def test_get_tile_not_in_tiles(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        tile = scrabble_game.get_tile_from_player(players_tiles, "W")
+        self.assertNotEqual(tile, scrabble_game.current_player.tiles[1])
 
-board = Board()
-board.positions()
-board.print_board()
 if __name__ == '__main__':
     unittest.main()

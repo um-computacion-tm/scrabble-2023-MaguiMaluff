@@ -8,9 +8,13 @@ All notable changes to this project will be documented in this file.
 
 - Function calculate_word_value is now in scrabble_game
 
-- Tried to make calculate_word_value calculate the word from a string insted of a list
-
 - Test for caculated_word_value now in test_scrabble_game
+
+- calculate_word_value now calculates the word value from a string instead of a list
+
+- put_word now the letter in the board is a Tile instead of a string like before
+
+- Tests for calculated_word_value and put_word
 
 2023-11-09
 
@@ -19,6 +23,10 @@ All notable changes to this project will be documented in this file.
 - Files test_board and board
 
 - put_word on scrabble_game
+
+- get_tile_from_player
+
+- Test for get_tile
 
 ### Delete 
 

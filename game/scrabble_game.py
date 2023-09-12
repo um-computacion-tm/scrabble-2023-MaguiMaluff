@@ -61,29 +61,43 @@ class ScrabbleGame:
     def put_word(self, word, location, orientation):
         f = location[0]
         c = location[1]
-        if orientation == "H":
-            for j in range(len(word)):
-                self.board.grid[f][c + j].letter = word[j]
-        if orientation == "V":
-            for i in range(len(word)):
-                self.board.grid[f + i][c].letter = word[i]
+        players_tiles = self.current_player.tiles
+
+        for i in range(len(word)):
+            if orientation == "H":
+                cell = self.board.grid[f][c + i]
+            elif orientation == "V":
+                cell = self.board.grid[f + i][c]
+            tile = self.get_tile_from_player(players_tiles, word[i])
+            if tile != None:
+                cell.letter = tile
+                self.current_player.tiles.remove(tile)    
+  
+
+    def get_tile_from_player(self, player_tiles, letter):
+        for tiles in player_tiles:
+            if tiles.letter == letter:
+                return tiles
+        return None
+    
+
+
 
     def calculate_word_value(self, word, location, orientation):
         f = location[0]
         c = location[1]
         counter = 0
         word_multiplier = 1
-        cell = None
 
         self.put_word(word, location, orientation)
 
         for letrita in range(len(word)):
             if orientation == "H":
-                    cell = self.board.grid[f][c + letrita]
+                cell = self.board.grid[f][c + letrita]
             elif orientation == "V":
-                    cell = self.board.grid[f + letrita][c]
+                cell = self.board.grid[f + letrita][c]
 
-            if cell.letter is None:
+            if cell.letter.letter is None:
                     return 0
             
             if cell.state == False:
