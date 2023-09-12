@@ -71,74 +71,7 @@ class TestCell(unittest.TestCase):
         cell.add_letter(letter)
         self.assertEqual(cell.calculate_value(),6)
 
-class TestCalculateWordValue(unittest.TestCase):
-    def test_simple(self):
-        board = Board()
-        board.positions()
-        word = [
-            Cell(letter = Tiles('C', 1),),
-            Cell(letter = Tiles('A', 1),),
-            Cell(letter = Tiles('S', 2),),
-            Cell(letter = Tiles('A', 1),),
-        ]
-        value = board.calculate_word_value(word)
-        self.assertEqual(value, 5)
 
-    def test_with_letter_multiplier(self):
-        board = Board()
-        board.positions()
-        word = [
-            Cell(letter = Tiles('C', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[9][1].multiplier,  multiplier_type = board.grid[9][1].multiplier_type) ,
-        ]
-        value = board.calculate_word_value(word)
-        self.assertEqual(value, 7)
-
-    def test_with_word_multiplier(self):
-        board = Board()
-        board.positions()
-        word = [
-            Cell(letter = Tiles('C', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[7][7].multiplier, multiplier_type = board.grid[7][7].multiplier_type),
-            Cell(letter = Tiles('A', 1), multiplier = board.grid[11][3].multiplier, multiplier_type = board.grid[11][3].multiplier_type) ,
-        ]
-        value = board.calculate_word_value(word)
-        self.assertEqual(value, 10)
-
-    def test_with_letter_word_multiplier(self):
-        board = Board()
-        board.positions()
-        word = [
-            Cell(multiplier = board.grid[5][1].multiplier, multiplier_type = board.grid[5][1].multiplier_type, letter = Tiles('C', 1)),
-            Cell(letter = Tiles('A', 1)),
-            Cell(letter = Tiles('S', 2), multiplier = board.grid[3][3].multiplier, multiplier_type = board.grid[3][3].multiplier_type),
-            Cell(letter = Tiles('A', 1)),
-        ]
-        value = board.calculate_word_value(word)
-        self.assertEqual(value, 14)
-
-    def test_with_letter_word_multiplier_no_active(self):
-        board = Board()
-        board.positions()
-        word = [
-                Cell(
-                multiplier=3,
-                multiplier_type='letter',
-                letter=Tiles('C', 1)
-            ),
-            Cell(letter=Tiles('A', 1)),
-            Cell(
-                letter=Tiles('S', 2),
-                multiplier=2,
-                multiplier_type='word', state = False
-            ),
-            Cell(letter = Tiles('A', 1),),
-        ]
-        value = board.calculate_word_value(word)
-        self.assertEqual(value, 7)
 
 if __name__ == '__main__':
     unittest.main()

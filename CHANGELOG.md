@@ -2,7 +2,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
-2023-10-09
+2023-12-09
+
+### Change
+
+- Function calculate_word_value is now in scrabble_game
+
+- Tried to make calculate_word_value calculate the word from a string insted of a list
+
+- Test for caculated_word_value now in test_scrabble_game
+
+2023-11-09
 
 ### Added
 
@@ -69,6 +79,7 @@ All notable changes to this project will be documented in this file.
 - README.md, added CircleCi and CodeClimate badges
 
 ### Fixed
+
 - Calculate_word_value and tests
 
 
@@ -81,45 +92,61 @@ All notable changes to this project will be documented in this file.
 2023-08-28
 
 ### Added
+
 - Tried to calculate word value, needs to be fixed
 
 2023-08-24
 
 ### Added
+
 - env
+
 - Branch develop
+
 - .circleci and config.yml
+
 - requirements.txt
+
 - Set word multipliers positions on Board and tests
 
 ### Fixed
 - config.yml file
+
 - Error in multipliers positions
 
 2023-08-23 
 
 ### Added
+
 - Class Board(grid), Player(tiles), Cell(add_letter, calculate_value)
+
 - Init test classes
+
 - File scrabble_game, with class ScrabbleGame. Tests for ScrabbleGame
 
 2023-08-21
 
 ### Added
+
 - Changlog file
+
 - .coveragerc
 
 ### Fixed
+
 - TestTiles, TestBagTiles(test_put and test_take)
 
 ### Change
+
 - Clase Tiles, added missing tiles
 
 
 2023-08-16
 
 ### Added
+
 - Clase Tiles, BagTiles
+
 - Tests, TestTiles, TestBagTiles, test_put, test_take
 
 

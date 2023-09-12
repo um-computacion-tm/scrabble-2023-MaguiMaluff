@@ -52,8 +52,8 @@ class ScrabbleGame:
 
     def get_word(self, word):
         res = dle.search_by_word(word)
-        res = res.to_dict()
-        if res == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
+        result = res.to_dict()
+        if result == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
             return False
         else:
             return True
@@ -67,3 +67,38 @@ class ScrabbleGame:
         if orientation == "V":
             for i in range(len(word)):
                 self.board.grid[f + i][c].letter = word[i]
+
+    def calculate_word_value(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        counter = 0
+        word_multiplier = 1
+        cell = None
+
+        self.put_word(word, location, orientation)
+
+        for letrita in range(len(word)):
+            if orientation == "H":
+                    cell = self.board.grid[f][c + letrita]
+            elif orientation == "V":
+                    cell = self.board.grid[f + letrita][c]
+
+            if cell.letter is None:
+                    return 0
+            
+            if cell.state == False:
+                 counter = counter + cell.letter.value
+            
+            if cell.multiplier_type == 'letter' and cell.state == True:
+                counter = counter + (cell.letter.value * cell.multiplier * word_multiplier)
+
+            if cell.multiplier_type == 'word' and word_multiplier != 1 and cell.state == True:
+                counter = (counter + (cell.letter.value * word_multiplier))
+                word_multiplier = cell.multiplier
+                counter = counter * word_multiplier
+
+            if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
+                word_multiplier = cell.multiplier
+                counter = ((counter + cell.letter.value) * word_multiplier)
+            cell.used_cell(cell)
+        return counter 

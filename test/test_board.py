@@ -1,5 +1,5 @@
 import unittest
-from game.models import Player, BagTiles
+from game.models import Player, BagTiles, Cell, Tiles
 from game.board import Board
 
 class TestBoard(unittest.TestCase):
@@ -57,6 +57,7 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
         
         assert word_is_valid == False
+
 
 if __name__ == '__main__':
     unittest.main()
