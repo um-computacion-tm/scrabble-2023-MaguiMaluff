@@ -1,5 +1,6 @@
 import unittest
-from game.models import Tiles, BagTiles, Player, Board, Cell
+from game.models import Tiles, BagTiles, Player, Cell
+from game.board import Board
 from game.scrabble_game import ScrabbleGame
 from unittest.mock import patch
 

@@ -1,4 +1,5 @@
-from game.models import Board, Player, BagTiles
+from game.models import Player, BagTiles
+from game.board import Board
 from pyrae import dle
 
 

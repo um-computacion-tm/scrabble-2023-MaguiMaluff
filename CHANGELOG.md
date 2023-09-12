@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Files test_board and board
+
+### Delete 
+
+- Class Board from models
+
+- Class TestBoard from test_models
+
+2023-10-09
+
+### Added
+
 - Validate word on Scrabble Game. And tests
 
 - File test_scrabble_game.
