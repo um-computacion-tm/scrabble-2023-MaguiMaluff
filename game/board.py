@@ -103,10 +103,11 @@ class Board:
         else:  ### NO funciona
             for i in range(len(word)):
                 if orientation == "H":
-                    cell = self.grid[f][c + i]
+                    if self.grid[f][c + i].letter != None:
+                        if self.grid[f][c + i].letter.letter == word[i]:
+                            return True
                 elif orientation == "V":
-                    cell = self.grid[f + i][c]
-                if cell.letter != None:
-                    return True
-                else:
-                    return False
+                    if self.grid[f + i][c].letter != None:
+                        if self.grid[f + i][c].letter.letter == word[i]:
+                            return True
+
