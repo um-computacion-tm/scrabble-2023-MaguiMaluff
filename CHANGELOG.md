@@ -2,6 +2,14 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-13-09
+
+### Added
+
+- Function is_empty to Board.
+
+- Function validate_word_place_board to Board
+
 2023-12-09
 
 ### Change

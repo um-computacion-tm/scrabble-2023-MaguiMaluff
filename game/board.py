@@ -78,6 +78,35 @@ class Board:
                     row_str += str(cell.letter.letter) + " "
             print(row_str)
 
-    
-    
+    def is_empty(self):
+        if self.grid[7][7].letter == None:
+            return True
+        else:
+            return False
 
+    def validate_word_place_board(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        good = self.is_empty()
+        if good == True:
+            celdas = []
+            for i in range(len(word)):
+                if orientation == "H":
+                    cell = self.grid[f][c + i]
+                elif orientation == "V":
+                    cell = self.grid[f + i][c]
+                celdas.append(cell)
+            if self.grid[7][7] in celdas:
+                return True
+            else:
+                return False
+        else:  ### NO funciona
+            for i in range(len(word)):
+                if orientation == "H":
+                    cell = self.grid[f][c + i]
+                elif orientation == "V":
+                    cell = self.grid[f + i][c]
+                if cell.letter != None:
+                    return True
+                else:
+                    return False
