@@ -31,7 +31,7 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
     
-    """def test_word_validation_only_tiles_user_and_board(self):
+    def test_word_validation_only_tiles_user_and_board(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.current_player.bag_tiles = (Tiles("A", 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
@@ -93,7 +93,7 @@ class TestScrabbleGame(unittest.TestCase):
         orientation = "H"
         validation = scrabble_game.validate_word(word, location, orientation)
         self.assertEqual(validation, True)
-    """
+    
     def test_put_simple_word_h(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
