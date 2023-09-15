@@ -100,7 +100,7 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
 
-"""    def test_place_word_not_empty_board_horizontal_fine(self):
+    def test_place_word_not_empty_board_horizontal_fine(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[8][7].add_letter(Tiles('A', 1)) 
@@ -126,26 +126,25 @@ class TestBoard(unittest.TestCase):
     def test_place_word_not_empty_board_vertical_fine(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
+        board.grid[7][8].add_letter(Tiles('A', 1)) 
+        board.grid[7][9].add_letter(Tiles('S', 1)) 
+        board.grid[7][10].add_letter(Tiles('A', 1)) 
         word = "PAZ"
-        location = (8, 6)
+        location = (6, 8)
         orientation = "V"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
 
     def test_place_word_not_empty_board_vertical_wrong(self):
         board = Board()
-        board.grid[5][7].add_letter(Tiles('S', 1)) 
-        board.grid[6][7].add_letter(Tiles('A', 1))
+        board.grid[7][5].add_letter(Tiles('S', 1)) 
+        board.grid[7][6].add_letter(Tiles('A', 1))
         board.grid[7][7].add_letter(Tiles('L', 1))
         word = "PAZ"
         location = (8, 6)
         orientation = "V"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False"""
-
+        assert word_is_valid == False
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,6 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-15-09
+
+### Fixed
+
+- Function validate_word_place_board now works
+
+### Changed
+
+- Shorten the function validate_word_place_board
+
 2023-13-09
 
 ### Added
