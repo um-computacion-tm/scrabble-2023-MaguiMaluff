@@ -100,14 +100,15 @@ class Board:
                 return True
             else:
                 return False
-        else:  ### NO funciona
+        elif good == False:  ### NO funciona
             for i in range(len(word)):
                 if orientation == "H":
-                    if self.grid[f][c + i].letter != None:
-                        if self.grid[f][c + i].letter.letter == word[i]:
-                            return True
+                    cell = self.grid[f][c + i]
                 elif orientation == "V":
-                    if self.grid[f + i][c].letter != None:
-                        if self.grid[f + i][c].letter.letter == word[i]:
-                            return True
+                    cell = self.grid[f + i][c]
+                if cell.letter != None and cell.letter.letter == word[i]:
+                    return True
+            return False
+                    
+
 
