@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 - Function validate_word_place_board now works
 
+### Changed
+
+- Shorten the function validate_word_place_board
+
 2023-13-09
 
 ### Added

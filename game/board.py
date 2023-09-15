@@ -88,27 +88,19 @@ class Board:
         f = location[0]
         c = location[1]
         good = self.is_empty()
-        if good == True:
-            celdas = []
-            for i in range(len(word)):
-                if orientation == "H":
-                    cell = self.grid[f][c + i]
-                elif orientation == "V":
-                    cell = self.grid[f + i][c]
+        celdas = []
+
+        for i in range(len(word)):
+            if orientation == "H":
+                cell = self.grid[f][c + i]
+            elif orientation == "V":
+                cell = self.grid[f + i][c]
+            if good == True:
                 celdas.append(cell)
-            if self.grid[7][7] in celdas:
-                return True
-            else:
-                return False
-        elif good == False:  ### NO funciona
-            for i in range(len(word)):
-                if orientation == "H":
-                    cell = self.grid[f][c + i]
-                elif orientation == "V":
-                    cell = self.grid[f + i][c]
+                if self.grid[7][7] in celdas:
+                    return True
+            elif good == False:
                 if cell.letter != None and cell.letter.letter == word[i]:
                     return True
-            return False
-                    
-
-
+        return False
+            
