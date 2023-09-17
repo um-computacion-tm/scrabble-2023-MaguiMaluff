@@ -2,6 +2,12 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-17-09
+
+### Added
+
+- Function words_on_board and tests
+
 2023-15-09
 
 ### Fixed

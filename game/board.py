@@ -103,4 +103,9 @@ class Board:
                 if cell.letter != None and cell.letter.letter == word[i]:
                     return True
         return False
-            
+    
+    def words_on_board(self, word, location, orientation):
+        words_on_board = []
+        word = [word, location, orientation]
+        words_on_board.append(word)
+        return words_on_board

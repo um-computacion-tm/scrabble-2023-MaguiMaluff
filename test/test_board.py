@@ -145,6 +145,14 @@ class TestBoard(unittest.TestCase):
         orientation = "V"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
+    
+    def test_words_on_board(self):
+        board = Board()
+        word = "PAZ"
+        location = (6, 8)
+        orientation = "V"
+        words = board.words_on_board(word, location, orientation)
+        self.assertEqual(words, [["PAZ", (6, 8), "V"]])
 
 if __name__ == '__main__':
     unittest.main()
