@@ -102,6 +102,8 @@ class Board:
             elif good == False:
                 if cell.letter != None and cell.letter.letter == word[i]:
                     return True
+                elif self.validate_word_when_not_empty(word, location, orientation) == True:
+                    return True
         return False
     
     def words_on_board(self, word, location, orientation):
@@ -109,3 +111,16 @@ class Board:
         word = [word, location, orientation]
         words_on_board.append(word)
         return words_on_board
+    
+    def validate_word_when_not_empty(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        las = len(word) - 1
+        if orientation == "H":
+            c += las
+            if self.grid[f][c].letter == None and (self.grid[f - 1][c].letter != None or self.grid[f + 1][c].letter != None):
+                return True
+        elif orientation == "V":
+            f += las
+            if self.grid[f][c].letter == None and (self.grid[f][c - 1].letter != None or self.grid[f][c + 1].letter != None):
+                return True

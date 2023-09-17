@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 - Function words_on_board and tests
 
+- validate_word_when_not_empty, now the game can validate if when adding a word, the word is adding letters to an existing word.
+
 2023-15-09
 
 ### Fixed
