@@ -2,6 +2,18 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-19-09
+
+### Change 
+
+- Player Class now has a point counter.
+
+- Function calculate_word_value now assigns points to the player
+
+### Added
+
+- Test for the changes
+
 2023-17-09
 
 ### Added

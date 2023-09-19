@@ -1,5 +1,6 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Cell
+from game.scrabble_game import ScrabbleGame
 from game.board import Board
 from unittest.mock import patch
 
@@ -48,6 +49,20 @@ class TestPlayer(unittest.TestCase):
         bag_tiles = BagTiles()
         player_1 = Player(1, bag_tiles)
         self.assertEqual(len(player_1.tiles),7,)
+
+    def test_point_exists(self):
+            bag_tiles = BagTiles()
+            player_1 = Player(1, bag_tiles)
+            player_1.points = 18
+            self.assertEqual(player_1.points,18,)
+    
+    def test_point_from_calculation(self):
+        scrabble_game = ScrabbleGame(players_count = 3)
+        bag_tiles = BagTiles()
+        scrabble_game.current_player = Player(1, bag_tiles)
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        scrabble_game.calculate_word_value("CASA", (7,7), "V")
+        self.assertEqual(scrabble_game.current_player.points, 5,)
 
 class TestCell(unittest.TestCase):
     def test_init(self):

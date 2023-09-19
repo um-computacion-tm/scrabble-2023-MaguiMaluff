@@ -72,7 +72,6 @@ class ScrabbleGame:
             if tile != None:
                 cell.letter = tile
                 self.current_player.tiles.remove(tile)    
-  
 
     def get_tile_from_player(self, player_tiles, letter):
         for tiles in player_tiles:
@@ -114,5 +113,6 @@ class ScrabbleGame:
             if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
                 word_multiplier = cell.multiplier
                 counter = ((counter + cell.letter.value) * word_multiplier)
-            cell.used_cell(cell)
+        self.current_player.points += counter
+        cell.used_cell(cell)
         return counter 

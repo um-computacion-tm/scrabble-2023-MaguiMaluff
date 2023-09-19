@@ -48,6 +48,7 @@ class Player:
     def __init__(self, id:int, bag_tiles:BagTiles):
         self.tiles = bag_tiles.take(7)
         self.bag_tiles = bag_tiles
+        self.points = 0
 
 class Cell:
     def __init__(self, multiplier = 1, multiplier_type = 'letter', letter = None, state = True):
