@@ -45,7 +45,6 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.current_player.bag_tiles = (Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
-        board = Board()
         word = "HOLA"
         location = (5, 4)
         orientation = "H"

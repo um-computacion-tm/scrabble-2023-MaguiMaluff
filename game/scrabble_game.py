@@ -26,29 +26,28 @@ class ScrabbleGame:
 
 
     def validate_word(self, word, location, orientation):
-        validation = True
+        if self.board.validate_word_inside_board(word, location, orientation) == False:
+            return False
+        elif self.player_tiles(word) == False:
+            return False
+        elif self.get_word == False:
+            return False
+        return True
+
+    
+    def player_tiles(self, word):
         letritas = []
         letritas_user = []
         for i in word:
             letritas.append(i)
         for j in self.current_player.bag_tiles:
             letritas_user.append(j.letter)
-        
-        validation = self.board.validate_word_inside_board(word, location, orientation)
-
-        if validation == False:
-            return False
-        else:
-            for w in range(len(letritas)):
+        for w in range(len(letritas)):
                 if letritas[w] in letritas_user:
                     posicion = letritas_user.index(letritas[w])
                     letritas_user.pop(posicion)
                 else:
-                    validation = False
-        if validation == True:
-            validation = self.get_word(word)
-
-        return validation
+                    return False
 
     def get_word(self, word):
         res = dle.search_by_word(word)

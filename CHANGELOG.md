@@ -10,9 +10,13 @@ All notable changes to this project will be documented in this file.
 
 - Function calculate_word_value now assigns points to the player
 
+- Function validate_word uses other functions
+
 ### Added
 
 - Test for the changes
+
+- player_tiles to Class ScrabbleGame, it validates if a player has the same tiles as the word they put.
 
 2023-17-09
 
