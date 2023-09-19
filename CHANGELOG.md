@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 2023-19-09
 
+
 ### Change 
 
 - Player Class now has a point counter.
@@ -11,6 +12,8 @@ All notable changes to this project will be documented in this file.
 - Function calculate_word_value now assigns points to the player
 
 - Function validate_word uses other functions
+
+- Realized validate_word_when_not_empty was wrong and tried to fixed it
 
 ### Added
 

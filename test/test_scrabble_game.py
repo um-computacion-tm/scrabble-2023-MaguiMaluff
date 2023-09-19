@@ -199,5 +199,11 @@ class TestCalculateWordValue(unittest.TestCase):
         tile = scrabble_game.get_tile_from_player(players_tiles, "W")
         self.assertNotEqual(tile, scrabble_game.current_player.tiles[1])
 
+    def test_validate_multiple_words(self):
+        pass
+
+    def test_calculate_multiple_words_value(self):
+        pass
+
 if __name__ == '__main__':
     unittest.main()

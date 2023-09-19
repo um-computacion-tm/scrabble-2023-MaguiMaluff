@@ -77,8 +77,6 @@ class ScrabbleGame:
             if tiles.letter == letter:
                 return tiles
         return None
-    
-
 
 
     def calculate_word_value(self, word, location, orientation):

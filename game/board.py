@@ -115,12 +115,19 @@ class Board:
     def validate_word_when_not_empty(self, word, location, orientation):
         f = location[0]
         c = location[1]
-        las = len(word) - 1
-        if orientation == "H":
-            c += las
-            if self.grid[f][c].letter == None and (self.grid[f - 1][c].letter != None or self.grid[f + 1][c].letter != None):
+        tile_1 = self.grid[f][c].letter
+        tile_2 = self.grid[f + 1][c].letter
+        tile_3 = self.grid[f - 1][c].letter
+        tile_4 = self.grid[f][c + 1].letter
+        tile_5 = self.grid[f][c - 1].letter
+        tiles = [tile_2, tile_3, tile_4, tile_5]
+        for i in range(len(word)):
+            if orientation == "H":
+                cell = self.grid[f][c + i]
+            elif orientation == "V":
+                cell = self.grid[f + i][c]
+            if tile_1 == None and tiles[i] != None:
                 return True
-        elif orientation == "V":
-            f += las
-            if self.grid[f][c].letter == None and (self.grid[f][c - 1].letter != None or self.grid[f][c + 1].letter != None):
-                return True
+        
+    
+       
