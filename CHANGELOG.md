@@ -2,6 +2,12 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-21-09
+
+### Fixed 
+
+- validate word_when not_empty (I don't like it, will probably change it again)
+
 2023-19-09
 
 

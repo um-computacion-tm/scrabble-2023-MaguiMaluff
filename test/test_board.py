@@ -70,7 +70,7 @@ class TestBoard(unittest.TestCase):
         
     def test_place_word_empty_board_horizontal_fine(self):
         board = Board()
-        word = "Facultad"
+        word = "FACULTAD"
         location = (7, 4)
         orientation = "H"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
@@ -118,7 +118,7 @@ class TestBoard(unittest.TestCase):
         board.grid[6][7].add_letter(Tiles('A', 1))
         board.grid[7][7].add_letter(Tiles('L', 1))
         word = "FACULTAD"
-        location = (8, 6)
+        location = (1, 1)
         orientation = "H"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
@@ -141,7 +141,7 @@ class TestBoard(unittest.TestCase):
         board.grid[7][6].add_letter(Tiles('A', 1))
         board.grid[7][7].add_letter(Tiles('L', 1))
         word = "PAZ"
-        location = (8, 6)
+        location = (9, 6)
         orientation = "V"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
@@ -168,6 +168,7 @@ class TestBoard(unittest.TestCase):
 
     def test_validate_word_place_board_add_letter_to_existing_word_wrong_v(self):
         board = Board()
+        print("SOY ESTE VERTICA:")
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[7][8].add_letter(Tiles('A', 1)) 
         board.grid[7][9].add_letter(Tiles('S', 1)) 
@@ -192,6 +193,7 @@ class TestBoard(unittest.TestCase):
     
     def test_validate_word_place_board_add_letter_to_existing_word_wrong_h(self):
         board = Board()
+        print("SOY ESTE")
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[8][7].add_letter(Tiles('A', 1)) 
         board.grid[9][7].add_letter(Tiles('S', 1)) 

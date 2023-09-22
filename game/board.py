@@ -89,7 +89,7 @@ class Board:
         c = location[1]
         good = self.is_empty()
         celdas = []
-
+        count = 0
         for i in range(len(word)):
             if orientation == "H":
                 cell = self.grid[f][c + i]
@@ -100,9 +100,9 @@ class Board:
                 if self.grid[7][7] in celdas:
                     return True
             elif good == False:
-                if cell.letter != None and cell.letter.letter == word[i]:
+                if (cell.letter != None and cell.letter.letter == word[i]):
                     return True
-                elif self.validate_word_when_not_empty(word, location, orientation) == True:
+                if self.validate_word_when_not_empty(word, location, orientation) == True:
                     return True
         return False
     
@@ -113,21 +113,29 @@ class Board:
         return words_on_board
     
     def validate_word_when_not_empty(self, word, location, orientation):
-        f = location[0]
-        c = location[1]
-        tile_1 = self.grid[f][c].letter
-        tile_2 = self.grid[f + 1][c].letter
-        tile_3 = self.grid[f - 1][c].letter
-        tile_4 = self.grid[f][c + 1].letter
-        tile_5 = self.grid[f][c - 1].letter
-        tiles = [tile_2, tile_3, tile_4, tile_5]
+        count = 0
         for i in range(len(word)):
+            f = location[0] 
+            c = location[1] 
             if orientation == "H":
-                cell = self.grid[f][c + i]
+                c = c + i
             elif orientation == "V":
-                cell = self.grid[f + i][c]
-            if tile_1 == None and tiles[i] != None:
-                return True
-        
-    
+                f = f + i
+            if 0 <= f < 14 and 0 <= c < 14:
+                tiles = [ self.grid[f + 1][c],  ##Arriba
+                          self.grid[f - 1][c],  ##Abajo
+                          self.grid[f][c + 1],  ##Derecha
+                          self.grid[f][c - 1],] ##Izquierda
+                print(f + 1 , c)
+                print(f - 1 , c)
+                print(f , c + 1)
+                print(f , c - 1)
+                for t in tiles:
+                    if t.letter is not None:
+                        count += 1
+        if count != 0:
+            return True
+        else:
+            return False
+
        
