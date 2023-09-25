@@ -107,10 +107,10 @@ class Board:
         return False
     
     def words_on_board(self, word, location, orientation):
-        words_on_board = []
+        self.words_on_board = []
         word = [word, location, orientation]
-        words_on_board.append(word)
-        return words_on_board
+        self.words_on_board.append(word)
+        return self.words_on_board
     
     def validate_word_when_not_empty(self, word, location, orientation):
         count = 0
@@ -126,10 +126,6 @@ class Board:
                           self.grid[f - 1][c],  ##Abajo
                           self.grid[f][c + 1],  ##Derecha
                           self.grid[f][c - 1],] ##Izquierda
-                print(f + 1 , c)
-                print(f - 1 , c)
-                print(f , c + 1)
-                print(f , c - 1)
                 for t in tiles:
                     if t.letter is not None:
                         count += 1
@@ -138,4 +134,5 @@ class Board:
         else:
             return False
 
+        
        

@@ -134,6 +134,16 @@ class TestCalculateWordValue(unittest.TestCase):
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 5)
 
+    def test_none_letter(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        word = ""
+        orientation = "V"
+        location = (7,7)
+        value = scrabble_game.calculate_word_value(word, location, orientation)
+        self.assertEqual(value, 0)
+
     def test_with_letter_multiplier(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
@@ -204,6 +214,36 @@ class TestCalculateWordValue(unittest.TestCase):
 
     def test_calculate_multiple_words_value(self):
         pass
+
+    def test_cells_values_vertical(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("H", 4), Tiles("O", 1), Tiles("L", 2), Tiles("A", 1)]
+        scrabble_game.put_word("HOLA", (0,0), 'V')
+        scrabble_game.calculate_word_without_any_multiplier("HOLA", (0,0), 'V')
+        self.assertEqual(scrabble_game.cells_values,
+                        {
+                            ( 0, 0) : 8,
+                            ( 1, 0) : 8,
+                            ( 2, 0) : 8,
+                            ( 3, 0) : 8,
+                        }
+                         )
+        
+    def test_cells_values_horizontal(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [Tiles("H", 4), Tiles("O", 1), Tiles("L", 2), Tiles("A", 1)]
+        scrabble_game.put_word("HOLA", (0,0), 'H')
+        scrabble_game.calculate_word_without_any_multiplier("HOLA", (0,0), 'H')
+        self.assertEqual(scrabble_game.cells_values,
+                        {
+                            (0 , 0) : 8,
+                            (0 , 1) : 8,
+                            (0 , 2) : 8,
+                            (0 , 3) : 8,
+                        }
+                         )
 
 if __name__ == '__main__':
     unittest.main()

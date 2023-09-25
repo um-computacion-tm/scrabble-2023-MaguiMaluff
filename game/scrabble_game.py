@@ -10,6 +10,7 @@ class ScrabbleGame:
         self.bag_tiles = BagTiles()
         self.players = []
         self.current_player = current_player
+        self.cells_values = {}
         for id in range(players_count):
             self.players.append(Player(id = id, bag_tiles = self.bag_tiles))
 
@@ -110,6 +111,29 @@ class ScrabbleGame:
             if cell.multiplier_type == 'word' and word_multiplier == 1 and cell.state == True:
                 word_multiplier = cell.multiplier
                 counter = ((counter + cell.letter.value) * word_multiplier)
+            cell.used_cell(cell)
         self.current_player.points += counter
-        cell.used_cell(cell)
         return counter 
+
+    def calculate_word_without_any_multiplier(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        counter = 0
+
+        for letrita in range(len(word)):
+            if orientation == "H":
+                cell = self.board.grid[f][c + letrita]
+            elif orientation == "V":
+                cell = self.board.grid[f + letrita][c]
+            counter = counter + cell.letter.value
+        
+        for i in range(len(word)):
+            f = location[0]
+            c = location[1]
+            if orientation == "H":
+                c += i
+            elif orientation == "V":
+                f += i
+            self.cells_values[(f , c)] = counter
+            
+

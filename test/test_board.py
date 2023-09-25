@@ -168,7 +168,6 @@ class TestBoard(unittest.TestCase):
 
     def test_validate_word_place_board_add_letter_to_existing_word_wrong_v(self):
         board = Board()
-        print("SOY ESTE VERTICA:")
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[7][8].add_letter(Tiles('A', 1)) 
         board.grid[7][9].add_letter(Tiles('S', 1)) 
@@ -193,7 +192,6 @@ class TestBoard(unittest.TestCase):
     
     def test_validate_word_place_board_add_letter_to_existing_word_wrong_h(self):
         board = Board()
-        print("SOY ESTE")
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[8][7].add_letter(Tiles('A', 1)) 
         board.grid[9][7].add_letter(Tiles('S', 1)) 

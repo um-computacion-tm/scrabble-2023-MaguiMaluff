@@ -2,6 +2,15 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-25-09
+
+### Added
+
+- Function calculate_word_without_any_multiplier
+
+- Dictionary cell_values to ScrabbleGame
+
+
 2023-21-09
 
 ### Fixed 
