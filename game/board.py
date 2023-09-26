@@ -3,7 +3,7 @@ from game.models import Cell, Player, BagTiles, Tiles
 class Board:
     def __init__(self):
         self.grid =[[Cell(1, 'letter') for _ in range(15)] for _ in range (15)]
-
+        self.words_on_board = []
     def set_word_multiplier(self):
         word_multi = [
             (0,0), (7,0), (14,0), (0,7), (0,14), (7,14), (14,14)
@@ -89,7 +89,6 @@ class Board:
         c = location[1]
         good = self.is_empty()
         celdas = []
-        count = 0
         for i in range(len(word)):
             if orientation == "H":
                 cell = self.grid[f][c + i]
@@ -106,17 +105,26 @@ class Board:
                     return True
         return False
     
-    def words_on_board(self, word, location, orientation):
-        self.words_on_board = []
+    def list_of_words(self, word, location, orientation):
         word = [word, location, orientation]
+        celdas = []
+        for i in range(len(word)):
+            f = location[0]
+            c = location[1]
+            if orientation == "H":
+                c = c + i
+            elif orientation == "V":
+                f = f + i
+            celdas.append((f , c))
+        word.extend(celdas)
         self.words_on_board.append(word)
         return self.words_on_board
     
     def validate_word_when_not_empty(self, word, location, orientation):
         count = 0
         for i in range(len(word)):
-            f = location[0] 
-            c = location[1] 
+            f = location[0]
+            c = location[1]
             if orientation == "H":
                 c = c + i
             elif orientation == "V":
@@ -133,6 +141,60 @@ class Board:
             return True
         else:
             return False
+    
+    def case_of_sum(self, word, location, orientation):
+        count = 0
+        celdas_arriba = []
+        celdas_abajo = []
+        celdas_izquierda = []
+        celdas_derecha = []
+        words_index = []
+        for i in range(len(word)):
+            f = location[0]
+            c = location[1]
+            if orientation == "H":
+                c = c + i
+                celdas_arriba.append((f + 1, c))
+                celdas_abajo.append((f - 1, c))
+            elif orientation == "V":
+                f = f + i
+                celdas_derecha.append((f , c + 1))
+                celdas_izquierda.append((f , c - 1))
 
+        for lista in range(len(self.list_of_words)):
+            for celda_arriba, celda_abajo in celdas_arriba, celdas_abajo:
+                if celda_arriba in self.list_of_words[lista]:
+                    words_index.append([self.list_of_words[lista][0], lista])
+                elif celda_abajo in self.list_of_words[lista]:
+                    existing_word = self.list_of_words[lista]
         
-       
+        if orientation not in existing_word:
+            pass
+
+
+            
+        for i in range(len(word)):
+            if 0 <= f < 14 and 0 <= c < 14:
+                tiles = [ self.grid[f + 1][c],  ##Arriba
+                          self.grid[f - 1][c],  ##Abajo
+                          self.grid[f][c + 1],  ##Derecha
+                          self.grid[f][c - 1],] ##Izquierda
+                for t in tiles:
+                    if t.letter is not None:
+                        count += 1
+        if count != 0:
+            return True
+        else:
+            return False
+
+        """Cuando se suman puntos? 
+        Cuando la palabra agrega al final de otra mas letras
+        o cuando queda al lado y forma palabras de 2 silabas
+        Si la palabra solo cruza a otra, no se suman puntos"""
+        """
+        Caso 1 de suma: si la palabra es vertical, la otra tiene que ser horizontal
+                        y la letra solo tiene a un lado de ella otra letra. (Hay que verificar la nueva palabra)
+        Caso 2 de suma: ambas palabras tienen la misma orientacion,
+                        y la letra solo tiene a un lado de ella otra letra. (Hay que verificar las nuevas palabras)
+        Caso sin puntos: orientaciones diferentes, la letra que cruza tiene otra a sus dos lados
+        """

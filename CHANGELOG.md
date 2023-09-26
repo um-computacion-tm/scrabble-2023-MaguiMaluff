@@ -2,6 +2,18 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-26-09
+
+### Soon to be delete
+
+- validate_word_when_not_empty
+
+### Added
+
+- case_1_sum, not done yet
+
+
+
 2023-25-09
 
 ### Added

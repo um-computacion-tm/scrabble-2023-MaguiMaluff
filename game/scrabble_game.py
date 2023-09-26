@@ -136,4 +136,6 @@ class ScrabbleGame:
                 f += i
             self.cells_values[(f , c)] = counter
             
+    def point_counter_existing_word(self):
+        pass
 

@@ -244,6 +244,9 @@ class TestCalculateWordValue(unittest.TestCase):
                             (0 , 3) : 8,
                         }
                          )
+        
+    def test_player_point_adding_letter_to_existing_word(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
