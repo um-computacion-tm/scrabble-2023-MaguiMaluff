@@ -112,9 +112,9 @@ class Board:
             f = location[0]
             c = location[1]
             if orientation == "H":
-                c = c + i
+                c += i
             elif orientation == "V":
-                f = f + i
+                f += i
             celdas.append((f , c))
         word.extend(celdas)
         self.words_on_board.append(word)
@@ -130,10 +130,10 @@ class Board:
             elif orientation == "V":
                 f = f + i
             if 0 <= f < 14 and 0 <= c < 14:
-                tiles = [ self.grid[f + 1][c],  ##Arriba
-                          self.grid[f - 1][c],  ##Abajo
-                          self.grid[f][c + 1],  ##Derecha
-                          self.grid[f][c - 1],] ##Izquierda
+                tiles = [ self.grid[f + 1][c],  ###Arriba
+                          self.grid[f - 1][c],  ###Abajo
+                          self.grid[f][c + 1],  ###Derecha
+                          self.grid[f][c - 1],] ###Izquierda
                 for t in tiles:
                     if t.letter is not None:
                         count += 1
@@ -142,7 +142,7 @@ class Board:
         else:
             return False
     
-    def case_of_sum(self, word, location, orientation):
+"""     def case_of_sum(self, word, location, orientation):
         count = 0
         celdas_arriba = []
         celdas_abajo = []
@@ -165,11 +165,12 @@ class Board:
             for celda_arriba, celda_abajo in celdas_arriba, celdas_abajo:
                 if celda_arriba in self.list_of_words[lista]:
                     words_index.append([self.list_of_words[lista][0], lista])
+                    existing_word = self.list_of_words[lista]
                 elif celda_abajo in self.list_of_words[lista]:
                     existing_word = self.list_of_words[lista]
         
         if orientation not in existing_word:
-            pass
+            return celda_abajo, celdas_arriba
 
 
             
@@ -186,15 +187,17 @@ class Board:
             return True
         else:
             return False
+"""
 
-        """Cuando se suman puntos? 
+"""     Cuando se suman puntos? 
         Cuando la palabra agrega al final de otra mas letras
         o cuando queda al lado y forma palabras de 2 silabas
-        Si la palabra solo cruza a otra, no se suman puntos"""
-        """
+        Si la palabra solo cruza a otra, no se suman puntos
+"""
+"""
         Caso 1 de suma: si la palabra es vertical, la otra tiene que ser horizontal
                         y la letra solo tiene a un lado de ella otra letra. (Hay que verificar la nueva palabra)
         Caso 2 de suma: ambas palabras tienen la misma orientacion,
                         y la letra solo tiene a un lado de ella otra letra. (Hay que verificar las nuevas palabras)
         Caso sin puntos: orientaciones diferentes, la letra que cruza tiene otra a sus dos lados
-        """
+"""

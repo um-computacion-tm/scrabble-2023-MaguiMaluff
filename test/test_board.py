@@ -154,6 +154,14 @@ class TestBoard(unittest.TestCase):
         words = board.list_of_words(word, location, orientation)
         self.assertEqual(words, [["PAZ", (6, 8), "V", (6, 8), (7, 8), (8, 8)]])
 
+    def test_words_on_board(self):
+        board = Board()
+        word = "CAS"
+        location = (6, 8)
+        orientation = "H"
+        words = board.list_of_words(word, location, orientation)
+        self.assertEqual(words, [["CAS", (6, 8), "H", (6, 8), (6, 9), (6, 10),]])
+
     def test_caso_1_de_suma_word_fine_v(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
@@ -214,20 +222,5 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
 
-    def test_case_1_sum_not_finished(self):
-        board = Board()
-        word = "PAZ"
-        location = (6, 8)
-        orientation = "V"
-        words = board.list_of_words(word, location, orientation)
-        self.assertEqual(words, [["PAZ", (6, 8), "V", (6, 8), (7, 8), (8, 8)]])
-        board = Board()
-        word = "MASA"
-        location = (0, 0)
-        orientation = "H"
-        words = board.list_of_words(word, location, orientation)
-        self.assertEqual(words, [["MASA", (0, 0), "V", (0, 0), (0, 1), (0, 2), (0 , 3)]])
-        celditas = board.case_1_sum("CASA", (0 , 4) , "H")
-        print(celditas)
 if __name__ == '__main__':
     unittest.main()

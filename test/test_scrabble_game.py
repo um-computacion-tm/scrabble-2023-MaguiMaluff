@@ -34,7 +34,7 @@ class TestScrabbleGame(unittest.TestCase):
     def test_word_validation_only_tiles_user_and_board(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.bag_tiles = (Tiles("A", 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        scrabble_game.current_player.tiles = (Tiles("A", 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4), Tiles("White", 0), Tiles("N", 9))
         word = "HOLA"
         location = (5, 4)
         orientation = "H"
@@ -44,7 +44,7 @@ class TestScrabbleGame(unittest.TestCase):
     def test_word_validation_not_tiles_(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.bag_tiles = (Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        scrabble_game.current_player.tiles = (Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
         word = "HOLA"
         location = (5, 4)
         orientation = "H"
@@ -86,7 +86,7 @@ class TestScrabbleGame(unittest.TestCase):
     def test_validate_everything(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        scrabble_game.current_player.tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
         word = "HOLA"
         location = (0, 0)
         orientation = "H"

@@ -50,6 +50,22 @@ class Player:
         self.bag_tiles = bag_tiles
         self.points = 0
 
+
+    def player_tiles(self, word):
+        letritas = []
+        letritas_user = []
+        for i in word:
+            letritas.append(i)
+        for j in self.tiles:
+            letritas_user.append(j.letter)
+        for w in range(len(letritas)):
+                if letritas[w] in letritas_user:
+                    posicion = letritas_user.index(letritas[w])
+                    letritas_user.pop(posicion)
+                else:
+                    return False
+        return True
+
 class Cell:
     def __init__(self, multiplier = 1, multiplier_type = 'letter', letter = None, state = True):
         self.multiplier = multiplier

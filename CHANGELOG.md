@@ -2,6 +2,12 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-27-09
+
+### Change
+
+- Function player_tiles moved to file models
+
 2023-26-09
 
 ### Soon to be delete

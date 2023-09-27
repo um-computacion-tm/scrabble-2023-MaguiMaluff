@@ -63,6 +63,38 @@ class TestPlayer(unittest.TestCase):
         scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
         scrabble_game.calculate_word_value("CASA", (7,7), "V")
         self.assertEqual(scrabble_game.current_player.points, 5,)
+    
+    def test_validate_user_has_letters(self):
+        bag_tile = BagTiles()
+        bag_tile.tiles = [
+            Tiles(letter='H', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),
+            Tiles(letter='C', value=1),
+            Tiles(letter='U', value=1),
+            Tiles(letter='M', value=1),
+        ]
+        player = Player(4, bag_tile)
+        is_valid = player.player_tiles("HOLA")
+
+        self.assertEqual(is_valid, True)
+
+    def test_validate_fail_when_user_has_not_letters(self):
+        bag_tiles = BagTiles()
+        bag_tiles.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),
+            Tiles(letter='C', value=1),
+            Tiles(letter='U', value=1),
+            Tiles(letter='M', value=1),
+        ]
+        player = Player(7 , bag_tiles)
+        is_valid = player.player_tiles("MAYONESA")
+
+        self.assertEqual(is_valid, False)
 
 class TestCell(unittest.TestCase):
     def test_init(self):
