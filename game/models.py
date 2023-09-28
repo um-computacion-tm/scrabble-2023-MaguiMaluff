@@ -50,6 +50,17 @@ class Player:
         self.bag_tiles = bag_tiles
         self.points = 0
 
+    def change_tiles(self, tiles):
+        lost_tiles = []
+        indices_to_remove = []
+        for i in tiles:
+            if i < len(self.tiles):
+                lost_tiles.append(self.tiles[i])
+                indices_to_remove.append(i)
+        for i in reversed(indices_to_remove):
+            self.tiles.pop(i)
+        self.bag_tiles.tiles.extend(lost_tiles)
+        self.tiles.extend(self.bag_tiles.take(len(tiles)))
 
     def player_tiles(self, word):
         letritas = []

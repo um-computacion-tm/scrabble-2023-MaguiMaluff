@@ -1,7 +1,11 @@
+#!/usr/bin/env python3.10
 from game.scrabble_game import ScrabbleGame
-from game.models import Board, Player, Tiles, Cell
+from game.models import Player, Tiles, Cell
+from game.board import Board
 
-def main(self):
+print("HELLO")
+def main():
+    print("Running...")
     while True:
         try:
             players_count = int(input('Cantidad de jugadores:'))
@@ -12,15 +16,25 @@ def main(self):
             print("Valor Invalido")
     
     game = ScrabbleGame(players_count)
-    board = Board()
-    board.positions()
-    word = input("Ingrese Palabra:")
-    location_i = input("Ingrese X: ")
-    location_j = input("Ingrese Y: ")
-    location = (location_i, location_j)
-    orientation = input ("Orientacion V o H: ")
     while(game.playing()):
-        pass
+        task = input("Para agregar palabra ingrese A",
+                     "Para cambiar letras ingrese C",
+                     "Para pasar de turno ingrese P")
+        task.upper()
+        if task == "A":
+            word = input("Ingrese Palabra:")
+            location_i = input("Ingrese X: ")
+            location_j = input("Ingrese Y: ")
+            location = (location_i, location_j)
+            orientation = input ("Orientacion V o H: ")
+            game.playing(word, location, orientation)
+        elif task == "C":
+            pass
+        elif task == "P":
+            game.next_turn()
+
+if __name__ == '__main__':
+    main()
 
     """
 

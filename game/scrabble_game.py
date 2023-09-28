@@ -2,7 +2,6 @@ from game.models import Player, BagTiles
 from game.board import Board
 from pyrae import dle
 
-
 class ScrabbleGame:
     def __init__(self, players_count, current_player = None):
         self.board = Board()
@@ -121,7 +120,9 @@ class ScrabbleGame:
             elif orientation == "V":
                 f += i
             self.cells_values[(f , c)] = counter
-            
-    def point_counter_existing_word(self):
-        pass
 
+    def playing(self, word, location, orientation):
+        word = word.upper()
+        orientation = orientation.upper()
+        self.board.validate_word_place_board(word, location, orientation)
+        self.validate_word(word, location, orientation)

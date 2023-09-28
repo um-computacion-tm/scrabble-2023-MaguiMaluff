@@ -43,7 +43,17 @@ class TestBagTiles(unittest.TestCase):
         self.assertEqual(
             len(bag.tiles), 
             102,)
-        
+    
+    def test_change_tiles(self):
+        bag_tiles_player = BagTiles()
+        bag_tiles = BagTiles()
+        bag_tiles.tiles = [Tiles('A', 1), Tiles('B', 1), Tiles('C', 1), Tiles('D', 1),]
+        player = Player(7 , bag_tiles_player)
+        player.bag_tiles.tiles = [Tiles('A', 1), Tiles('B', 1), Tiles('C', 1), Tiles('D', 1),]
+        player.change_tiles([1 , 2])
+        self.assertEqual(len(bag_tiles.tiles), 4)
+        self.assertEqual(len(player.bag_tiles.tiles), 4)
+
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         bag_tiles = BagTiles()

@@ -2,6 +2,18 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-28-09
+
+### Added
+
+- Function change_tiles to class Player and a test for it
+- Function playing
+
+### Change
+
+- Change name main.py to scrabble.main.py
+- Added some things to scrabble_main.py
+
 2023-27-09
 
 ### Change
