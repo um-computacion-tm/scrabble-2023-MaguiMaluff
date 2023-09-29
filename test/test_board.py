@@ -156,11 +156,11 @@ class TestBoard(unittest.TestCase):
 
     def test_words_on_board(self):
         board = Board()
-        word = "CASA"
+        word = "CASITA"
         location = (6, 8)
         orientation = "H"
         words = board.list_of_words(word, location, orientation)
-        self.assertEqual(words, [["CAS", "H", (6, 8), (6, 9), (6, 10), (6 , 11)]])
+        self.assertEqual(words, [["CASITA", "H", (6, 8), (6, 9), (6, 10), (6 , 11), (6 , 12), (6 , 13)]])
 
     def test_caso_1_de_suma_word_fine_v(self):
         board = Board()

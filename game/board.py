@@ -106,9 +106,10 @@ class Board:
         return False
     
     def list_of_words(self, word, location, orientation):
-        word = [word, orientation]
+        word_info = [word, orientation]
         celdas = []
         for i in range(len(word)):
+            print(i)
             f = location[0]
             c = location[1]
             if orientation == "H":
@@ -116,8 +117,8 @@ class Board:
             elif orientation == "V":
                 f += i
             celdas.append((f , c))
-        word.extend(celdas)
-        self.words_on_board.append(word)
+        word_info.extend(celdas)
+        self.words_on_board.append(word_info)
         return self.words_on_board
     
     def validate_word_when_not_empty(self, word, location, orientation):

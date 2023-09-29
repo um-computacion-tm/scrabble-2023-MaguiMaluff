@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 2023-29-09
 
+### Fixed
+
+- Function list_of_words
+
 ### Change
 
 - Tried to make function case_of_sum, still can't
