@@ -2,6 +2,13 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-29-09
+
+### Change
+
+- Tried to make function case_of_sum, still can't
+- list_of_words
+
 2023-28-09
 
 ### Added

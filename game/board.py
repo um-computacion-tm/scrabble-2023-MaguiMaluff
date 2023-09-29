@@ -106,7 +106,7 @@ class Board:
         return False
     
     def list_of_words(self, word, location, orientation):
-        word = [word, location, orientation]
+        word = [word, orientation]
         celdas = []
         for i in range(len(word)):
             f = location[0]
@@ -142,8 +142,9 @@ class Board:
         else:
             return False
     
-"""     def case_of_sum(self, word, location, orientation):
+    def case_of_sum(self, word, location, orientation):
         count = 0
+        case = ""
         celdas_arriba = []
         celdas_abajo = []
         celdas_izquierda = []
@@ -154,23 +155,17 @@ class Board:
             c = location[1]
             if orientation == "H":
                 c = c + i
-                celdas_arriba.append((f + 1, c))
-                celdas_abajo.append((f - 1, c))
+                if self.grid[f + 1][c].letter != None:
+                    celdas_arriba.append((f + 1, c))
+                if self.grid[f - 1][c].letter != None:
+                    celdas_abajo.append((f - 1, c))
             elif orientation == "V":
                 f = f + i
-                celdas_derecha.append((f , c + 1))
-                celdas_izquierda.append((f , c - 1))
+                if self.grid[f][c + 1].letter != None:
+                    celdas_derecha.append((f , c + 1))
+                if self.grid[f][c - 1].letter != None:
+                    celdas_izquierda.append((f , c - 1))
 
-        for lista in range(len(self.list_of_words)):
-            for celda_arriba, celda_abajo in celdas_arriba, celdas_abajo:
-                if celda_arriba in self.list_of_words[lista]:
-                    words_index.append([self.list_of_words[lista][0], lista])
-                    existing_word = self.list_of_words[lista]
-                elif celda_abajo in self.list_of_words[lista]:
-                    existing_word = self.list_of_words[lista]
-        
-        if orientation not in existing_word:
-            return celda_abajo, celdas_arriba
 
 
             
@@ -187,7 +182,7 @@ class Board:
             return True
         else:
             return False
-"""
+
 
 """     Cuando se suman puntos? 
         Cuando la palabra agrega al final de otra mas letras

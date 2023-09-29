@@ -152,15 +152,15 @@ class TestBoard(unittest.TestCase):
         location = (6, 8)
         orientation = "V"
         words = board.list_of_words(word, location, orientation)
-        self.assertEqual(words, [["PAZ", (6, 8), "V", (6, 8), (7, 8), (8, 8)]])
+        self.assertEqual(words, [["PAZ", "V", (6, 8), (7, 8), (8, 8)]])
 
     def test_words_on_board(self):
         board = Board()
-        word = "CAS"
+        word = "CASA"
         location = (6, 8)
         orientation = "H"
         words = board.list_of_words(word, location, orientation)
-        self.assertEqual(words, [["CAS", (6, 8), "H", (6, 8), (6, 9), (6, 10),]])
+        self.assertEqual(words, [["CAS", "H", (6, 8), (6, 9), (6, 10), (6 , 11)]])
 
     def test_caso_1_de_suma_word_fine_v(self):
         board = Board()
@@ -221,6 +221,10 @@ class TestBoard(unittest.TestCase):
         orientation = "H"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
+
+    def test_agregando_final(self):
+        board = Board()
+        board.positions()
 
 if __name__ == '__main__':
     unittest.main()
