@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- vertical_word_check_for_sum_1
+- vertical_word_check_for_sum_1, not done yet
 
 2023-29-09
 
