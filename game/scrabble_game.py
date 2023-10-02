@@ -2,6 +2,12 @@ from game.models import Player, BagTiles
 from game.board import Board
 from pyrae import dle
 
+class DictionaryConnectionError(Exception):
+    pass
+
+class WordDoesntExists(Exception):
+    pass
+
 class ScrabbleGame:
     def __init__(self, players_count, current_player = None):
         self.board = Board()
@@ -38,17 +44,19 @@ class ScrabbleGame:
     def get_word(self, word):
         res = dle.search_by_word(word)
         result = res.to_dict()
+        if res is None:
+            raise DictionaryConnectionError()
         if result == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
             return False
         else:
             return True
 
     def put_word(self, word, location, orientation):
-        f = location[0]
-        c = location[1]
         players_tiles = self.current_player.tiles
 
         for i in range(len(word)):
+            f = location[0]
+            c = location[1]
             if orientation == "H":
                 cell = self.board.grid[f][c + i]
             elif orientation == "V":
@@ -56,7 +64,8 @@ class ScrabbleGame:
             tile = self.get_tile_from_player(players_tiles, word[i])
             if tile != None:
                 cell.letter = tile
-                self.current_player.tiles.remove(tile)    
+                self.current_player.tiles.remove(tile)
+        self.board.list_of_words(word, location, orientation)    
 
     def get_tile_from_player(self, player_tiles, letter):
         for tiles in player_tiles:
@@ -121,8 +130,38 @@ class ScrabbleGame:
                 f += i
             self.cells_values[(f , c)] = counter
 
+    def vertical_word_check_for_sum_1(self, word, location):
+        izquierda = []
+        derecha = []
+        for i in range(len(word)): 
+            f = location[0] + i
+            c = location[1]
+            if self.board.grid[f][c - 1].letter != None and self.board.grid[f][c + 1].letter == None:
+                izquierda.append((f , c - 1))
+                search = self.board.get_word_from_cell(izquierda)
+                new_word = search[0] + word[i]
+                if self.get_word(new_word) == True:
+                    self.board.words_on_board[search[1]][0] = new_word
+                    return f'{new_word}, Sumando'
+                else:
+                    raise WordDoesntExists()
+                
+            elif self.board.grid[f][c - 1].letter == None and self.board.grid[f][c + 1].letter != None:
+                derecha.append((f , c + 1))
+                search = self.board.get_word_from_cell(derecha)
+                new_word = word[i] +search[0] 
+                if self.get_word(new_word) == True:
+                    self.board.words_on_board[search[1]][0] = new_word
+                    return f'{new_word}, Sumando'
+                else:
+                    raise WordDoesntExists()
+
     def playing(self, word, location, orientation):
         word = word.upper()
         orientation = orientation.upper()
         self.board.validate_word_place_board(word, location, orientation)
         self.validate_word(word, location, orientation)
+        if location == "V":
+            self.board.vertical_word_check_for_sum_1(word, location)
+
+        

@@ -1,6 +1,7 @@
 import unittest
 from game.models import Player, BagTiles, Cell, Tiles
 from game.board import Board
+from game.scrabble_game import ScrabbleGame
 
 class TestBoard(unittest.TestCase):
     def test_init(self):
@@ -162,7 +163,7 @@ class TestBoard(unittest.TestCase):
         words = board.list_of_words(word, location, orientation)
         self.assertEqual(words, [["CASITA", "H", (6, 8), (6, 9), (6, 10), (6 , 11), (6 , 12), (6 , 13)]])
 
-    def test_caso_1_de_suma_word_fine_v(self):
+    def test_validate_word_place_board_add_letter_to_existing_word_fine_v(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[7][8].add_letter(Tiles('A', 1)) 
@@ -186,7 +187,7 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
     
-    def test_caso_1_de_suma_word_fine_h(self):
+    def test_validate_word_place_board_add_letter_to_existing_word_fine_h(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[8][7].add_letter(Tiles('A', 1)) 
@@ -198,7 +199,7 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
     
-    def test_caso_1_de_suma_wrong_h(self):
+    def test_validate_word_place_board_add_letter_to_existing_word_wrong_h(self):
         board = Board()
         board.grid[7][7].add_letter(Tiles('C', 1))
         board.grid[8][7].add_letter(Tiles('A', 1)) 
@@ -210,21 +211,16 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
     
-    def test_caso_2_de_suma_fine_v(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
-        word = "AMA"
-        location = (9, 6)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
 
-    def test_agregando_final(self):
-        board = Board()
-        board.positions()
+class TestGetWordCell(unittest.TestCase):
+    def test_get_word(self):
+        game = ScrabbleGame(2)
+        game.current_player = game.players[0]
+        players_tiles = game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        game.put_word("CASA", (7, 7), "H")
+        look = game.board.get_word_from_cell([(7, 7)])
+        self.assertEqual(look, ["CASA", 0])
+
 
 if __name__ == '__main__':
     unittest.main()

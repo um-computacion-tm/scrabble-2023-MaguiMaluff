@@ -1,5 +1,7 @@
 from game.models import Cell, Player, BagTiles, Tiles
 
+
+
 class Board:
     def __init__(self):
         self.grid =[[Cell(1, 'letter') for _ in range(15)] for _ in range (15)]
@@ -109,7 +111,6 @@ class Board:
         word_info = [word, orientation]
         celdas = []
         for i in range(len(word)):
-            print(i)
             f = location[0]
             c = location[1]
             if orientation == "H":
@@ -143,47 +144,13 @@ class Board:
         else:
             return False
     
-    def case_of_sum(self, word, location, orientation):
-        count = 0
-        case = ""
-        celdas_arriba = []
-        celdas_abajo = []
-        celdas_izquierda = []
-        celdas_derecha = []
-        words_index = []
-        for i in range(len(word)):
-            f = location[0]
-            c = location[1]
-            if orientation == "H":
-                c = c + i
-                if self.grid[f + 1][c].letter != None:
-                    celdas_arriba.append((f + 1, c))
-                if self.grid[f - 1][c].letter != None:
-                    celdas_abajo.append((f - 1, c))
-            elif orientation == "V":
-                f = f + i
-                if self.grid[f][c + 1].letter != None:
-                    celdas_derecha.append((f , c + 1))
-                if self.grid[f][c - 1].letter != None:
-                    celdas_izquierda.append((f , c - 1))
-
-
-
-            
-        for i in range(len(word)):
-            if 0 <= f < 14 and 0 <= c < 14:
-                tiles = [ self.grid[f + 1][c],  ##Arriba
-                          self.grid[f - 1][c],  ##Abajo
-                          self.grid[f][c + 1],  ##Derecha
-                          self.grid[f][c - 1],] ##Izquierda
-                for t in tiles:
-                    if t.letter is not None:
-                        count += 1
-        if count != 0:
-            return True
-        else:
-            return False
-
+    def get_word_from_cell(self, list):
+        for i in list:
+            for j in range(len(self.words_on_board)):
+                if i in self.words_on_board[j]:
+                    return [self.words_on_board[j][0], j]
+  
+        
 
 """     Cuando se suman puntos? 
         Cuando la palabra agrega al final de otra mas letras
@@ -195,5 +162,4 @@ class Board:
                         y la letra solo tiene a un lado de ella otra letra. (Hay que verificar la nueva palabra)
         Caso 2 de suma: ambas palabras tienen la misma orientacion,
                         y la letra solo tiene a un lado de ella otra letra. (Hay que verificar las nuevas palabras)
-        Caso sin puntos: orientaciones diferentes, la letra que cruza tiene otra a sus dos lados
-"""
+        Caso sin puntos: orientaciones diferentes, la letra que cruza tiene otra a sus dos lados """

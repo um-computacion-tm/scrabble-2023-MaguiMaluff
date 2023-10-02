@@ -2,6 +2,20 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-02-10
+
+### Change 
+
+- Function get_word, now if theres an error it returns an exception
+
+### Deleted
+
+- case_of_sum
+
+### Added
+
+- vertical_word_check_for_sum_1
+
 2023-29-09
 
 ### Fixed

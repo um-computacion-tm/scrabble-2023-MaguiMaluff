@@ -248,6 +248,27 @@ class TestCalculateWordValue(unittest.TestCase):
     def test_player_point_adding_letter_to_existing_word(self):
         pass
 
+class TestWordValidationMultipleWords(unittest.TestCase):
+    
+    def test_check_vertical_adding_left(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        scrabble_game.put_word("CASA", (7,7), "H") 
+        word = "OLAS"
+        location = (4, 11)
+        check = scrabble_game.vertical_word_check_for_sum_1(word, location)
+        self.assertEqual(check, "CASAS, Sumando")
+
+    def test_check_vertical_adding_right(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        scrabble_game.put_word("ASA", (7,7), "H") 
+        word = "MAS"
+        location = (7, 6)
+        check = scrabble_game.vertical_word_check_for_sum_1(word, location)
+        self.assertEqual(check, "MASA, Sumando")
 
 if __name__ == '__main__':
     unittest.main()
