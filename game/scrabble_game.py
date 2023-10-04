@@ -8,6 +8,8 @@ class DictionaryConnectionError(Exception):
 class WordDoesntExists(Exception):
     pass
 
+dle.set_log_level(log_level='CRITICAL')
+
 class ScrabbleGame:
     def __init__(self, players_count, current_player = None):
         self.board = Board()
@@ -130,38 +132,82 @@ class ScrabbleGame:
                 f += i
             self.cells_values[(f , c)] = counter
 
-    def vertical_word_check_for_sum_1(self, word, location):
+    def vertical_word_check_for_sum(self, word, location):
         izquierda = []
         derecha = []
+        new_words = []
         for i in range(len(word)): 
             f = location[0] + i
             c = location[1]
             if self.board.grid[f][c - 1].letter != None and self.board.grid[f][c + 1].letter == None:
                 izquierda.append((f , c - 1))
                 search = self.board.get_word_from_cell(izquierda)
-                new_word = search[0] + word[i]
-                if self.get_word(new_word) == True:
-                    self.board.words_on_board[search[1]][0] = new_word
-                    return f'{new_word}, Sumando'
+                if self.board.words_on_board[search[1]][1] == "V":
+                    new_word = self.get_horizontal_word((f , c), word[i], "left")
+                    new_words.append(new_word)
+                    for w in new_words:
+                        if self.get_word(w) == False:
+                            raise WordDoesntExists()
                 else:
-                    raise WordDoesntExists()
-                
+                    new_word = search[0] + word[i]
+                    if self.get_word(new_word) == True:
+                        self.board.words_on_board[search[1]][0] = new_word
+                        new_words.append(new_word)
+                    else:
+                        raise WordDoesntExists()
+
             elif self.board.grid[f][c - 1].letter == None and self.board.grid[f][c + 1].letter != None:
                 derecha.append((f , c + 1))
                 search = self.board.get_word_from_cell(derecha)
-                new_word = word[i] +search[0] 
-                if self.get_word(new_word) == True:
-                    self.board.words_on_board[search[1]][0] = new_word
-                    return f'{new_word}, Sumando'
+                if self.board.words_on_board[search[1]][1] == "V":
+                    new_word = self.get_horizontal_word((f , c), word[i], "right")
+                    new_words.append(new_word)
+                    for w in new_words:
+                        if self.get_word(w) == False:
+                            raise WordDoesntExists()
                 else:
-                    raise WordDoesntExists()
+                    new_word = word[i] +search[0] 
+                    if self.get_word(new_word) == True:
+                        self.board.words_on_board[search[1]][0] = new_word
+                        new_words.append(new_word)
+                    else:
+                        raise WordDoesntExists()
+        return new_words
+    
+    def get_horizontal_word(self, cell, letter, side):
+        k = 1
+        new_word = letter
+        if side == "right":
+            while letter != None:
+                f = cell[0]
+                c = cell[1]
+                celda = self.board.grid[f][c + k].letter
+                if celda != None:
+                    letter = self.board.grid[f][c + k].letter.letter
+                    k += 1
+                    new_word += letter
+                else:
+                    break
+            return new_word
+        elif side == "left":
+            while letter != None:
+                f = cell[0]
+                c = cell[1]
+                celda = self.board.grid[f][c - k].letter
+                if celda != None:
+                    letter = self.board.grid[f][c - k].letter.letter
+                    k += 1
+                    new_word = letter + new_word
+                else:
+                    break
+            return new_word
 
-    def playing(self, word, location, orientation):
+"""    def playing(self, word, location, orientation):
         word = word.upper()
         orientation = orientation.upper()
         self.board.validate_word_place_board(word, location, orientation)
         self.validate_word(word, location, orientation)
         if location == "V":
-            self.board.vertical_word_check_for_sum_1(word, location)
+            self.board.vertical_word_check_for_sum_1(word, location)"""
 
         

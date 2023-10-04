@@ -3,9 +3,8 @@ from game.scrabble_game import ScrabbleGame
 from game.models import Player, Tiles, Cell
 from game.board import Board
 
-print("HELLO")
+
 def main():
-    print("Running...")
     while True:
         try:
             players_count = int(input('Cantidad de jugadores:'))
@@ -41,7 +40,8 @@ if __name__ == '__main__':
     El jugador puede:
     1- Agregar palabras
     2- Cambiar fichas
-    
+    3- Pasar de turno
+
     Despues de agregar la palabra
     1- Verifico que el board o este vacio o la palabara pase por (7, 7)
     2- Verifico que la palabra no este en el tablero

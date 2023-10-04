@@ -2,6 +2,17 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-04-10
+
+### Change
+
+- get_word, now it doesnt show on the terminal
+
+- vertical_word_check_for_sum_1 to vertical_word_check_for_sum
+
+- vertical_word_check_for_sum now works. But not done yet
+
+
 2023-02-10
 
 ### Change 
