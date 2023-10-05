@@ -219,7 +219,7 @@ class TestGetWordCell(unittest.TestCase):
         players_tiles = game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
         game.put_word("CASA", (7, 7), "H")
         look = game.board.get_word_from_cell([(7, 7)])
-        self.assertEqual(look, ["CASA", 0])
+        self.assertEqual(look, [["CASA", 0, 'H']])
 
 
 if __name__ == '__main__':

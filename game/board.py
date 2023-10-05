@@ -145,11 +145,12 @@ class Board:
             return False
     
     def get_word_from_cell(self, list):
+        words = []
         for i in list:
             for j in range(len(self.words_on_board)):
                 if i in self.words_on_board[j]:
-                    return [self.words_on_board[j][0], j]
-  
+                    words.append([self.words_on_board[j][0], j, self.words_on_board[j][1]])
+        return words
         
 
 """     Cuando se suman puntos? 

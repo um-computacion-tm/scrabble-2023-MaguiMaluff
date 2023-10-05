@@ -2,6 +2,13 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+### Change
+
+- get_horizontal_word
+
+- vertical_word_check_for_sum, almost done
+
+
 2023-04-10
 
 ### Change
@@ -26,6 +33,10 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - vertical_word_check_for_sum_1, not done yet
+
+- get_horizontal_word
+
+- get_word_from_cell
 
 2023-29-09
 

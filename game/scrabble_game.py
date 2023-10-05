@@ -136,71 +136,78 @@ class ScrabbleGame:
         izquierda = []
         derecha = []
         new_words = []
+        search = None
         for i in range(len(word)): 
             f = location[0] + i
             c = location[1]
-            if self.board.grid[f][c - 1].letter != None and self.board.grid[f][c + 1].letter == None:
+            celda_i = self.board.grid[f][c - 1].letter
+            celda_d = self.board.grid[f][c + 1].letter
+            if  celda_i != None and celda_d == None:
                 izquierda.append((f , c - 1))
                 search = self.board.get_word_from_cell(izquierda)
-                if self.board.words_on_board[search[1]][1] == "V":
-                    new_word = self.get_horizontal_word((f , c), word[i], "left")
+                if search[0][2] == "V":
+                    new_word = self.get_horizontal_word((f , c), word[i])
                     new_words.append(new_word)
                     for w in new_words:
                         if self.get_word(w) == False:
                             raise WordDoesntExists()
                 else:
-                    new_word = search[0] + word[i]
+                    new_word = search[0][0] + word[i]
                     if self.get_word(new_word) == True:
-                        self.board.words_on_board[search[1]][0] = new_word
+                        self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append(new_word)
                     else:
                         raise WordDoesntExists()
-
-            elif self.board.grid[f][c - 1].letter == None and self.board.grid[f][c + 1].letter != None:
+            elif celda_d != None and celda_i == None:
                 derecha.append((f , c + 1))
                 search = self.board.get_word_from_cell(derecha)
-                if self.board.words_on_board[search[1]][1] == "V":
-                    new_word = self.get_horizontal_word((f , c), word[i], "right")
+                if search[0][2] == "V":
+                    new_word = self.get_horizontal_word((f , c), word[i])
                     new_words.append(new_word)
                     for w in new_words:
                         if self.get_word(w) == False:
                             raise WordDoesntExists()
                 else:
-                    new_word = word[i] +search[0] 
+                    new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
-                        self.board.words_on_board[search[1]][0] = new_word
+                        self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append(new_word)
                     else:
                         raise WordDoesntExists()
+            else:
+                derecha.append((f , c + 1))
+                if search == None:
+                    search = self.board.get_word_from_cell(derecha)
+                for w in range(len(search)):
+                    if search[w][2] == "V":
+                        new_word = self.get_horizontal_word((f , c), word[i])
+                        new_words.append(new_word)
+                        for w in new_words:
+                            if self.get_word(w) == False:
+                                raise WordDoesntExists()
         return new_words
     
-    def get_horizontal_word(self, cell, letter, side):
+    def get_horizontal_word(self, cell, letter):
         k = 1
         new_word = letter
-        if side == "right":
-            while letter != None:
-                f = cell[0]
-                c = cell[1]
-                celda = self.board.grid[f][c + k].letter
-                if celda != None:
-                    letter = self.board.grid[f][c + k].letter.letter
-                    k += 1
-                    new_word += letter
-                else:
+        while letter != None:
+            f = cell[0]
+            c = cell[1]
+            if c + k <= 14 and c - k >= 0:
+                celda_1 = self.board.grid[f][c - k].letter
+                celda_2 = self.board.grid[f][c + k].letter
+                if celda_1 != None:
+                    letter_1 = celda_1.letter
+                    new_word = letter_1 + new_word
+                if celda_2 != None:
+                    letter_2 = celda_2.letter
+                    new_word += letter_2
+                else: 
                     break
-            return new_word
-        elif side == "left":
-            while letter != None:
-                f = cell[0]
-                c = cell[1]
-                celda = self.board.grid[f][c - k].letter
-                if celda != None:
-                    letter = self.board.grid[f][c - k].letter.letter
-                    k += 1
-                    new_word = letter + new_word
-                else:
-                    break
-            return new_word
+                k +=1
+        return new_word
+
+
 
 """    def playing(self, word, location, orientation):
         word = word.upper()

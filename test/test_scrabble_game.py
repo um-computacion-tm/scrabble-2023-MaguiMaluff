@@ -247,7 +247,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
         players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
-        scrabble_game.put_word("CASA", (7,7), "H") 
+        scrabble_game.put_word("CASA", (7,7), "H")
         word = "OLAS"
         location = (4, 11)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
@@ -329,8 +329,31 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
         scrabble_game.put_word("AS", (7,8), "V")
         scrabble_game.put_word("CA", (7,7), "V")
-        check = scrabble_game.get_horizontal_word((8,6), "M", "right")
+        check = scrabble_game.get_horizontal_word((8,6), "M",)
+        
         self.assertEqual(check, "MAS")
+    
+    def test_check_vertical_making_words_both_sides_fine(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1), Tiles("A", 1),  Tiles("A", 1), Tiles("N", 4)]
+        scrabble_game.put_word("ASA", (7,7), "V")
+        scrabble_game.put_word("ANA", (7,9), "V")
+        word = "LI"
+        location = (7,8)
+        check = scrabble_game.vertical_word_check_for_sum(word, location)
+        self.assertEqual(check, ['ALA', 'SIN', ])
+    
+    def test_check_vertical_making_words_both_sides_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1), Tiles("A", 1),  Tiles("A", 1), Tiles("N", 4)]
+        scrabble_game.put_word("ASA", (7,7), "V")
+        scrabble_game.put_word("ANA", (7,9), "V")
+        word = "LK"
+        location = (7,8)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.vertical_word_check_for_sum(word, location)
 
 
 
