@@ -71,14 +71,29 @@ class Board:
             return True
 
     def print_board(self):
-        for row in self.grid:
-            row_str = ""
-            for cell in row:
+        print("  ")
+        first_row = "       "
+        for i in range(15):
+            if i <= 9:
+                first_row += str(i) + "    "
+            else:
+                first_row += str(i) + "   "
+        print(first_row)
+        for row in range(len(self.grid)):
+            if row >= 10:
+                row_str = "   "
+            else:
+                row_str = "    "
+            for cell in self.grid[row]:
                 if cell.letter == None:
-                    row_str += str(cell.multiplier) + " "
+                    row_str += "[" + str(cell.multiplier)
+                    if cell.multiplier_type == "letter":
+                        row_str +=  "L] "
+                    else:
+                        row_str +=  "W] "
                 if cell.letter != None:
-                    row_str += str(cell.letter.letter) + " "
-            print(row_str)
+                    row_str += "  " + str(cell.letter.letter) + "  "
+            print(row, row_str)
 
     def is_empty(self):
         if self.grid[7][7].letter == None:

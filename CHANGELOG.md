@@ -2,6 +2,24 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-10-10
+
+### Change
+
+- function print_board
+
+2023-06-11
+
+### Added
+
+- horizontal_word_check_for_sum
+- Test for horizontal_word_check_for_sum
+
+### Deleted
+
+- playing from scrabble_game
+
+
 2023-05-10
 
 ### Change

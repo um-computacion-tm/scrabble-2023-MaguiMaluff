@@ -242,7 +242,9 @@ class TestCalculateWordValue(unittest.TestCase):
 
 
 class TestWordValidationMultipleWords(unittest.TestCase):
-    
+
+### test de chech vertical
+
     def test_check_vertical_adding_left(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
@@ -355,6 +357,120 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         with self.assertRaises(WordDoesntExists):
             scrabble_game.vertical_word_check_for_sum(word, location)
 
+### Test de check horizontal
+
+    def test_check_horizontal_adding_to_word_up_fine(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("I", 1), Tiles("N", 2), Tiles("T", 1), Tiles("A", 1)]
+        scrabble_game.put_word("CINTA", (7,7), "V")
+        word = "OSOS"
+        location = (12,4)
+        check = scrabble_game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, ['CINTAS'])
+
+
+    def test_check_horizontal_adding_to_word_up_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("I", 1), Tiles("N", 2), Tiles("T", 1), Tiles("A", 1)]
+        scrabble_game.put_word("CINTA", (7,7), "V")
+        word = "CANA"
+        location = (12,4)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.horizontal_word_check_for_sum(word, location)
+
+    def test_check_horizontal_adding_to_word_down_fine(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("O", 1), Tiles("S", 1), Tiles("N", 2), Tiles("T", 1), Tiles("A", 1)]
+        scrabble_game.put_word("OSA", (7,7), "V")
+        word = "CAN"
+        location = (6,7)
+        check = scrabble_game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, ['COSA'])
+    
+    def test_check_horizontal_adding_to_word_down_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("O", 1), Tiles("S", 1), Tiles("N", 2), Tiles("T", 1), Tiles("A", 1)]
+        scrabble_game.put_word("OSA", (7,7), "V")
+        word = "KIWI"
+        location = (6,7)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.horizontal_word_check_for_sum(word, location)
+
+    def test_check_horizontal_new_word_down_fine(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("O", 1), Tiles("L", 1), Tiles("N", 2), Tiles("T", 1), Tiles("A", 1)]
+        scrabble_game.put_word("OLA", (7,7), "H")
+        word = "NA"
+        location = (6,7)
+        check = scrabble_game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, ['NO', 'AL'])
+    
+    def test_check_horizontal_new_word_down_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("O", 1), Tiles("L", 1), Tiles("A", 1)]
+        scrabble_game.put_word("OLA", (7,7), "H")
+        word = "KA"
+        location = (6,7)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.horizontal_word_check_for_sum(word, location)
+    
+    def test_check_horizontal_new_word_up_fine(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[1]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("M", 1), Tiles("L", 1), Tiles("A", 1)]
+        scrabble_game.put_word("MAL", (7,7), "H")
+        word = "HILO"
+        location = (8,6)
+        check = scrabble_game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, ['MI', 'AL', 'LO'])
+    
+    def test_check_horizontal_new_word_up_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[0]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("M", 1), Tiles("L", 1), Tiles("A", 1)]
+        scrabble_game.put_word("MAL", (7,7), "H")
+        word = "HOLA"
+        location = (6,7)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.horizontal_word_check_for_sum(word, location)
+
+
+    def test_check_horizontal_new_word_both_sides(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[0]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("S", 1), Tiles("L", 1), Tiles("A", 1), Tiles("S", 1), Tiles("O", 1), Tiles("N", 1)]
+        scrabble_game.put_word("LAS", (7,7), "H")
+        scrabble_game.put_word("SON", (9,7), "H")
+        word = "AMAN"
+        location = (8,7)
+        check = scrabble_game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, ['LAS', 'AMO', 'SAN'])
+    
+    def test_check_horizontal_new_word_both_sides_wrong(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[0]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("S", 1), Tiles("L", 1), Tiles("A", 1), Tiles("S", 1), Tiles("O", 1), Tiles("N", 1)]
+        scrabble_game.put_word("LAS", (7,7), "H")
+        scrabble_game.put_word("SON", (9,7), "H")
+        word = "AMAN"
+        location = (8,6)
+        with self.assertRaises(WordDoesntExists):
+            scrabble_game.horizontal_word_check_for_sum(word, location)
+
+    def test_get_vertical_word(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        players_tiles = scrabble_game.current_player.tiles = [Tiles("S", 1), Tiles("A", 1), Tiles("L", 2), Tiles("M", 1)]
+        scrabble_game.put_word("SAL", (9,5), "H")
+        scrabble_game.put_word("M", (7,7), "H")
+        check = scrabble_game.get_vertical_word((8,7), "A",)
+        self.assertEqual(check, 'MAL')
 
 
 if __name__ == '__main__':
