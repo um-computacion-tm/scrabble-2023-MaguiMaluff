@@ -148,75 +148,53 @@ class ScrabbleGame:
                 izquierda.append((f , c - 1))
                 search = self.board.get_word_from_cell(izquierda)
                 if search[0][2] == "V":
-                    new_word = self.get_horizontal_word((f , c), word[i])
-                    new_words.append(new_word)
-                    for w in new_words:
-                        if self.get_word(w) == False:
-                            raise WordDoesntExists()
+                    new_word_list = self.get_horizontal_word((f , c), word[i])
+                    new_word = new_word_list[0]
+                    new_words.append(new_word_list)
+                    if self.get_word(new_word) == False:
+                        raise WordDoesntExists()
                 else:
                     new_word = search[0][0] + word[i]
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
-                        new_words.append(new_word)
+                        new_words.append([new_word, self.board.words_on_board[search[0][1]][2] , "V" ])
                     else:
                         raise WordDoesntExists()
             elif celda_d != None and celda_i == None:
                 derecha.append((f , c + 1))
                 search = self.board.get_word_from_cell(derecha)
                 if search[0][2] == "V":
-                    new_word = self.get_horizontal_word((f , c), word[i])
-                    new_words.append(new_word)
-                    for w in new_words:
-                        if self.get_word(w) == False:
-                            raise WordDoesntExists()
+                    new_word_list = self.get_horizontal_word((f , c), word[i])
+                    new_word = new_word_list[0]
+                    new_words.append(new_word_list)
+                    if self.get_word(new_word) == False:
+                        raise WordDoesntExists()
                 else:
                     new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
-                        new_words.append(new_word)
+                        new_words.append([new_word, (f , c), "H" ])
                     else:
                         raise WordDoesntExists()
-            else:
+            elif celda_d != None and celda_i != None:
                 derecha.append((f , c + 1))
                 if search == None:
                     search = self.board.get_word_from_cell(derecha)
                 for w in range(len(search)):
                     if search[w][2] == "V":
-                        new_word = self.get_horizontal_word((f , c), word[i])
-                        new_words.append(new_word)
-                        for w in new_words:
-                            if self.get_word(w) == False:
-                                raise WordDoesntExists()
+                        new_word_list = self.get_horizontal_word((f , c), word[i])
+                        new_word = new_word_list[0]
+                        new_words.append(new_word_list)
+                        if self.get_word(new_word) == False:
+                            raise WordDoesntExists()
         return new_words
-
-
-    
-    def get_horizontal_word(self, cell, letter):
-        k = 1
-        new_word = letter
-        while letter != None:
-            f = cell[0]
-            c = cell[1]
-            if c + k <= 14 and c - k >= 0:
-                celda_1 = self.board.grid[f][c - k].letter
-                celda_2 = self.board.grid[f][c + k].letter
-                if celda_1 != None:
-                    letter_1 = celda_1.letter
-                    new_word = letter_1 + new_word
-                if celda_2 != None:
-                    letter_2 = celda_2.letter
-                    new_word += letter_2
-                else: 
-                    break
-                k +=1
-        return new_word
 
     def horizontal_word_check_for_sum(self, word, location):
         up = []
         down = []
         new_words = []
         search = None
-        for i in range(len(word)): 
+        for i in range(len(word)):
             f = location[0]
             c = location[1] + i
             if f + 1 <= 14:
@@ -227,32 +205,32 @@ class ScrabbleGame:
                 up.append((f - 1, c))
                 search = self.board.get_word_from_cell(up)
                 if search[0][2] == "H":
-                    new_word = self.get_vertical_word((f , c), word[i])
-                    new_words.append(new_word)
-                    for w in new_words:
-                        if self.get_word(w) == False:
-                            raise WordDoesntExists(new_word)
+                    new_word_list = self.get_vertical_word((f , c), word[i])
+                    new_word = new_word_list[0]
+                    new_words.append(new_word_list)
+                    if self.get_word(new_word) == False:
+                        raise WordDoesntExists(new_word)
                 else:
                     new_word = search[0][0] + word[i] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
-                        new_words.append(new_word)
+                        new_words.append([new_word, self.board.words_on_board[search[0][1]][2], "V" ])
                     else:
                         raise WordDoesntExists(new_word)
             elif celda_d != None and celda_u == None:
                 down.append((f + 1 , c))
                 search = self.board.get_word_from_cell(down)
                 if search[0][2] == "H":
-                    new_word = self.get_vertical_word((f , c), word[i])
-                    new_words.append(new_word)
-                    for w in new_words:
-                        if self.get_word(w) == False:
-                            raise WordDoesntExists(new_word)
+                    new_word_list = self.get_vertical_word((f , c), word[i])
+                    new_word = new_word_list[0]
+                    new_words.append(new_word_list)
+                    if self.get_word(new_word) == False:
+                        raise WordDoesntExists(new_word)
                 else:
                     new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
-                        new_words.append(new_word)
+                        new_words.append([new_word, (f , c), "V" ])
                     else:
                         raise WordDoesntExists(new_word)
             elif celda_d != None and celda_u != None:
@@ -261,16 +239,17 @@ class ScrabbleGame:
                     search = self.board.get_word_from_cell(up)
                 for w in range(len(search)):
                     if search[w][2] == "H":
-                        new_word = self.get_vertical_word((f , c), word[i])
-                        new_words.append(new_word)
-                        for w in new_words:
-                            if self.get_word(w) == False:
-                                raise WordDoesntExists(new_word)
+                        new_word_list = self.get_vertical_word((f , c), word[i])
+                        new_word = new_word_list[0]
+                        new_words.append(new_word_list)
+                        if self.get_word(new_word) == False:
+                            raise WordDoesntExists(new_word)
         return new_words
 
     def get_vertical_word(self, cell, letter):
         k = 1
         new_word = letter
+        new_word_info = ["V"]
         while letter != None:
             f = cell[0]
             c = cell[1]
@@ -283,9 +262,39 @@ class ScrabbleGame:
                 if celda_2 != None:
                     letter_2 = celda_2.letter
                     new_word = letter_2 + new_word
+                    if (f - k) < (f - k + 1):
+                        new_word_info.insert(0, (f - k, c))
                 else: 
                     break
                 k +=1
-        return new_word
+        if len(new_word_info) < 2:
+            new_word_info.insert(0, cell)
+        new_word_info.insert(0,new_word)
+        return new_word_info
 
-        
+    
+    def get_horizontal_word(self, cell, letter):
+        k = 1
+        new_word = letter
+        new_word_info = ["H"]
+        while letter != None:
+            f = cell[0]
+            c = cell[1]
+            if c + k <= 14 and c - k >= 0:
+                celda_1 = self.board.grid[f][c - k].letter
+                celda_2 = self.board.grid[f][c + k].letter
+                if celda_1 != None:
+                    letter_1 = celda_1.letter
+                    new_word = letter_1 + new_word
+                    if (c - k) < (c - k + 1):
+                        new_word_info.insert(0, (f, c - k))
+                if celda_2 != None:
+                    letter_2 = celda_2.letter
+                    new_word += letter_2
+                else: 
+                    break
+                k +=1
+        if len(new_word_info) < 2:
+            new_word_info.insert(0, cell)
+        new_word_info.insert(0, new_word)      
+        return new_word_info   

@@ -2,6 +2,13 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-11-10
+
+### Change
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum
+- get_horizontal_word, get_vertical_word
+
 2023-10-10
 
 ### Change

@@ -253,7 +253,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "OLAS"
         location = (4, 11)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
-        self.assertEqual(check, ['CASAS'])
+        self.assertEqual(check, [['CASAS', (7,7), "V"]])
 
     def test_check_vertical_adding_right(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -263,7 +263,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "MAS"
         location = (7, 6)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
-        self.assertEqual(check, ['MASA'])
+        self.assertEqual(check, [['MASA', (7,6), "H"]])
 
     def test_check_vertical_adding_right_new_word_doesnt_exist(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -293,7 +293,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "MA"
         location = (8,6)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
-        self.assertEqual(check, ['MA', 'AS'])
+        self.assertEqual(check, [['MA', (8,6), "H" ], ['AS', (9,6), "H"]])
 
     def test_check_vertical_making_words_right_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -313,7 +313,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "LI"
         location = (7,8)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
-        self.assertEqual(check, ['AL', 'SI'])
+        self.assertEqual(check, [['AL', (7,7), "H"], ['SI', (8,7), "H"]])
 
     def test_check_vertical_making_words_left_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -324,7 +324,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         location = (8,8)
         with self.assertRaises(WordDoesntExists):
             scrabble_game.vertical_word_check_for_sum(word, location)
-
+    
     def test_get_horizontal_word(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
@@ -332,8 +332,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         scrabble_game.put_word("AS", (7,8), "V")
         scrabble_game.put_word("CA", (7,7), "V")
         check = scrabble_game.get_horizontal_word((8,6), "M",)
-        
-        self.assertEqual(check, "MAS")
+        self.assertEqual(check, ["MAS", (8,6), "H"])
     
     def test_check_vertical_making_words_both_sides_fine(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -344,7 +343,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "LI"
         location = (7,8)
         check = scrabble_game.vertical_word_check_for_sum(word, location)
-        self.assertEqual(check, ['ALA', 'SIN', ])
+        self.assertEqual(check, [['ALA', (7,7), "H"], ['SIN', (8,7), "H"], ])
     
     def test_check_vertical_making_words_both_sides_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -367,7 +366,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "OSOS"
         location = (12,4)
         check = scrabble_game.horizontal_word_check_for_sum(word, location)
-        self.assertEqual(check, ['CINTAS'])
+        self.assertEqual(check, [['CINTAS', (7,7), "V"]])
 
 
     def test_check_horizontal_adding_to_word_up_wrong(self):
@@ -388,7 +387,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "CAN"
         location = (6,7)
         check = scrabble_game.horizontal_word_check_for_sum(word, location)
-        self.assertEqual(check, ['COSA'])
+        self.assertEqual(check, [['COSA', (6,7), "V"]])
     
     def test_check_horizontal_adding_to_word_down_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -408,7 +407,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "NA"
         location = (6,7)
         check = scrabble_game.horizontal_word_check_for_sum(word, location)
-        self.assertEqual(check, ['NO', 'AL'])
+        self.assertEqual(check, [['NO', (6,7), "V"], ['AL', (6,8), "V"]])
     
     def test_check_horizontal_new_word_down_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -428,7 +427,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "HILO"
         location = (8,6)
         check = scrabble_game.horizontal_word_check_for_sum(word, location)
-        self.assertEqual(check, ['MI', 'AL', 'LO'])
+        self.assertEqual(check, [['MI', (7,7), "V"], ['AL', (7,8), "V"], ['LO', (7,9), "V"]])
     
     def test_check_horizontal_new_word_up_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -450,7 +449,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         word = "AMAN"
         location = (8,7)
         check = scrabble_game.horizontal_word_check_for_sum(word, location)
-        self.assertEqual(check, ['LAS', 'AMO', 'SAN'])
+        self.assertEqual(check, [['LAS', (7,7), "V"], ['AMO', (7,8), "V"], ['SAN', (7,9), "V"]])
     
     def test_check_horizontal_new_word_both_sides_wrong(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -470,7 +469,7 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         scrabble_game.put_word("SAL", (9,5), "H")
         scrabble_game.put_word("M", (7,7), "H")
         check = scrabble_game.get_vertical_word((8,7), "A",)
-        self.assertEqual(check, 'MAL')
+        self.assertEqual(check, ['MAL', (7,7), "V"])
 
 
 if __name__ == '__main__':
