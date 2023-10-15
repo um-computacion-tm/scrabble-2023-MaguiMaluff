@@ -2,7 +2,19 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
-2023-1-10
+2023-14-10s
+
+### Added
+
+- To scrabble_game, functions, get_word, get_location, get_orientation, add_word and get_task
+
+### Change
+
+- scrabble_main
+
+- calculate_word_value
+
+2023-12-10
 
 ### Change
 

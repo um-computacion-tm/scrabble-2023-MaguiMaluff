@@ -1,32 +1,25 @@
 #!/usr/bin/env python3.10
+from scrabble_get import GetInfo
 from game.scrabble_game import ScrabbleGame
-from game.models import Player, Tiles, Cell
-from game.board import Board
 
 
 def main():
     while True:
-        try:
-            players_count = int(input('Cantidad de jugadores:'))
-            if players_count < 1 or players_count > 4:
-                raise ValueError
-            break
-        except ValueError:
-            print("Valor Invalido")
-    
+            try:
+                players_count = int(input('Cantidad de jugadores:'))
+                if players_count < 1 or players_count > 4:
+                    raise ValueError
+                break
+            except ValueError:
+                print("Valor Invalido")
     game = ScrabbleGame(players_count)
-    while(game.playing()):
-        task = input("Para agregar palabra ingrese A",
-                     "Para cambiar letras ingrese C",
-                     "Para pasar de turno ingrese P")
-        task.upper()
+    while(game.is_playing()):
+        task = game.get_task()
         if task == "A":
-            word = input("Ingrese Palabra:")
-            location_i = input("Ingrese X: ")
-            location_j = input("Ingrese Y: ")
-            location = (location_i, location_j)
-            orientation = input ("Orientacion V o H: ")
-            game.playing(word, location, orientation)
+            word = game.get_word()
+            location = game.get_location()
+            orientation = game.get_orientation()
+            game.add_word(word, location, orientation)
         elif task == "C":
             pass
         elif task == "P":

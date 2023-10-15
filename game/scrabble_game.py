@@ -8,6 +8,12 @@ class DictionaryConnectionError(Exception):
 class WordDoesntExists(Exception):
     pass
 
+class IsNotNumber(Exception):
+    pass
+
+class OutOfRange(Exception):
+    pass
+
 dle.set_log_level(log_level='CRITICAL')
 
 class ScrabbleGame:
@@ -298,3 +304,74 @@ class ScrabbleGame:
             new_word_info.insert(0, cell)
         new_word_info.insert(0, new_word)      
         return new_word_info   
+
+    def get_task(self):
+        task = input("Para agregar palabra ingrese A",
+                     "Para cambiar letras ingrese C",
+                     "Para pasar de turno ingrese P")
+        task.upper()
+        return task
+    
+    def get_word(self):
+        while True:
+            try:
+                word = input("Ingrese Palabra:")
+                for i in word:
+                    if not i.isalpha():
+                        raise ValueError
+                    else:
+                        return word
+            except ValueError:
+                print("Palabra invalida")
+    
+    def get_location(self):
+        while True:
+            try:
+                location_i = input("Ingrese X: ")
+                location_j = input("Ingrese Y: ")
+                if not location_i.isnumeric() or not location_j.isnumeric():
+                    raise IsNotNumber()
+                elif location_i > 14 or location_i < 0:
+                    raise OutOfRange()
+                elif location_j > 14 or location_j < 0:
+                    raise OutOfRange()
+                else:
+                    location = (location_i, location_j)
+                    return location
+            except Exception as e:
+                print(e)
+                
+    def get_orientation():
+        while True:
+            try:
+                orientation = input ("Orientacion V o H: ")
+                if orientation != "V" or orientation != "H":
+                    raise ValueError
+                return orientation
+            except ValueError:
+                print("Ingrese V o H")
+
+    def add_word(self, word, location, orientation):
+        try:
+            first_validation = self.validate_word(word, location, orientation)
+            second_validation = self.board.validate_word_place_board(word, location, orientation)
+        except Exception as e:
+            print(e)
+        
+        self.put_word(word, location, orientation)
+        
+        if orientation == "V":
+            new_words = self.vertical_word_check_for_sum(word, location)
+        elif orientation == "H":
+            new_words = self.horizontal_word_check_for_sum(word, location)
+        
+        self.current_player.point += self.calculate_word_value(word, location, orientation)
+        
+        if new_words != None:
+            for wordd in new_words:
+                new_word_word = wordd[0]
+                new_word_location = wordd[1]
+                new_word_orientation = wordd[2]
+                point = self.calculate_word_value(new_word_word, new_word_location, new_word_orientation)
+                self.current_player.points += point
+
