@@ -50,6 +50,11 @@ class Player:
         self.bag_tiles = bag_tiles
         self.points = 0
 
+    def take_to_seven(self):
+        largo = len(self.tiles)
+        to_take = 7 - largo
+        self.bag_tiles.take(to_take)
+
     def change_tiles(self, tiles):
         lost_tiles = []
         indices_to_remove = []

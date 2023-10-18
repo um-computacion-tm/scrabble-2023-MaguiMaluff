@@ -14,6 +14,13 @@ class IsNotNumber(Exception):
 class OutOfRange(Exception):
     pass
 
+class InvalidWord(Exception):
+    pass
+
+class OutOfTiles(Exception):
+    pass
+
+
 dle.set_log_level(log_level='CRITICAL')
 
 class ScrabbleGame:
@@ -24,6 +31,7 @@ class ScrabbleGame:
         self.players = []
         self.current_player = current_player
         self.cells_values = {}
+        self.playing = True
         for id in range(players_count):
             self.players.append(Player(id = id, bag_tiles = self.bag_tiles))
 
@@ -41,11 +49,11 @@ class ScrabbleGame:
 
     def validate_word(self, word, location, orientation):
         if self.board.validate_word_inside_board(word, location, orientation) == False:
-            return False
+            raise OutOfRange()
         elif self.current_player.player_tiles(word) == False:
-            return False
+            raise OutOfTiles()
         elif self.get_word == False:
-            return False
+            raise InvalidWord()
         return True
 
 
@@ -81,6 +89,11 @@ class ScrabbleGame:
                 return tiles
         return None
 
+    def player_tiles_list(self):
+        letras = []
+        for i in range(len(self.current_player.tiles)):
+            letras.append(self.current_player.tiles[i].letter)
+        return letras
 
     def calculate_word_value(self, word, location, orientation):
         f = location[0]
@@ -304,16 +317,17 @@ class ScrabbleGame:
         return new_word_info   
 
     def get_task(self):
-        task = input("Para agregar palabra ingrese A",
-                     "Para cambiar letras ingrese C",
+        task = input("Para agregar palabra ingrese A"
+                     "Para cambiar letras ingrese C"
                      "Para pasar de turno ingrese P")
-        task.upper()
+        task = task.upper()
         return task
     
     def get_word_main(self):
         while True:
             try:
                 word = input("Ingrese Palabra:")
+                word = word.upper()
                 for i in word:
                     if not i.isalpha():
                         raise ValueError
@@ -329,7 +343,10 @@ class ScrabbleGame:
                 location_j = input("Ingrese Y: ")
                 if not location_i.isnumeric() or not location_j.isnumeric():
                     raise IsNotNumber()
-                elif location_i > 14 or location_i < 0:
+                elif location_i.isnumeric() and location_j.isnumeric():
+                    location_j = int(location_j)
+                    location_i = int(location_i)
+                if location_i > 14 or location_i < 0:
                     raise OutOfRange()
                 elif location_j > 14 or location_j < 0:
                     raise OutOfRange()
@@ -339,15 +356,25 @@ class ScrabbleGame:
             except Exception as e:
                 print(e)
                 
-    def get_orientation():
+    def get_orientation(self):
         while True:
             try:
                 orientation = input ("Orientacion V o H: ")
-                if orientation != "V" or orientation != "H":
+                orientation = orientation.upper()
+                ori = ["V", "H"]
+                if orientation not in ori:
                     raise ValueError
                 return orientation
             except ValueError:
                 print("Ingrese V o H")
+    
+    def printbb(self):
+        self.board.print_board()
+
+    def get_player_info(self):
+        print(self.current_player.points)
+        print(self.player_tiles_list())
+
 
     def add_word(self, word, location, orientation):
         try:
@@ -357,14 +384,14 @@ class ScrabbleGame:
             print(e)
         
         self.put_word(word, location, orientation)
-        
         if orientation == "V":
             new_words = self.vertical_word_check_for_sum(word, location)
         elif orientation == "H":
             new_words = self.horizontal_word_check_for_sum(word, location)
-        
-        self.current_player.point += self.calculate_word_value(word, location, orientation)
-        
+
+        self.put_word(word, location, orientation)
+        self.current_player.points += self.calculate_word_value(word, location, orientation)
+       
         if new_words != None:
             for wordd in new_words:
                 new_word_word = wordd[0]
@@ -372,4 +399,8 @@ class ScrabbleGame:
                 new_word_orientation = wordd[2]
                 point = self.calculate_word_value(new_word_word, new_word_location, new_word_orientation)
                 self.current_player.points += point
+        
+        self.current_player.take_to_seven()
 
+    def is_playing(self):
+        return self.playing

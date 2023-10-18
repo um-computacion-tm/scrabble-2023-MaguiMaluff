@@ -7,10 +7,14 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - File test_scrabble_game_for_main
+- Exceptions to validate_word
+- Added take_to_7, player_tiles_list, printbb, get_player_info
 
 ### Fixed
 
 - Fixed calculated_word_value and tests
+- add_word, get_word_main, get_orientation
+
 2023-14-10
 
 ### Added

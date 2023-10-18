@@ -1,7 +1,7 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Cell
 from game.board import Board
-from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError
+from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles
 from unittest.mock import patch
 
 class TestScrabbleGame(unittest.TestCase):
@@ -48,8 +48,10 @@ class TestScrabbleGame(unittest.TestCase):
         word = "HOLA"
         location = (5, 4)
         orientation = "H"
-        validation = scrabble_game.validate_word(word, location, orientation)
-        self.assertEqual(validation, False)
+        with self.assertRaises(OutOfTiles):
+            scrabble_game.validate_word(word, location, orientation)
+
+
 
     def test_word_validation_out_of_range(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -58,18 +60,8 @@ class TestScrabbleGame(unittest.TestCase):
         word = "HOLA"
         location = (14, 4)
         orientation = "H"
-        validation = scrabble_game.validate_word(word, location, orientation)
-        self.assertEqual(validation, False)
-
-    def test_word_validation_out_of_range(self):
-        scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
-        word = "HOLA"
-        location = (14, 4)
-        orientation = "H"
-        validation = scrabble_game.validate_word(word, location, orientation)
-        self.assertEqual(validation, False)
+        with self.assertRaises(OutOfRange):
+            scrabble_game.validate_word(word, location, orientation)
     
     def test_get_word_dictionary(self):
         scrabble_game = ScrabbleGame(players_count=3)

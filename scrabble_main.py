@@ -13,10 +13,13 @@ def main():
                 print("Valor Invalido")
     game = ScrabbleGame(players_count)
     while(game.is_playing()):
+        next = game.next_turn()
         task = game.get_task()
+        game.printbb()
+        game.get_player_info()
         if task == "A":
             try:
-                word = game.get_word()
+                word = game.get_word_main()
                 location = game.get_location()
                 orientation = game.get_orientation()
                 game.add_word(word, location, orientation)
