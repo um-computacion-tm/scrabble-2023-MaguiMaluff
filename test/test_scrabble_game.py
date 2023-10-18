@@ -131,6 +131,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = "CASA"
         orientation = "V"
         location = (7,7)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 5)
 
@@ -141,6 +142,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = ""
         orientation = "V"
         location = (7,7)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 0)
 
@@ -151,6 +153,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = "CASA"
         orientation = "H"
         location = (8,7)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 6)
 
@@ -161,6 +164,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = "CASA"
         orientation = "H"
         location = (1,1)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 10)
 
@@ -171,6 +175,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = "CASA"
         orientation = "V"
         location = (0,0)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 18)
 
@@ -181,6 +186,7 @@ class TestCalculateWordValue(unittest.TestCase):
         word = "MAYONESA"
         orientation = "V"
         location = (0,0)
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 126)
 
@@ -192,6 +198,7 @@ class TestCalculateWordValue(unittest.TestCase):
         orientation = "V"
         location = (8,7)
         scrabble_game.board.grid[11][7].state = False
+        scrabble_game.put_word(word, location, orientation)
         value = scrabble_game.calculate_word_value(word, location, orientation)
         self.assertEqual(value, 5)
     

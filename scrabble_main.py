@@ -1,5 +1,4 @@
 #!/usr/bin/env python3.10
-from scrabble_get import GetInfo
 from game.scrabble_game import ScrabbleGame
 
 
@@ -16,10 +15,13 @@ def main():
     while(game.is_playing()):
         task = game.get_task()
         if task == "A":
-            word = game.get_word()
-            location = game.get_location()
-            orientation = game.get_orientation()
-            game.add_word(word, location, orientation)
+            try:
+                word = game.get_word()
+                location = game.get_location()
+                orientation = game.get_orientation()
+                game.add_word(word, location, orientation)
+            except Exception as e:
+                print(e)
         elif task == "C":
             pass
         elif task == "P":

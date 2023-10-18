@@ -88,8 +88,6 @@ class ScrabbleGame:
         counter = 0
         word_multiplier = 1
 
-        self.put_word(word, location, orientation)
-
         for letrita in range(len(word)):
             if orientation == "H":
                 cell = self.board.grid[f][c + letrita]
@@ -312,7 +310,7 @@ class ScrabbleGame:
         task.upper()
         return task
     
-    def get_word(self):
+    def get_word_main(self):
         while True:
             try:
                 word = input("Ingrese Palabra:")

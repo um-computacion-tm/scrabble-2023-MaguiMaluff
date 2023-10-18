@@ -71,6 +71,7 @@ class TestPlayer(unittest.TestCase):
         bag_tiles = BagTiles()
         scrabble_game.current_player = Player(1, bag_tiles)
         scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        scrabble_game.put_word("CASA", (7,7), "V")
         scrabble_game.calculate_word_value("CASA", (7,7), "V")
         self.assertEqual(scrabble_game.current_player.points, 5,)
     

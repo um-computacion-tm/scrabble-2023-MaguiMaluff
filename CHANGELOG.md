@@ -2,7 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
-2023-14-10s
+2023-18-10
+
+### Added
+
+- File test_scrabble_game_for_main
+
+### Fixed
+
+- Fixed calculated_word_value and tests
+2023-14-10
 
 ### Added
 
