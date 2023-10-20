@@ -20,6 +20,8 @@ class InvalidWord(Exception):
 class OutOfTiles(Exception):
     pass
 
+class InvalidTask(Exception):
+    pass
 
 dle.set_log_level(log_level='CRITICAL')
 
@@ -48,13 +50,14 @@ class ScrabbleGame:
 
 
     def validate_word(self, word, location, orientation):
-        if self.board.validate_word_inside_board(word, location, orientation) == False:
+        if not self.board.validate_word_inside_board(word, location, orientation):
             raise OutOfRange()
-        elif self.current_player.player_tiles(word) == False:
+        elif not self.current_player.player_tiles(word):
             raise OutOfTiles()
-        elif self.get_word == False:
+        elif not self.get_word(word):
             raise InvalidWord()
-        return True
+        else:
+            return True
 
 
     def get_word(self, word):
@@ -69,18 +72,20 @@ class ScrabbleGame:
 
     def put_word(self, word, location, orientation):
         players_tiles = self.current_player.tiles
-
-        for i in range(len(word)):
-            f = location[0]
-            c = location[1]
-            if orientation == "H":
-                cell = self.board.grid[f][c + i]
-            elif orientation == "V":
-                cell = self.board.grid[f + i][c]
-            tile = self.get_tile_from_player(players_tiles, word[i])
-            if tile != None:
-                cell.letter = tile
-                self.current_player.tiles.remove(tile)
+        if players_tiles == False:
+            raise OutOfTiles()
+        else:
+            for i in range(len(word)):
+                f = location[0]
+                c = location[1]
+                if orientation == "H":
+                    cell = self.board.grid[f][c + i]
+                elif orientation == "V":
+                    cell = self.board.grid[f + i][c]
+                tile = self.get_tile_from_player(players_tiles, word[i])
+                if tile != None:
+                    cell.letter = tile
+                    self.current_player.tiles.remove(tile)
         self.board.list_of_words(word, location, orientation)    
 
     def get_tile_from_player(self, player_tiles, letter):
@@ -317,11 +322,16 @@ class ScrabbleGame:
         return new_word_info   
 
     def get_task(self):
-        task = input("Para agregar palabra ingrese A"
-                     "Para cambiar letras ingrese C"
-                     "Para pasar de turno ingrese P")
-        task = task.upper()
-        return task
+        while True:
+            try:
+                task = input("Para agregar palabra ingrese A, Para cambiar letras ingrese C, Para pasar de turno ingrese P")
+                task = task.upper()
+                if task not in ["A", "C", "P"]:
+                    raise InvalidTask()
+                else:
+                    return task
+            except Exception as e:
+                print(e)
     
     def get_word_main(self):
         while True:
@@ -378,8 +388,12 @@ class ScrabbleGame:
 
     def add_word(self, word, location, orientation):
         try:
-            first_validation = self.validate_word(word, location, orientation)
-            second_validation = self.board.validate_word_place_board(word, location, orientation)
+            e = self.validate_word(word, location, orientation)
+        except Exception as e:
+            print(e)
+
+    """        try:
+            self.board.validate_word_place_board(word, location, orientation)
         except Exception as e:
             print(e)
         
@@ -401,6 +415,7 @@ class ScrabbleGame:
                 self.current_player.points += point
         
         self.current_player.take_to_seven()
+"""
 
     def is_playing(self):
         return self.playing

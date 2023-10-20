@@ -51,8 +51,6 @@ class TestScrabbleGame(unittest.TestCase):
         with self.assertRaises(OutOfTiles):
             scrabble_game.validate_word(word, location, orientation)
 
-
-
     def test_word_validation_out_of_range(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]

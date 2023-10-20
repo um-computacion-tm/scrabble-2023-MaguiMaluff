@@ -13,10 +13,10 @@ def main():
                 print("Valor Invalido")
     game = ScrabbleGame(players_count)
     while(game.is_playing()):
-        next = game.next_turn()
-        task = game.get_task()
+        game.next_turn()
         game.printbb()
         game.get_player_info()
+        task = game.get_task()
         if task == "A":
             try:
                 word = game.get_word_main()
@@ -28,7 +28,8 @@ def main():
         elif task == "C":
             pass
         elif task == "P":
-            game.next_turn()
+            pass
+        
 
 if __name__ == '__main__':
     main()

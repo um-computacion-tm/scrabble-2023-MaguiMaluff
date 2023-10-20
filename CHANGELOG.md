@@ -2,6 +2,11 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-20-10
+
+- Tried to fix add_word
+
+
 2023-18-10
 
 ### Added
