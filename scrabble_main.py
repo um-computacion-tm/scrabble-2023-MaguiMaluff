@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.10
 from game.scrabble_game import ScrabbleGame
+from back import Back
 
 
 def main():
@@ -12,19 +13,25 @@ def main():
             except ValueError:
                 print("Valor Invalido")
     game = ScrabbleGame(players_count)
+    back = Back()
     while(game.is_playing()):
         game.next_turn()
         game.printbb()
         game.get_player_info()
-        task = game.get_task()
+        task = back.get_task()
         if task == "A":
-            try:
-                word = game.get_word_main()
-                location = game.get_location()
-                orientation = game.get_orientation()
-                game.add_word(word, location, orientation)
-            except Exception as e:
-                print(e)
+            while True:
+                try:
+                    word = back.get_word_main()
+                    location = back.get_location()
+                    orientation = back.get_orientation()
+                    done = game.add_word(word, location, orientation)
+                    if done == True:
+                        print(done, "Next Turn")
+                        False
+                        break
+                except Exception as e:
+                    print(e)
         elif task == "C":
             pass
         elif task == "P":

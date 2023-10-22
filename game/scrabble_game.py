@@ -23,6 +23,9 @@ class OutOfTiles(Exception):
 class InvalidTask(Exception):
     pass
 
+class InvalidPlace(Exception):
+    pass
+
 dle.set_log_level(log_level='CRITICAL')
 
 class ScrabbleGame:
@@ -51,11 +54,11 @@ class ScrabbleGame:
 
     def validate_word(self, word, location, orientation):
         if not self.board.validate_word_inside_board(word, location, orientation):
-            raise OutOfRange()
+            raise OutOfRange("Palabra fuera de rango")
         elif not self.current_player.player_tiles(word):
-            raise OutOfTiles()
+            raise OutOfTiles("No tiene las fichas necesarias")
         elif not self.get_word(word):
-            raise InvalidWord()
+            raise InvalidWord("La palabra no es valida")
         else:
             return True
 
@@ -94,7 +97,7 @@ class ScrabbleGame:
                 return tiles
         return None
 
-    def player_tiles_list(self):
+    def player_tiles_list(self): ###TESTEAR
         letras = []
         for i in range(len(self.current_player.tiles)):
             letras.append(self.current_player.tiles[i].letter)
@@ -231,7 +234,7 @@ class ScrabbleGame:
                     new_word = new_word_list[0]
                     new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists(new_word)
+                        raise WordDoesntExists()
                 else:
                     new_word = search[0][0] + word[i] 
                     if self.get_word(new_word) == True:
@@ -247,14 +250,14 @@ class ScrabbleGame:
                     new_word = new_word_list[0]
                     new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists(new_word)
+                        raise WordDoesntExists()
                 else:
                     new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, (f , c), "V" ])
                     else:
-                        raise WordDoesntExists(new_word)
+                        raise WordDoesntExists()
             elif celda_d != None and celda_u != None:
                 up.append((f + 1, c))
                 if search == None:
@@ -265,7 +268,7 @@ class ScrabbleGame:
                         new_word = new_word_list[0]
                         new_words.append(new_word_list)
                         if self.get_word(new_word) == False:
-                            raise WordDoesntExists(new_word)
+                            raise WordDoesntExists()
         return new_words
 
     def get_vertical_word(self, cell, letter):
@@ -321,62 +324,8 @@ class ScrabbleGame:
         new_word_info.insert(0, new_word)      
         return new_word_info   
 
-    def get_task(self):
-        while True:
-            try:
-                task = input("Para agregar palabra ingrese A, Para cambiar letras ingrese C, Para pasar de turno ingrese P")
-                task = task.upper()
-                if task not in ["A", "C", "P"]:
-                    raise InvalidTask()
-                else:
-                    return task
-            except Exception as e:
-                print(e)
-    
-    def get_word_main(self):
-        while True:
-            try:
-                word = input("Ingrese Palabra:")
-                word = word.upper()
-                for i in word:
-                    if not i.isalpha():
-                        raise ValueError
-                    else:
-                        return word
-            except ValueError:
-                print("Palabra invalida")
-    
-    def get_location(self):
-        while True:
-            try:
-                location_i = input("Ingrese X: ")
-                location_j = input("Ingrese Y: ")
-                if not location_i.isnumeric() or not location_j.isnumeric():
-                    raise IsNotNumber()
-                elif location_i.isnumeric() and location_j.isnumeric():
-                    location_j = int(location_j)
-                    location_i = int(location_i)
-                if location_i > 14 or location_i < 0:
-                    raise OutOfRange()
-                elif location_j > 14 or location_j < 0:
-                    raise OutOfRange()
-                else:
-                    location = (location_i, location_j)
-                    return location
-            except Exception as e:
-                print(e)
-                
-    def get_orientation(self):
-        while True:
-            try:
-                orientation = input ("Orientacion V o H: ")
-                orientation = orientation.upper()
-                ori = ["V", "H"]
-                if orientation not in ori:
-                    raise ValueError
-                return orientation
-            except ValueError:
-                print("Ingrese V o H")
+    def is_playing(self):
+        return self.playing
     
     def printbb(self):
         self.board.print_board()
@@ -385,37 +334,21 @@ class ScrabbleGame:
         print(self.current_player.points)
         print(self.player_tiles_list())
 
-
     def add_word(self, word, location, orientation):
         try:
-            e = self.validate_word(word, location, orientation)
-        except Exception as e:
-            print(e)
-
-    """        try:
-            self.board.validate_word_place_board(word, location, orientation)
+            self.validate_word(word, location, orientation)
+            second_validation = self.board.validate_word_inside_board(word, location, orientation)
+            if second_validation == False:
+                raise InvalidPlace("Su palabra debe agregar o pasar por otra palabra. Si es el primer turno, debe pasar por la celda (7 , 7)")
+                
+            """if orientation == "H":
+                third_validation = self.horizontal_word_check_for_sum(word, location)
+            elif orientation == "V":
+                third_validation = self.vertical_word_check_for_sum(word, location)"""
+                
+            self.put_word(word, location, orientation)
+            return True
         except Exception as e:
             print(e)
         
-        self.put_word(word, location, orientation)
-        if orientation == "V":
-            new_words = self.vertical_word_check_for_sum(word, location)
-        elif orientation == "H":
-            new_words = self.horizontal_word_check_for_sum(word, location)
-
-        self.put_word(word, location, orientation)
-        self.current_player.points += self.calculate_word_value(word, location, orientation)
-       
-        if new_words != None:
-            for wordd in new_words:
-                new_word_word = wordd[0]
-                new_word_location = wordd[1]
-                new_word_orientation = wordd[2]
-                point = self.calculate_word_value(new_word_word, new_word_location, new_word_orientation)
-                self.current_player.points += point
-        
-        self.current_player.take_to_seven()
-"""
-
-    def is_playing(self):
-        return self.playing
+    

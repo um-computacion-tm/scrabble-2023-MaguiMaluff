@@ -56,7 +56,7 @@ class Board:
         word_list = []
         for letra in word:
             word_list.append(letra)
-        
+
         i = location[0]
         j = location[1]
 
@@ -72,7 +72,7 @@ class Board:
 
     def print_board(self):
         print("  ")
-        first_row = "       "
+        first_row = "x\y    "
         for i in range(15):
             if i <= 9:
                 first_row += str(i) + "    "

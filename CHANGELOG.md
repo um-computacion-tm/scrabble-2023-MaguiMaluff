@@ -2,6 +2,20 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-22-10
+
+### Added
+
+- File back.py, and moved get_word_main, get_location, get_orientation and get_task
+
+- test_back.py
+
+### Changed 
+
+- add_word
+- main
+- board, print_board
+
 2023-20-10
 
 - Tried to fix add_word
@@ -24,7 +38,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- To scrabble_game, functions, get_word, get_location, get_orientation, add_word and get_task
+- To scrabble_game, functions, get_word_main, get_location, get_orientation, add_word and get_task
 
 ### Change
 
