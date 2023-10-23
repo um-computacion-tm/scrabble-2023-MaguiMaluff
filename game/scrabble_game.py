@@ -165,43 +165,46 @@ class ScrabbleGame:
         for i in range(len(word)): 
             f = location[0] + i
             c = location[1]
+            celda_actual = self.board.grid[f][c].letter
             if c - 1 >= 0:
                 celda_i = self.board.grid[f][c - 1].letter
             if c + 1 <= 14:
                 celda_d = self.board.grid[f][c + 1].letter
-            if  celda_i != None and celda_d == None:
+            if  celda_i != None and celda_d == None and celda_actual == None:
                 izquierda.append((f , c - 1))
                 search = self.board.get_word_from_cell(izquierda)
                 if search[0][2] == "V":
                     new_word_list = self.get_horizontal_word((f , c), word[i])
                     new_word = new_word_list[0]
-                    new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists()
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                    else:
+                        new_words.append(new_word_list)
                 else:
                     new_word = search[0][0] + word[i]
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, self.board.words_on_board[search[0][1]][2] , "V" ])
                     else:
-                        raise WordDoesntExists()
-            elif celda_d != None and celda_i == None:
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+            elif celda_d != None and celda_i == None and celda_actual == None:
                 derecha.append((f , c + 1))
                 search = self.board.get_word_from_cell(derecha)
                 if search[0][2] == "V":
                     new_word_list = self.get_horizontal_word((f , c), word[i])
                     new_word = new_word_list[0]
-                    new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists()
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                    else:
+                        new_words.append(new_word_list)
                 else:
                     new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, (f , c), "H" ])
                     else:
-                        raise WordDoesntExists()
-            elif celda_d != None and celda_i != None:
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+            elif celda_d != None and celda_i != None and celda_actual == None:
                 derecha.append((f , c + 1))
                 if search == None:
                     search = self.board.get_word_from_cell(derecha)
@@ -209,9 +212,11 @@ class ScrabbleGame:
                     if search[w][2] == "V":
                         new_word_list = self.get_horizontal_word((f , c), word[i])
                         new_word = new_word_list[0]
-                        new_words.append(new_word_list)
                         if self.get_word(new_word) == False:
-                            raise WordDoesntExists()
+                            raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        else:
+                            new_words.append(new_word_list)
+                    
         return new_words
 
     def horizontal_word_check_for_sum(self, word, location):
@@ -222,43 +227,46 @@ class ScrabbleGame:
         for i in range(len(word)):
             f = location[0]
             c = location[1] + i
+            celda_actual = self.board.grid[f][c].letter
             if f + 1 <= 14:
                 celda_u = self.board.grid[f - 1][c].letter
             if f - 1 >= 0:
                 celda_d = self.board.grid[f + 1][c].letter
-            if  celda_u != None and celda_d == None:
+            if  celda_u != None and celda_d == None and celda_actual == None:
                 up.append((f - 1, c))
                 search = self.board.get_word_from_cell(up)
                 if search[0][2] == "H":
                     new_word_list = self.get_vertical_word((f , c), word[i])
                     new_word = new_word_list[0]
-                    new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists()
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                    else:
+                        new_words.append(new_word_list)
                 else:
                     new_word = search[0][0] + word[i] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, self.board.words_on_board[search[0][1]][2], "V" ])
                     else:
-                        raise WordDoesntExists(new_word)
-            elif celda_d != None and celda_u == None:
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+            elif celda_d != None and celda_u == None and celda_actual == None:
                 down.append((f + 1 , c))
                 search = self.board.get_word_from_cell(down)
                 if search[0][2] == "H":
                     new_word_list = self.get_vertical_word((f , c), word[i])
                     new_word = new_word_list[0]
-                    new_words.append(new_word_list)
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists()
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                    else:
+                            new_words.append(new_word_list)
                 else:
                     new_word = word[i] + search[0][0] 
                     if self.get_word(new_word) == True:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, (f , c), "V" ])
                     else:
-                        raise WordDoesntExists()
-            elif celda_d != None and celda_u != None:
+                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+            elif celda_d != None and celda_u != None and celda_actual == None:
                 up.append((f + 1, c))
                 if search == None:
                     search = self.board.get_word_from_cell(up)
@@ -266,9 +274,10 @@ class ScrabbleGame:
                     if search[w][2] == "H":
                         new_word_list = self.get_vertical_word((f , c), word[i])
                         new_word = new_word_list[0]
-                        new_words.append(new_word_list)
                         if self.get_word(new_word) == False:
-                            raise WordDoesntExists()
+                            raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        else:
+                            new_words.append(new_word_list)
         return new_words
 
     def get_vertical_word(self, cell, letter):
@@ -324,6 +333,29 @@ class ScrabbleGame:
         new_word_info.insert(0, new_word)      
         return new_word_info   
 
+
+    def validate_word_place_board(self, word, location, orientation):
+        f = location[0]
+        c = location[1]
+        good = self.board.is_empty()
+        celdas = []
+        for i in range(len(word)):
+            if orientation == "H":
+                cell = self.board.grid[f][c + i]
+            elif orientation == "V":
+                cell = self.board.grid[f + i][c]
+            if good == True:
+                celdas.append(cell)
+                if self.board.grid[7][7] in celdas:
+                    return True
+            elif good == False:
+                if (cell.letter != None and cell.letter.letter == word[i]):
+                    self.current_player.tiles.append(cell.letter) ###Testear
+                    return True
+                if self.board.validate_word_when_not_empty(word, location, orientation) == True:
+                    return True
+        return False
+
     def is_playing(self):
         return self.playing
     
@@ -336,15 +368,15 @@ class ScrabbleGame:
 
     def add_word(self, word, location, orientation):
         try:
+            first_validation = self.validate_word_place_board(word, location, orientation)
             self.validate_word(word, location, orientation)
-            second_validation = self.board.validate_word_inside_board(word, location, orientation)
-            if second_validation == False:
+            if first_validation == False:
                 raise InvalidPlace("Su palabra debe agregar o pasar por otra palabra. Si es el primer turno, debe pasar por la celda (7 , 7)")
                 
-            """if orientation == "H":
+            if orientation == "H":
                 third_validation = self.horizontal_word_check_for_sum(word, location)
             elif orientation == "V":
-                third_validation = self.vertical_word_check_for_sum(word, location)"""
+                third_validation = self.vertical_word_check_for_sum(word, location)
                 
             self.put_word(word, location, orientation)
             return True

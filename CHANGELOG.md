@@ -2,6 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-23-10
+
+### Fixed
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum. There was an error when the word was crossing another, fixed it.
+
+### Change
+
+- validate_word_place_board is now in ScrabbleGame. This fixes the problem where a word crosses another word, and there's a letter that's already on the board, so the player shouldn't have that letter.
+
 2023-22-10
 
 ### Added

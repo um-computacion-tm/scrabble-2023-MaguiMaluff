@@ -69,83 +69,6 @@ class TestBoard(unittest.TestCase):
         board.grid[7][7].add_letter(Tiles('C', 1))
         assert board.is_empty() == False
         
-    def test_place_word_empty_board_horizontal_fine(self):
-        board = Board()
-        word = "FACULTAD"
-        location = (7, 4)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_empty_board_horizontal_wrong(self):
-        board = Board()
-        word = "Facultad"
-        location = (2, 4)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_empty_board_vertical_fine(self):
-        board = Board()
-        word = "Facultad"
-        location = (4, 7)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_empty_board_vertical_wrong(self):
-        board = Board()
-        word = "Facultad"
-        location = (2, 4)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_not_empty_board_horizontal_fine(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
-        word = "FACULTAD"
-        location = (8, 6)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_not_empty_board_horizontal_wrong(self):
-        board = Board()
-        board.grid[5][7].add_letter(Tiles('S', 1)) 
-        board.grid[6][7].add_letter(Tiles('A', 1))
-        board.grid[7][7].add_letter(Tiles('L', 1))
-        word = "FACULTAD"
-        location = (1, 1)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_not_empty_board_vertical_fine(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[7][8].add_letter(Tiles('A', 1)) 
-        board.grid[7][9].add_letter(Tiles('S', 1)) 
-        board.grid[7][10].add_letter(Tiles('A', 1)) 
-        word = "PAZ"
-        location = (6, 8)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_not_empty_board_vertical_wrong(self):
-        board = Board()
-        board.grid[7][5].add_letter(Tiles('S', 1)) 
-        board.grid[7][6].add_letter(Tiles('A', 1))
-        board.grid[7][7].add_letter(Tiles('L', 1))
-        word = "PAZ"
-        location = (9, 6)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
     
     def test_words_on_board(self):
         board = Board()
@@ -162,54 +85,6 @@ class TestBoard(unittest.TestCase):
         orientation = "H"
         words = board.list_of_words(word, location, orientation)
         self.assertEqual(words, [["CASITA", "H", (6, 8), (6, 9), (6, 10), (6 , 11), (6 , 12), (6 , 13)]])
-
-    def test_validate_word_place_board_add_letter_to_existing_word_fine_v(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[7][8].add_letter(Tiles('A', 1)) 
-        board.grid[7][9].add_letter(Tiles('S', 1)) 
-        board.grid[7][10].add_letter(Tiles('A', 1)) 
-        word = "MAS"
-        location = (5, 11)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_validate_word_place_board_add_letter_to_existing_word_wrong_v(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[7][8].add_letter(Tiles('A', 1)) 
-        board.grid[7][9].add_letter(Tiles('S', 1)) 
-        board.grid[7][10].add_letter(Tiles('A', 1)) 
-        word = "MA"
-        location = (5, 11)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-    
-    def test_validate_word_place_board_add_letter_to_existing_word_fine_h(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
-        word = "MAS"
-        location = (11, 5)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-    
-    def test_validate_word_place_board_add_letter_to_existing_word_wrong_h(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
-        word = "MA"
-        location = (11, 5)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
     
 
 class TestGetWordCell(unittest.TestCase):

@@ -468,6 +468,133 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         check = scrabble_game.get_vertical_word((8,7), "A",)
         self.assertEqual(check, ['MAL', (7,7), "V"])
 
+class TestValidatePlaceBoard(unittest.TestCase):
+    def test_place_word_empty_board_horizontal_fine(self):
+        game = ScrabbleGame(2)
+        word = "FACULTAD"
+        location = (7, 4)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+
+    def test_place_word_empty_board_horizontal_wrong(self):
+        game = ScrabbleGame(2)
+        word = "Facultad"
+        location = (2, 4)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+
+    def test_place_word_empty_board_vertical_fine(self):
+        game = ScrabbleGame(2)
+        word = "Facultad"
+        location = (4, 7)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+
+    def test_place_word_empty_board_vertical_wrong(self):
+        game = ScrabbleGame(2)
+        word = "Facultad"
+        location = (2, 4)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+
+    def test_place_word_not_empty_board_horizontal_fine(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[8][7].add_letter(Tiles('A', 1)) 
+        game.board.grid[9][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[10][7].add_letter(Tiles('A', 1)) 
+        word = "FACULTAD"
+        location = (8, 6)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+
+    def test_place_word_not_empty_board_horizontal_wrong(self):
+        game = ScrabbleGame(2)
+        game.board.grid[5][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[6][7].add_letter(Tiles('A', 1))
+        game.board.grid[7][7].add_letter(Tiles('L', 1))
+        word = "FACULTAD"
+        location = (1, 1)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+
+    def test_place_word_not_empty_board_vertical_fine(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[7][8].add_letter(Tiles('A', 1)) 
+        game.board.grid[7][9].add_letter(Tiles('S', 1)) 
+        game.board.grid[7][10].add_letter(Tiles('A', 1)) 
+        word = "PAZ"
+        location = (6, 8)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+
+    def test_place_word_not_empty_board_vertical_wrong(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][5].add_letter(Tiles('S', 1)) 
+        game.board.grid[7][6].add_letter(Tiles('A', 1))
+        game.board.grid[7][7].add_letter(Tiles('L', 1))
+        word = "PAZ"
+        location = (9, 6)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+    
+    def test_validate_word_place_board_add_letter_to_existing_word_fine_v(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[7][8].add_letter(Tiles('A', 1)) 
+        game.board.grid[7][9].add_letter(Tiles('S', 1)) 
+        game.board.grid[7][10].add_letter(Tiles('A', 1)) 
+        word = "MAS"
+        location = (5, 11)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+
+    def test_validate_word_place_board_add_letter_to_existing_word_wrong_v(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[7][8].add_letter(Tiles('A', 1)) 
+        game.board.grid[7][9].add_letter(Tiles('S', 1)) 
+        game.board.grid[7][10].add_letter(Tiles('A', 1)) 
+        word = "MA"
+        location = (5, 11)
+        orientation = "V"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+    
+    def test_validate_word_place_board_add_letter_to_existing_word_fine_h(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[8][7].add_letter(Tiles('A', 1)) 
+        game.board.grid[9][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[10][7].add_letter(Tiles('A', 1)) 
+        word = "MAS"
+        location = (11, 5)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
+    
+    def test_validate_word_place_board_add_letter_to_existing_word_wrong_h(self):
+        game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[8][7].add_letter(Tiles('A', 1)) 
+        game.board.grid[9][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[10][7].add_letter(Tiles('A', 1)) 
+        word = "MA"
+        location = (11, 5)
+        orientation = "H"
+        word_is_valid = game.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == False
+
 
 if __name__ == '__main__':
     unittest.main()

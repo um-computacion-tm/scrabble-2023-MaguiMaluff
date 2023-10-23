@@ -1,7 +1,6 @@
 from game.models import Cell, Player, BagTiles, Tiles
 
 
-
 class Board:
     def __init__(self):
         self.grid =[[Cell(1, 'letter') for _ in range(15)] for _ in range (15)]
@@ -100,27 +99,6 @@ class Board:
             return True
         else:
             return False
-
-    def validate_word_place_board(self, word, location, orientation):
-        f = location[0]
-        c = location[1]
-        good = self.is_empty()
-        celdas = []
-        for i in range(len(word)):
-            if orientation == "H":
-                cell = self.grid[f][c + i]
-            elif orientation == "V":
-                cell = self.grid[f + i][c]
-            if good == True:
-                celdas.append(cell)
-                if self.grid[7][7] in celdas:
-                    return True
-            elif good == False:
-                if (cell.letter != None and cell.letter.letter == word[i]):
-                    return True
-                if self.validate_word_when_not_empty(word, location, orientation) == True:
-                    return True
-        return False
     
     def list_of_words(self, word, location, orientation):
         word_info = [word, orientation]
