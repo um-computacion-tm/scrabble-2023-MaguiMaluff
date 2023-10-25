@@ -145,15 +145,3 @@ class Board:
                     words.append([self.words_on_board[j][0], j, self.words_on_board[j][1]])
         return words
         
-
-"""     Cuando se suman puntos? 
-        Cuando la palabra agrega al final de otra mas letras
-        o cuando queda al lado y forma palabras de 2 silabas
-        Si la palabra solo cruza a otra, no se suman puntos
-"""
-"""
-        Caso 1 de suma: si la palabra es vertical, la otra tiene que ser horizontal
-                        y la letra solo tiene a un lado de ella otra letra. (Hay que verificar la nueva palabra)
-        Caso 2 de suma: ambas palabras tienen la misma orientacion,
-                        y la letra solo tiene a un lado de ella otra letra. (Hay que verificar las nuevas palabras)
-        Caso sin puntos: orientaciones diferentes, la letra que cruza tiene otra a sus dos lados """

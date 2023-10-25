@@ -2,6 +2,24 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-25-10
+
+### Change
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum, if the list is empty it returns None.
+
+- add_word, added the calculation of points
+
+- get_player_info
+
+- change_tile
+
+- validate_word_place_board
+
+### Added
+
+- change_player_tiles
+
 2023-23-10
 
 ### Fixed
@@ -20,7 +38,7 @@ All notable changes to this project will be documented in this file.
 
 - test_back.py
 
-### Changed 
+### Change
 
 - add_word
 - main

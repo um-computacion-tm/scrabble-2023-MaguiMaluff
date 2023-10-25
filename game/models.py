@@ -34,7 +34,7 @@ class BagTiles:
             Tiles('X', 8), Tiles('Z',10), Tiles('White', 0), Tiles('White', 0),
         ]
         random.shuffle(self.tiles)
-
+    
     def take(self, count):
         tiles = []
         for _ in range(count):
@@ -49,23 +49,19 @@ class Player:
         self.tiles = bag_tiles.take(7)
         self.bag_tiles = bag_tiles
         self.points = 0
+        self.id = id
+
+    def change_tiles(self, list_tiles):
+        num = len(list_tiles)
+        new_tiles = self.bag_tiles.take(num)
+        self.bag_tiles.tiles.extend(list_tiles)
+        self.tiles.extend(new_tiles)
+
 
     def take_to_seven(self):
         largo = len(self.tiles)
         to_take = 7 - largo
         self.bag_tiles.take(to_take)
-
-    def change_tiles(self, tiles):
-        lost_tiles = []
-        indices_to_remove = []
-        for i in tiles:
-            if i < len(self.tiles):
-                lost_tiles.append(self.tiles[i])
-                indices_to_remove.append(i)
-        for i in reversed(indices_to_remove):
-            self.tiles.pop(i)
-        self.bag_tiles.tiles.extend(lost_tiles)
-        self.tiles.extend(self.bag_tiles.take(len(tiles)))
 
     def player_tiles(self, word):
         letritas = []

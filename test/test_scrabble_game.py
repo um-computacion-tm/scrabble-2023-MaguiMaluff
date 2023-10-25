@@ -503,6 +503,7 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_not_empty_board_horizontal_fine(self):
         game = ScrabbleGame(2)
+        game.next_turn()
         game.board.grid[7][7].add_letter(Tiles('C', 1))
         game.board.grid[8][7].add_letter(Tiles('A', 1)) 
         game.board.grid[9][7].add_letter(Tiles('S', 1)) 
@@ -526,6 +527,7 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_not_empty_board_vertical_fine(self):
         game = ScrabbleGame(2)
+        game.next_turn()
         game.board.grid[7][7].add_letter(Tiles('C', 1))
         game.board.grid[7][8].add_letter(Tiles('A', 1)) 
         game.board.grid[7][9].add_letter(Tiles('S', 1)) 
@@ -594,6 +596,22 @@ class TestValidatePlaceBoard(unittest.TestCase):
         orientation = "H"
         word_is_valid = game.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
+
+class Funciona(unittest.TestCase):
+    def test_validate_word_place_board_add_tile(self):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[8][7].add_letter(Tiles('A', 1)) 
+        game.board.grid[9][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[10][7].add_letter(Tiles('A', 1)) 
+        game.current_player.tiles = [Tiles("M", 2), Tiles("A", 2)]
+        word = "MAS"
+        location = (9, 5)
+        orientation = "H"
+        game.validate_word_place_board(word, location, orientation)
+        self.assertEqual(len(game.current_player.tiles), 3)
+        self.assertEqual(game.current_player.tiles[2].letter, "S")
 
 
 if __name__ == '__main__':

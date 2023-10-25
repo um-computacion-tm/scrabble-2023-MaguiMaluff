@@ -67,7 +67,7 @@ class ScrabbleGame:
         res = dle.search_by_word(word)
         result = res.to_dict()
         if res is None:
-            raise DictionaryConnectionError()
+            raise DictionaryConnectionError("No hay conexion")
         if result == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
             return False
         else:
@@ -86,8 +86,10 @@ class ScrabbleGame:
                 elif orientation == "V":
                     cell = self.board.grid[f + i][c]
                 tile = self.get_tile_from_player(players_tiles, word[i])
-                if tile != None:
+                if tile != None and cell.letter == None:
                     cell.letter = tile
+                    self.current_player.tiles.remove(tile)
+                elif tile != None and cell.letter.letter == tile.letter:
                     self.current_player.tiles.remove(tile)
         self.board.list_of_words(word, location, orientation)    
 
@@ -278,7 +280,10 @@ class ScrabbleGame:
                             raise WordDoesntExists("La palabra ", new_word, " no existe")
                         else:
                             new_words.append(new_word_list)
-        return new_words
+        if len(new_words) != 0:
+            return new_words
+        else:
+            return None
 
     def get_vertical_word(self, cell, letter):
         k = 1
@@ -337,23 +342,23 @@ class ScrabbleGame:
     def validate_word_place_board(self, word, location, orientation):
         f = location[0]
         c = location[1]
-        good = self.board.is_empty()
+        empty = self.board.is_empty()
         celdas = []
         for i in range(len(word)):
             if orientation == "H":
                 cell = self.board.grid[f][c + i]
             elif orientation == "V":
                 cell = self.board.grid[f + i][c]
-            if good == True:
+            if empty == True:
                 celdas.append(cell)
                 if self.board.grid[7][7] in celdas:
                     return True
-            elif good == False:
-                if (cell.letter != None and cell.letter.letter == word[i]):
-                    self.current_player.tiles.append(cell.letter) ###Testear
+            elif empty == False:
+                if cell.letter != None and cell.letter.letter == word[i]: 
+                    self.current_player.tiles.append(cell.letter)
                     return True
-                if self.board.validate_word_when_not_empty(word, location, orientation) == True:
-                    return True
+        if self.board.validate_word_when_not_empty(word, location, orientation) == True:
+            return True
         return False
 
     def is_playing(self):
@@ -363,24 +368,61 @@ class ScrabbleGame:
         self.board.print_board()
 
     def get_player_info(self):
-        print(self.current_player.points)
+        print('Jugador: ', self.current_player.id)
+        print('Puntos: ', self.current_player.points)
         print(self.player_tiles_list())
 
     def add_word(self, word, location, orientation):
         try:
-            first_validation = self.validate_word_place_board(word, location, orientation)
+            self.validate_word_place_board(word, location, orientation)
             self.validate_word(word, location, orientation)
-            if first_validation == False:
-                raise InvalidPlace("Su palabra debe agregar o pasar por otra palabra. Si es el primer turno, debe pasar por la celda (7 , 7)")
-                
+            
+
             if orientation == "H":
                 third_validation = self.horizontal_word_check_for_sum(word, location)
             elif orientation == "V":
                 third_validation = self.vertical_word_check_for_sum(word, location)
-                
+
             self.put_word(word, location, orientation)
+            self.current_player.points += self.calculate_word_value(word, location, orientation)
+
+            if third_validation != None:
+                for i in third_validation:
+                    word = third_validation[i][0]
+                    location = third_validation[i][1]
+                    orientation = third_validation[i][2]
+                    self.current_player.points += self.calculate_word_value(word, location, orientation)
+            
+            self.current_player.take_to_seven()
+
             return True
         except Exception as e:
             print(e)
         
-    
+    def change_tiles_player(self):
+        tiles_player = self.player_tiles_list()
+        print(tiles_player)
+        try:
+            til = input("Cuantas fichas quiere cambiar?: ")
+            if not til.isnumeric():
+                raise ValueError
+        except ValueError:
+            print("Ingrese un numero")
+        tiles_to_change = []
+        try:
+            for i in range(til - 1):
+                print(tiles_player)
+                for n in range(len(tiles_player)):
+                    string = "  "
+                    string += str(n) + "    "
+                print(string)
+                try:
+                    tile = input("Que ficha quiere cambiar?, ingrese un numero: ")
+                    if not tile.isnumeric():
+                        raise ValueError
+                except ValueError:
+                    print("Ingrese un numero")
+                tiles_to_change.append(tiles_player[tile])
+                tiles_player.pop([tile])
+        except Exception as e:
+            print(e)
