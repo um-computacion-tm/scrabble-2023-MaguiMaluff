@@ -10,7 +10,6 @@ Cada jugador elige siete fichas al azar. Pueden jugar hasta 4 jugadores.
 En cada turno, un jugador debe formar una palabra en el tablero.
 Las palabras se forman colocando las fichas en el tablero de manera horizontal o vertical, conectándolas con otras.
 Se pueden formar múltiples palabras en un solo turno, siempre y cuando todas las palabras sean válidas.
-Las letras se colocan en el tablero de manera que formen palabras válidas en todas las direcciones.
 Al final del turno el jugador obtiene fichas nuevas, las necesarias para llegar a 7.
 
 Reglas de puntuación:
@@ -28,7 +27,7 @@ Final del juego:
 El juego continúa hasta que todas las fichas se han agotado, hasta que los jugadores decidan que no pueden formar más palabras válidas o cuando todos los jugadores han pasado 2 veces.
 El jugador con la puntuación más alta al final del juego gana.
 
-
+En docker se ejecuta con el comando: docker run -it my_game
 
 
 # Author

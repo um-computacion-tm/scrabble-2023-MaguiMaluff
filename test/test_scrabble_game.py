@@ -1,7 +1,7 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Cell
 from game.board import Board
-from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles, NotInTheMiddle
+from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles, NotInTheMiddle, WrongCross
 from unittest.mock import patch
 
 class TestScrabbleGame(unittest.TestCase):
@@ -511,9 +511,10 @@ class TestWordValidationMultipleWords(unittest.TestCase):
 class TestValidatePlaceBoard(unittest.TestCase):
     def test_place_word_empty_board_horizontal_fine(self):
         game = ScrabbleGame(2)
+        game.next_turn()
         game.board.grid[7][7].add_letter(Tiles('C', 1))
         word = "FACULTAD"
-        location = (7, 4)
+        location = (7, 5)
         orientation = "H"
         word_is_valid = game.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
@@ -529,17 +530,19 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_empty_board_vertical_fine(self):
         game = ScrabbleGame(2)
+        game.next_turn()
         game.board.grid[7][7].add_letter(Tiles('C', 1))
-        word = "Facultad"
-        location = (4, 7)
+        word = "FACULTAD"
+        location = (5, 7)
         orientation = "V"
         word_is_valid = game.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
 
     def test_place_word_empty_board_vertical_wrong(self):
         game = ScrabbleGame(2)
+        game.next_turn()
         game.board.grid[7][7].add_letter(Tiles('C', 1))
-        word = "Facultad"
+        word = "FACULTAD"
         location = (2, 4)
         orientation = "V"
         word_is_valid = game.validate_word_place_board(word, location, orientation)
@@ -676,6 +679,20 @@ class ForMain(unittest.TestCase):
         game.validate_word_place_board(word, location, orientation)
         self.assertEqual(len(game.current_player.tiles), 3)
         self.assertEqual(game.current_player.tiles[2].letter, "S")
+
+    def test_validate_word_place_board_raises(self):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
+        game.board.grid[8][7].add_letter(Tiles('A', 1)) 
+        game.board.grid[9][7].add_letter(Tiles('S', 1)) 
+        game.board.grid[10][7].add_letter(Tiles('A', 1)) 
+        game.current_player.tiles = [Tiles("M", 2), Tiles("A", 2)]
+        word = "MAS"
+        location = (9, 6)
+        orientation = "H"
+        with self.assertRaises(WrongCross):
+            game.validate_word_place_board(word, location, orientation)
 
     def test_validate_word_place_board_add_tile(self):
         game = ScrabbleGame(2)

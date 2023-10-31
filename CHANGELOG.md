@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 2023-31-10
 
+### Added
+
+- Dockerfile
+ 
 ### Fixed
 
 - take_to_seven

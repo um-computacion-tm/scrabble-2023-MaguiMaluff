@@ -29,6 +29,9 @@ class InvalidPlace(Exception):
 class NotInTheMiddle(Exception):
     pass
 
+class WrongCross(Exception):
+    pass
+
 dle.set_log_level(log_level='CRITICAL')
 
 class ScrabbleGame:
@@ -368,6 +371,8 @@ class ScrabbleGame:
             elif empty == False:
                 if self.board.grid[cell[0]][cell[1]].letter != None and self.board.grid[cell[0]][cell[1]].letter.letter == word[i]:
                     self.current_player.tiles.append(self.board.grid[cell[0]][cell[1]].letter)
+                elif self.board.grid[cell[0]][cell[1]].letter != None and self.board.grid[cell[0]][cell[1]].letter.letter != word[i]:
+                    raise WrongCross("Las letras que se cruzan no coinciden")
         if self.board.validate_word_when_not_empty(word, location, orientation) == True:
             return True
         return False

@@ -66,8 +66,11 @@ class Player:
     def take_to_seven(self):
         largo = len(self.tiles)
         to_take = 7 - largo
-        new_tiles = self.bag_tiles.take(to_take)
-        self.tiles.extend(new_tiles)
+        if to_take == 0:
+            pass
+        else:
+            new_tiles = self.bag_tiles.take(to_take)
+            self.tiles.extend(new_tiles)
 
     def player_tiles(self, word):
         letritas = []
