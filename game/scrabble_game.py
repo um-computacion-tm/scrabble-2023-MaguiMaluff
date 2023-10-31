@@ -26,6 +26,9 @@ class InvalidTask(Exception):
 class InvalidPlace(Exception):
     pass
 
+class NotInTheMiddle(Exception):
+    pass
+
 dle.set_log_level(log_level='CRITICAL')
 
 class ScrabbleGame:
@@ -53,9 +56,9 @@ class ScrabbleGame:
 
 
     def validate_word(self, word, location, orientation):
-        if not self.board.validate_word_inside_board(word, location, orientation):
+        if self.board.validate_word_inside_board(word, location, orientation) == False:
             raise OutOfRange("Palabra fuera de rango")
-        elif not self.current_player.player_tiles(word):
+        elif self.current_player.player_tiles(word) == False:
             raise OutOfTiles("No tiene las fichas necesarias")
         elif not self.get_word(word):
             raise InvalidWord("La palabra no es valida")
@@ -99,11 +102,18 @@ class ScrabbleGame:
                 return tiles
         return None
 
-    def player_tiles_list(self): ###TESTEAR
+    def player_tiles_list(self):
         letras = []
         for i in range(len(self.current_player.tiles)):
             letras.append(self.current_player.tiles[i].letter)
         return letras
+    
+
+    def player_tiles_values(self):
+        valores = []
+        for i in range(len(self.current_player.tiles)):
+            valores.append(self.current_player.tiles[i].value)
+        return valores
 
     def calculate_word_value(self, word, location, orientation):
         f = location[0]
@@ -218,8 +228,10 @@ class ScrabbleGame:
                             raise WordDoesntExists("La palabra ", new_word, " no existe")
                         else:
                             new_words.append(new_word_list)
-                    
-        return new_words
+        if len(new_words) != 0:
+            return new_words
+        else:
+            return None
 
     def horizontal_word_check_for_sum(self, word, location):
         up = []
@@ -345,20 +357,17 @@ class ScrabbleGame:
         empty = self.board.is_empty()
         celdas = []
         for i in range(len(word)):
-            c = location[1]
             if orientation == "H":
-                c = c + i
-                cell = self.board.grid[f][c]
+                cell = (f , c + i)
             elif orientation == "V":
-                cell = self.board.grid[f + i][c]
+                cell = (f + i , c)
             if empty == True:
                 celdas.append(cell)
-                if self.board.grid[7][7] in celdas:
-                    return True
+                if (7,7) not in celdas:
+                    raise NotInTheMiddle("En el primer turno la palabra debe estar en (7,7)")
             elif empty == False:
-                if cell.letter != None and cell.letter.letter == word[i]:
-                    self.current_player.tiles.append(cell.letter)
-                    return True
+                if self.board.grid[cell[0]][cell[1]].letter != None and self.board.grid[cell[0]][cell[1]].letter.letter == word[i]:
+                    self.current_player.tiles.append(self.board.grid[cell[0]][cell[1]].letter)
         if self.board.validate_word_when_not_empty(word, location, orientation) == True:
             return True
         return False
@@ -373,6 +382,11 @@ class ScrabbleGame:
         print('Jugador: ', self.current_player.id)
         print('Puntos: ', self.current_player.points)
         print(self.player_tiles_list())
+        valores = self.player_tiles_values()
+        string = "  "
+        for value in valores:
+            string += str(value) + "    "
+        print(string)
 
     def add_word(self, word, location, orientation):
         try:
@@ -389,45 +403,51 @@ class ScrabbleGame:
             self.current_player.points += self.calculate_word_value(word, location, orientation)
 
             if third_validation != None:
-                for i in third_validation:
+                for i in range(len(third_validation)):
                     word = third_validation[i][0]
                     location = third_validation[i][1]
                     orientation = third_validation[i][2]
                     self.current_player.points += self.calculate_word_value(word, location, orientation)
             
             self.current_player.take_to_seven()
-
-            return True
+            print('Puntos: ', self.current_player.points)
         except Exception as e:
             print(e)
         
     def change_tiles_player(self):
         tiles_player = self.player_tiles_list()
         print(tiles_player)
-        try:
-            til = input("Cuantas fichas quiere cambiar?: ")
-            if not til.isnumeric():
-                raise ValueError
-        except ValueError:
-            print("Ingrese un numero")
-        tiles_to_change = []
-        try:
-            for i in range(til - 1):
-                print(tiles_player)
-                for n in range(len(tiles_player)):
-                    string = "  "
-                    string += str(n) + "    "
-                print(string)
+        change = []
+        while True:
+            try:
+                til = input("Cuantas fichas quiere cambiar?: ")
+                if not til.isnumeric():
+                    raise ValueError
+                break
+            except ValueError:
+                print("Ingrese un numero")   
+        print(tiles_player)
+        string = "  "
+        largo = len(tiles_player)
+        for n in range(largo):
+            string += str(n) + "    "
+        print(string)
+        for i in range(int(til)):
+            while True:    
                 try:
                     tile = input("Que ficha quiere cambiar?, ingrese un numero: ")
                     if not tile.isnumeric():
                         raise ValueError
+                    else:
+                        change.append(int(tile))
+                        break
                 except ValueError:
                     print("Ingrese un numero")
-                tiles_to_change.append(tiles_player[tile])
-                tiles_player.pop([tile])
-        except Exception as e:
-            print(e)
+        self.current_player.change_tiles(change)
+        print("Sus nuevas fichas son",
+              self.player_tiles_list())
+        
+
 
 
 

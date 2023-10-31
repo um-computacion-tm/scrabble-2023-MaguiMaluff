@@ -66,7 +66,8 @@ class Player:
     def take_to_seven(self):
         largo = len(self.tiles)
         to_take = 7 - largo
-        self.bag_tiles.take(to_take)
+        new_tiles = self.bag_tiles.take(to_take)
+        self.tiles.extend(new_tiles)
 
     def player_tiles(self, word):
         letritas = []
@@ -75,9 +76,9 @@ class Player:
             letritas.append(i)
         for j in self.tiles:
             letritas_user.append(j.letter)
-        for w in range(len(letritas)):
-                if letritas[w] in letritas_user:
-                    posicion = letritas_user.index(letritas[w])
+        for w in letritas:
+                if w in letritas_user:
+                    posicion = letritas_user.index(w)
                     letritas_user.pop(posicion)
                 else:
                     return False

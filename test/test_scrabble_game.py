@@ -1,7 +1,7 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Cell
 from game.board import Board
-from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles
+from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles, NotInTheMiddle
 from unittest.mock import patch
 
 class TestScrabbleGame(unittest.TestCase):
@@ -54,14 +54,13 @@ class TestScrabbleGame(unittest.TestCase):
     def test_word_validation_out_of_range(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.bag_tiles = (Tiles('A', 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
+        scrabble_game.current_player.tiles = (Tiles("A", 1), Tiles("H", 2), Tiles("L", 3), Tiles("O", 4))
         word = "HOLA"
         location = (14, 4)
-        orientation = "H"
+        orientation = "V"
         with self.assertRaises(OutOfRange):
             scrabble_game.validate_word(word, location, orientation)
     
-    def test_get_word_dictionary(self):
         scrabble_game = ScrabbleGame(players_count=3)
         word = "Noche"
         valor = scrabble_game.get_word(word)
@@ -457,6 +456,24 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         with self.assertRaises(WordDoesntExists):
             scrabble_game.horizontal_word_check_for_sum(word, location)
 
+    def test_check_horizontal_no_words_horizontal(self):
+        game = ScrabbleGame(3)
+        game.current_player = game.players[0]
+        players_tiles = game.current_player.tiles = [Tiles("M", 1), Tiles("L", 1), Tiles("A", 1)]
+        word = "MAL"
+        location = (7,7)
+        check = game.horizontal_word_check_for_sum(word, location)
+        self.assertEqual(check, None)
+    
+    def test_check_horizontal_no_words_vertical(self):
+        game = ScrabbleGame(3)
+        game.current_player = game.players[0]
+        players_tiles = game.current_player.tiles = [Tiles("M", 1), Tiles("L", 1), Tiles("A", 1)]
+        word = "MAL"
+        location = (7,7)
+        check = game.vertical_word_check_for_sum(word, location)
+        self.assertEqual(check, None)
+
 
     def test_check_horizontal_new_word_both_sides(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -489,9 +506,12 @@ class TestWordValidationMultipleWords(unittest.TestCase):
         check = scrabble_game.get_vertical_word((8,7), "A",)
         self.assertEqual(check, ['MAL', (7,7), "V"])
 
+    
+
 class TestValidatePlaceBoard(unittest.TestCase):
     def test_place_word_empty_board_horizontal_fine(self):
         game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
         word = "FACULTAD"
         location = (7, 4)
         orientation = "H"
@@ -500,6 +520,7 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_empty_board_horizontal_wrong(self):
         game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
         word = "Facultad"
         location = (2, 4)
         orientation = "H"
@@ -508,6 +529,7 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_empty_board_vertical_fine(self):
         game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
         word = "Facultad"
         location = (4, 7)
         orientation = "V"
@@ -516,6 +538,7 @@ class TestValidatePlaceBoard(unittest.TestCase):
 
     def test_place_word_empty_board_vertical_wrong(self):
         game = ScrabbleGame(2)
+        game.board.grid[7][7].add_letter(Tiles('C', 1))
         word = "Facultad"
         location = (2, 4)
         orientation = "V"
@@ -630,6 +653,14 @@ class TestValidatePlaceBoard(unittest.TestCase):
         word_is_valid = game.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
 
+    def test_validate_word_place_board_raises(self):
+        game = ScrabbleGame(2)
+        word = "MA"
+        location = (11, 5)
+        orientation = "H"
+        with self.assertRaises(NotInTheMiddle):
+            game.validate_word_place_board(word, location, orientation)
+
 class ForMain(unittest.TestCase):
     def test_validate_word_place_board_add_tile(self):
         game = ScrabbleGame(2)
@@ -663,8 +694,34 @@ class ForMain(unittest.TestCase):
         lista = game.player_tiles_list()
         self.assertEqual(lista, ["C", "A", "S", "A"])
 
-    def test_change_tiles(self):
-        pass
+    def test_player_tiles_value(self):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.current_player.tiles = [Tiles('C', 1),(Tiles('A', 1)),(Tiles('S', 1)),(Tiles('A', 1))]
+        lista = game.player_tiles_values()
+        self.assertEqual(lista, [1,1,1,1])
+
+    def test_validate_word_place_board_add_tile(self):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.board.grid[7][7].add_letter(Tiles('A', 1))
+        game.board.grid[7][8].add_letter(Tiles('N', 1)) 
+        game.board.grid[7][9].add_letter(Tiles('O', 1)) 
+        game.current_player.tiles = [Tiles("N", 2)]
+        word = "NANO"
+        location = (7, 6)
+        orientation = "H"
+        game.validate_word_place_board(word, location, orientation)
+        self.assertEqual(len(game.current_player.tiles), 4)
+        self.assertEqual(game.current_player.tiles[1].letter, "A")
+        self.assertEqual(game.current_player.tiles[2].letter, "N")
+    
+    def test_playin(self):
+        game = ScrabbleGame(2)
+        check = game.is_playing()
+        self.assertEqual(check, True)
+
+
 
 if __name__ == '__main__':
     unittest.main()

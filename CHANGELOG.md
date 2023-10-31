@@ -2,6 +2,18 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-31-10
+
+### Fixed
+
+- take_to_seven
+
+- validate_word_inside_board
+
+- validate_word_place_board
+
+- scrabble_main
+
 2023-30-10
 
 ### Fixed 

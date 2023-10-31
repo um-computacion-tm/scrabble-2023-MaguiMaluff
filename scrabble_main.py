@@ -20,23 +20,19 @@ def main():
         game.get_player_info()
         task = back.get_task()
         if task == "A":
-            while True:
                 try:
                     word = back.get_word_main()
                     location = back.get_location()
                     orientation = back.get_orientation()
-                    done = game.add_word(word, location, orientation)
-                    if done == True:
-                        print(done, "Next Turn")
-                        False
-                        break
+                    game.add_word(word, location, orientation)
                 except Exception as e:
                     print(e)
         elif task == "C":
             game.change_tiles_player()
         elif task == "P":
-            pass
-        
+            game.next_turn()
+
+            
 
 if __name__ == '__main__':
     main()

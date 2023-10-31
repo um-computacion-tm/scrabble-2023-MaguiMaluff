@@ -52,19 +52,19 @@ class Board:
         self.set_word_multiplier()
     
     def validate_word_inside_board(self, word, location, orientation):
-        word_list = []
-        for letra in word:
-            word_list.append(letra)
+        lenght = len(word)
 
         i = location[0]
         j = location[1]
 
         if orientation == "V":
-            j += len(word_list)
+            i = i + lenght
         if orientation == "H":
-            i += len(word_list)
+            j = j + lenght
 
-        if i > 14 or j > 14:
+        if i > 14:
+            return False
+        elif j > 14:
             return False
         else:
             return True

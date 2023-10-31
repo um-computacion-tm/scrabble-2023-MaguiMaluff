@@ -119,6 +119,17 @@ class TestPlayer(unittest.TestCase):
         player.change_tiles(change)
         self.assertEqual(len(player.tiles), 4)
         self.assertEqual(player.tiles[0].letter, "P")
+    
+    def test_take_to_seven(self):
+        bag_tiles = BagTiles()
+        player = Player(1, bag_tiles)
+        player.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),]
+        player.take_to_seven()
+        self.assertEqual(len(player.tiles), 7)
 
 class TestCell(unittest.TestCase):
     def test_init(self):

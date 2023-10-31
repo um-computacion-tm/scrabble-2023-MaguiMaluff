@@ -53,10 +53,9 @@ class TestBoard(unittest.TestCase):
     def test_word_out_of_board(self):
         board = Board()
         word = "Facultad"
-        location = (14, 4)
+        location = (4, 14)
         orientation = "H"
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
-        
         assert word_is_valid == False
 
     def test_board_is_empty(self):
