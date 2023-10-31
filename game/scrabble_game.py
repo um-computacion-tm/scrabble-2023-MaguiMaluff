@@ -345,8 +345,10 @@ class ScrabbleGame:
         empty = self.board.is_empty()
         celdas = []
         for i in range(len(word)):
+            c = location[1]
             if orientation == "H":
-                cell = self.board.grid[f][c + i]
+                c = c + i
+                cell = self.board.grid[f][c]
             elif orientation == "V":
                 cell = self.board.grid[f + i][c]
             if empty == True:
@@ -354,7 +356,7 @@ class ScrabbleGame:
                 if self.board.grid[7][7] in celdas:
                     return True
             elif empty == False:
-                if cell.letter != None and cell.letter.letter == word[i]: 
+                if cell.letter != None and cell.letter.letter == word[i]:
                     self.current_player.tiles.append(cell.letter)
                     return True
         if self.board.validate_word_when_not_empty(word, location, orientation) == True:
@@ -426,3 +428,6 @@ class ScrabbleGame:
                 tiles_player.pop([tile])
         except Exception as e:
             print(e)
+
+
+

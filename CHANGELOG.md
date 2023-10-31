@@ -2,6 +2,20 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-30-10
+
+### Fixed 
+
+- change_tiles in Player
+
+### Added
+
+- Game's rules to readme.md
+
+### Change
+
+- Deleted RR, CH and LL from tiles, added 2 L, 2 R, 1 C, 1 H
+
 2023-25-10
 
 ### Change

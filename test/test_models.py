@@ -16,7 +16,7 @@ class TestBagTiles(unittest.TestCase):
         bag = BagTiles ()
         self.assertEqual(
             len(bag.tiles),
-            100,
+            103,
         )
         self.assertEqual(
             patch_shuffle.call_count,
@@ -31,7 +31,7 @@ class TestBagTiles(unittest.TestCase):
         tiles = bag.take(2)
         self.assertEqual(
             len(bag.tiles),
-            98,)
+            101,)
         self.assertEqual(
             len(tiles),
             2,)
@@ -42,7 +42,7 @@ class TestBagTiles(unittest.TestCase):
         bag.put(put_tiles)
         self.assertEqual(
             len(bag.tiles), 
-            102,)
+            105,)
     
     def test_change_tiles(self):
         bag_tiles_player = BagTiles()
@@ -106,6 +106,19 @@ class TestPlayer(unittest.TestCase):
         is_valid = player.player_tiles("MAYONESA")
 
         self.assertEqual(is_valid, False)
+
+    def test_change_tiles(self):
+        bag_tiles = BagTiles()
+        player = Player(1, bag_tiles)
+        player.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),]
+        change = [2, 3]
+        player.change_tiles(change)
+        self.assertEqual(len(player.tiles), 4)
+        self.assertEqual(player.tiles[0].letter, "P")
 
 class TestCell(unittest.TestCase):
     def test_init(self):

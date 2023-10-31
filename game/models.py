@@ -20,6 +20,7 @@ class BagTiles:
             Tiles('S', 1), Tiles('S', 1), Tiles('S', 1), Tiles('S', 1),
             Tiles('S', 1), Tiles('N', 1), Tiles('N', 1), Tiles('N', 1),
             Tiles('N', 1), Tiles('N', 1), Tiles('L', 1), Tiles('L', 1),
+            Tiles('L', 1), Tiles('L', 1), Tiles('C', 3), Tiles('H', 4),
             Tiles('L', 1), Tiles('L', 1), Tiles('R', 1), Tiles('R', 1),
             Tiles('R', 1), Tiles('R', 1), Tiles('R', 1), Tiles('U', 1),
             Tiles('U', 1), Tiles('U', 1), Tiles('U', 1), Tiles('U', 1),
@@ -29,13 +30,14 @@ class BagTiles:
             Tiles('C', 3), Tiles('C', 3), Tiles('C', 3), Tiles('B', 3),
             Tiles('B', 3), Tiles('M', 3), Tiles('M', 3), Tiles('P', 3),
             Tiles('P', 3), Tiles('H', 4), Tiles('H', 4), Tiles('F', 4),
-            Tiles('V', 4), Tiles('Y', 4), Tiles('CH',5), Tiles('Q', 5),
-            Tiles('J', 8), Tiles('LL',8), Tiles('Ñ', 8), Tiles('RR',8),
-            Tiles('X', 8), Tiles('Z',10), Tiles('White', 0), Tiles('White', 0),
+            Tiles('V', 4), Tiles('Y', 4), Tiles('Q', 5), Tiles('J', 8), 
+            Tiles('Ñ', 8), Tiles('R', 1), Tiles('R', 1), Tiles('X', 8), 
+            Tiles('Z',10), Tiles('White', 0), Tiles('White', 0),
         ]
         random.shuffle(self.tiles)
     
     def take(self, count):
+        random.shuffle(self.tiles)
         tiles = []
         for _ in range(count):
             tiles.append(self.tiles.pop())
@@ -53,7 +55,10 @@ class Player:
 
     def change_tiles(self, list_tiles):
         num = len(list_tiles)
+        may_to_men = sorted(list_tiles, reverse=True)
         new_tiles = self.bag_tiles.take(num)
+        for i in may_to_men:
+            self.tiles.pop(i)
         self.bag_tiles.tiles.extend(list_tiles)
         self.tiles.extend(new_tiles)
 
