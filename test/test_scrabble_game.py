@@ -3,6 +3,7 @@ from game.models import Tiles, BagTiles, Player, Cell
 from game.board import Board
 from game.scrabble_game import ScrabbleGame, WordDoesntExists, DictionaryConnectionError, OutOfRange, InvalidWord, OutOfTiles, NotInTheMiddle, WrongCross
 from unittest.mock import patch
+import builtins
 
 class TestScrabbleGame(unittest.TestCase):
     def test_init(self):
@@ -738,7 +739,13 @@ class ForMain(unittest.TestCase):
         check = game.is_playing()
         self.assertEqual(check, True)
 
-
+    @patch.object(builtins, 'input', side_effect=["Y", "J"])
+    def test_check_white(self, mock_input):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.current_player.tiles = [Tiles("White", 1)]
+        game.check_white()
+        self.assertEqual(game.current_player.tiles[0].letter, "J")
 
 if __name__ == '__main__':
     unittest.main()

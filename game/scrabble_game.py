@@ -2,6 +2,7 @@ from game.models import Player, BagTiles
 from game.board import Board
 from pyrae import dle
 
+
 class DictionaryConnectionError(Exception):
     pass
 
@@ -452,6 +453,24 @@ class ScrabbleGame:
         print("Sus nuevas fichas son",
               self.player_tiles_list())
         
+    def check_white(self):
+        player_tiles = self.current_player.tiles
+        invalid_letters = ['K', 'W']
+        for tile in player_tiles:
+            if tile.letter == "White":
+                print("Tiene una ficha blanca. La quiere usar?")
+                choice = input("Ingrese Y/N: ")
+                choice = choice.upper()
+                if choice == "Y":
+                    new_letter = input("Elija una letra: ")
+                    new_letter = new_letter.upper()
+                    try:
+                        if (not new_letter.isalpha()) or (new_letter in invalid_letters):
+                            raise InvalidWord
+                        elif new_letter.isalpha() and not new_letter in invalid_letters:
+                            tile.letter = new_letter
+                    except Exception as e:
+                        print("Ingrese una letra valida")
 
 
 

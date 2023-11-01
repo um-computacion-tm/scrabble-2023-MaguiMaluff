@@ -24,13 +24,14 @@ def main():
                     word = back.get_word_main()
                     location = back.get_location()
                     orientation = back.get_orientation()
+                    game.check_white()
                     game.add_word(word, location, orientation)
                 except Exception as e:
                     print(e)
         elif task == "C":
             game.change_tiles_player()
         elif task == "P":
-            game.next_turn()
+            pass
 
             
 
