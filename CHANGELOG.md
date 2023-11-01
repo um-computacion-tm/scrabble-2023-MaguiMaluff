@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 
 - check_white
 
+- Tests
+
+### Fixed
+
+- change_tiles
+
 2023-31-10
 
 ### Added

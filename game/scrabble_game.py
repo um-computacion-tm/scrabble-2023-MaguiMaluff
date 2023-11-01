@@ -466,11 +466,13 @@ class ScrabbleGame:
                     new_letter = new_letter.upper()
                     try:
                         if (not new_letter.isalpha()) or (new_letter in invalid_letters):
-                            raise InvalidWord
+                            raise InvalidWord("Ingrese una letra valida")
                         elif new_letter.isalpha() and not new_letter in invalid_letters:
                             tile.letter = new_letter
                     except Exception as e:
-                        print("Ingrese una letra valida")
+                        print(e)
+            else:
+                pass
 
 
 

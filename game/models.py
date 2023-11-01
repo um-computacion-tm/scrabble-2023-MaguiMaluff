@@ -54,13 +54,15 @@ class Player:
         self.id = id
 
     def change_tiles(self, list_tiles):
+        return_tiles = []
         num = len(list_tiles)
         may_to_men = sorted(list_tiles, reverse=True)
         new_tiles = self.bag_tiles.take(num)
         for i in may_to_men:
-            self.tiles.pop(i)
-        self.bag_tiles.tiles.extend(list_tiles)
-        self.tiles.extend(new_tiles)
+            return_tiles.append(self.tiles[i])
+        self.bag_tiles.tiles.extend(return_tiles)
+        for i in may_to_men:
+            self.tiles[i] = new_tiles.pop()
 
 
     def take_to_seven(self):

@@ -739,13 +739,41 @@ class ForMain(unittest.TestCase):
         check = game.is_playing()
         self.assertEqual(check, True)
 
+class CheckWhite(unittest.TestCase):
+    @patch.object(builtins, 'print')
     @patch.object(builtins, 'input', side_effect=["Y", "J"])
-    def test_check_white(self, mock_input):
+    def test_check_white(self, mock_input, mock_print):
         game = ScrabbleGame(2)
         game.next_turn()
         game.current_player.tiles = [Tiles("White", 1)]
         game.check_white()
         self.assertEqual(game.current_player.tiles[0].letter, "J")
+
+class ChangeTiles(unittest.TestCase):
+    @patch.object(builtins, 'print')
+    def test_add_word(self, mock_print):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.current_player.tiles = [Tiles('H', 1), Tiles('O', 1), Tiles('L', 1), Tiles('A', 1)]
+        word = "HOLA"
+        location = (7, 7)
+        orientation = "V"
+        game.add_word(word, location, orientation)
+        self.assertEqual(game.board.grid[7][7].letter.letter, "H")
+        self.assertEqual(game.board.grid[8][7].letter.letter, "O")
+        self.assertEqual(game.board.grid[9][7].letter.letter, "L")
+        self.assertEqual(game.board.grid[10][7].letter.letter, "A")
+        
+    @patch.object(builtins, 'print')
+    @patch.object(builtins, 'input', side_effect=["2", "1", "0"])
+    def test_check_white(self, mock_input, mock_print):
+        game = ScrabbleGame(2)
+        game.next_turn()
+        game.current_player.tiles = [Tiles("White", 1), Tiles("C", 2)]
+        game.change_tiles_player()
+        self.assertNotEqual(game.current_player.tiles[0].letter, "White")
+        self.assertNotEqual(game.current_player.tiles[1].letter, "C")
+        self.assertEqual(len(game.current_player.tiles), 2)
 
 if __name__ == '__main__':
     unittest.main()
