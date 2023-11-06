@@ -4,9 +4,13 @@ class Back:
     def get_task(self):
         while True:
             try:
-                task = input("Para agregar palabra ingrese A, para cambiar letras ingrese C, para pasar de turno ingrese P")
+                print('A- Add word')
+                print('C- Change tiles')
+                print('P- Pass turn')
+                print('E- End game')
+                task = input('Your choice: ')
                 task = task.upper()
-                if task not in ["A", "C", "P"]:
+                if task not in ["A", "C", "P", 'E']:
                     raise InvalidTask("Invalid Task")
                 else:
                     return task
@@ -16,7 +20,7 @@ class Back:
     def get_word_main(self):
         while True:
             try:
-                word = input("Ingrese Palabra:")
+                word = input("Word:")
                 word = word.upper()
                 for i in word:
                     if not i.isalpha():
@@ -24,13 +28,13 @@ class Back:
                     else:
                         return word
             except ValueError:
-                print("Palabra invalida")
+                print("Invalid")
     
     def get_location(self):
         while True:
             try:
-                location_i = input("Ingrese X: ")
-                location_j = input("Ingrese Y: ")
+                location_i = input("X: ")
+                location_j = input("Y: ")
                 if not location_i.isnumeric() or not location_j.isnumeric():
                     raise IsNotNumber()
                 elif location_i.isnumeric() and location_j.isnumeric():
@@ -49,14 +53,14 @@ class Back:
     def get_orientation(self):
         while True:
             try:
-                orientation = input ("Orientacion V o H: ")
+                orientation = input ("Orientation V or H: ")
                 orientation = orientation.upper()
                 ori = ["V", "H"]
                 if orientation not in ori:
                     raise ValueError
                 return orientation
             except ValueError:
-                print("Ingrese V o H")
+                print("Please enter V o H")
 
 
 

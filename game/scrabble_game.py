@@ -61,11 +61,11 @@ class ScrabbleGame:
 
     def validate_word(self, word, location, orientation):
         if self.board.validate_word_inside_board(word, location, orientation) == False:
-            raise OutOfRange("Palabra fuera de rango")
+            raise OutOfRange("Word out of range")
         elif self.current_player.player_tiles(word) == False:
-            raise OutOfTiles("No tiene las fichas necesarias")
+            raise OutOfTiles("Not enough tiles")
         elif not self.get_word(word):
-            raise InvalidWord("La palabra no es valida")
+            raise InvalidWord("Invalid word")
         else:
             return True
 
@@ -74,7 +74,7 @@ class ScrabbleGame:
         res = dle.search_by_word(word)
         result = res.to_dict()
         if res is None:
-            raise DictionaryConnectionError("No hay conexion")
+            raise DictionaryConnectionError("No conection")
         if result == {'title': 'Diccionario de la lengua española | Edición del Tricentenario | RAE - ASALE'}:
             return False
         else:
@@ -193,7 +193,7 @@ class ScrabbleGame:
                     new_word_list = self.get_horizontal_word((f , c), word[i])
                     new_word = new_word_list[0]
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
                     else:
                         new_words.append(new_word_list)
                 else:
@@ -202,7 +202,7 @@ class ScrabbleGame:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, self.board.words_on_board[search[0][1]][2] , "V" ])
                     else:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
             elif celda_d != None and celda_i == None and celda_actual == None:
                 derecha.append((f , c + 1))
                 search = self.board.get_word_from_cell(derecha)
@@ -210,7 +210,7 @@ class ScrabbleGame:
                     new_word_list = self.get_horizontal_word((f , c), word[i])
                     new_word = new_word_list[0]
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
                     else:
                         new_words.append(new_word_list)
                 else:
@@ -219,7 +219,7 @@ class ScrabbleGame:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, (f , c), "H" ])
                     else:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
             elif celda_d != None and celda_i != None and celda_actual == None:
                 derecha.append((f , c + 1))
                 if search == None:
@@ -229,7 +229,7 @@ class ScrabbleGame:
                         new_word_list = self.get_horizontal_word((f , c), word[i])
                         new_word = new_word_list[0]
                         if self.get_word(new_word) == False:
-                            raise WordDoesntExists("La palabra ", new_word, " no existe")
+                            raise WordDoesntExists(' The word', new_word, 'does not exist.')
                         else:
                             new_words.append(new_word_list)
         if len(new_words) != 0:
@@ -257,7 +257,7 @@ class ScrabbleGame:
                     new_word_list = self.get_vertical_word((f , c), word[i])
                     new_word = new_word_list[0]
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
                     else:
                         new_words.append(new_word_list)
                 else:
@@ -266,7 +266,7 @@ class ScrabbleGame:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, self.board.words_on_board[search[0][1]][2], "V" ])
                     else:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
             elif celda_d != None and celda_u == None and celda_actual == None:
                 down.append((f + 1 , c))
                 search = self.board.get_word_from_cell(down)
@@ -274,7 +274,7 @@ class ScrabbleGame:
                     new_word_list = self.get_vertical_word((f , c), word[i])
                     new_word = new_word_list[0]
                     if self.get_word(new_word) == False:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
                     else:
                             new_words.append(new_word_list)
                 else:
@@ -283,7 +283,7 @@ class ScrabbleGame:
                         self.board.words_on_board[search[0][1]][0] = new_word
                         new_words.append([new_word, (f , c), "V" ])
                     else:
-                        raise WordDoesntExists("La palabra ", new_word, " no existe")
+                        raise WordDoesntExists(' The word', new_word, 'does not exist.')
             elif celda_d != None and celda_u != None and celda_actual == None:
                 up.append((f + 1, c))
                 if search == None:
@@ -293,7 +293,7 @@ class ScrabbleGame:
                         new_word_list = self.get_vertical_word((f , c), word[i])
                         new_word = new_word_list[0]
                         if self.get_word(new_word) == False:
-                            raise WordDoesntExists("La palabra ", new_word, " no existe")
+                            raise WordDoesntExists(' The word', new_word, 'does not exist.')
                         else:
                             new_words.append(new_word_list)
         if len(new_words) != 0:
@@ -368,12 +368,12 @@ class ScrabbleGame:
             if empty == True:
                 celdas.append(cell)
                 if (7,7) not in celdas:
-                    raise NotInTheMiddle("En el primer turno la palabra debe estar en (7,7)")
+                    raise NotInTheMiddle("In the first turn, the word must cross (7 , 7)")
             elif empty == False:
                 if self.board.grid[cell[0]][cell[1]].letter != None and self.board.grid[cell[0]][cell[1]].letter.letter == word[i]:
                     self.current_player.tiles.append(self.board.grid[cell[0]][cell[1]].letter)
                 elif self.board.grid[cell[0]][cell[1]].letter != None and self.board.grid[cell[0]][cell[1]].letter.letter != word[i]:
-                    raise WrongCross("Las letras que se cruzan no coinciden")
+                    raise WrongCross("Crossing letters are different")
         if self.board.validate_word_when_not_empty(word, location, orientation) == True:
             return True
         return False
@@ -385,8 +385,8 @@ class ScrabbleGame:
         self.board.print_board()
 
     def get_player_info(self):
-        print('Jugador: ', self.current_player.id)
-        print('Puntos: ', self.current_player.points)
+        print('Player: ', self.current_player.id)
+        print('Points: ', self.current_player.points)
         print(self.player_tiles_list())
         valores = self.player_tiles_values()
         string = "  "
@@ -416,7 +416,7 @@ class ScrabbleGame:
                     self.current_player.points += self.calculate_word_value(word, location, orientation)
             
             self.current_player.take_to_seven()
-            print('Puntos: ', self.current_player.points)
+            print('Points: ', self.current_player.points)
         except Exception as e:
             print(e)
         
@@ -426,12 +426,12 @@ class ScrabbleGame:
         change = []
         while True:
             try:
-                til = input("Cuantas fichas quiere cambiar?: ")
+                til = input("How many tiles would you like to change?: ")
                 if not til.isnumeric():
                     raise ValueError
                 break
             except ValueError:
-                print("Ingrese un numero")   
+                print("Please enter a number")   
         print(tiles_player)
         string = "  "
         largo = len(tiles_player)
@@ -441,16 +441,16 @@ class ScrabbleGame:
         for i in range(int(til)):
             while True:    
                 try:
-                    tile = input("Que ficha quiere cambiar?, ingrese un numero: ")
+                    tile = input("Select a tile: ")
                     if not tile.isnumeric():
                         raise ValueError
                     else:
                         change.append(int(tile))
                         break
                 except ValueError:
-                    print("Ingrese un numero")
+                    print("Please enter a number")
         self.current_player.change_tiles(change)
-        print("Sus nuevas fichas son",
+        print("New tiles: ",
               self.player_tiles_list())
         
     def check_white(self):
@@ -458,15 +458,15 @@ class ScrabbleGame:
         invalid_letters = ['K', 'W']
         for tile in player_tiles:
             if tile.letter == "White":
-                print("Tiene una ficha blanca. La quiere usar?")
-                choice = input("Ingrese Y/N: ")
+                print("You have a white tile. Would you like tp use it?")
+                choice = input("Y/N: ")
                 choice = choice.upper()
                 if choice == "Y":
-                    new_letter = input("Elija una letra: ")
+                    new_letter = input("Choose a letter: ")
                     new_letter = new_letter.upper()
                     try:
                         if (not new_letter.isalpha()) or (new_letter in invalid_letters):
-                            raise InvalidWord("Ingrese una letra valida")
+                            raise InvalidWord("Please enter a valid letter")
                         elif new_letter.isalpha() and not new_letter in invalid_letters:
                             tile.letter = new_letter
                     except Exception as e:

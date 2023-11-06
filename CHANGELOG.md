@@ -2,6 +2,15 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-06-11
+
+### Change
+
+- Dockerfile
+
+- Translated to english
+
+
 2023-01-11
  
 ### Added

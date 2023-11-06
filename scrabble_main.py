@@ -6,12 +6,15 @@ from back import Back
 def main():
     while True:
             try:
-                players_count = int(input('Cantidad de jugadores:'))
+                players_count = input('Number of players:')
                 if players_count < 1 or players_count > 4:
                     raise ValueError
+                elif not players_count.isnumeric():
+                     raise ValueError
+                players_count = int(players_count)
                 break
             except ValueError:
-                print("Valor Invalido")
+                print("Invalid value")
     game = ScrabbleGame(players_count)
     back = Back()
     while(game.is_playing()):
@@ -31,6 +34,8 @@ def main():
         elif task == "C":
             game.change_tiles_player()
         elif task == "P":
+            pass
+        elif task == 'E':
             pass
 
             
