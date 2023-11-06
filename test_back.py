@@ -1,10 +1,11 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, builtins
 from back import Back, InvalidTask
 
 class TestBack(unittest.TestCase):
+    @patch.object(builtins, 'print')
     @patch('builtins.input', side_effect = ["A", "C", "P", "a",])
-    def test_get_task(self, mock_input):
+    def test_get_task(self, mock_input, mock_print):
         back = Back()
 
         task = back.get_task()
