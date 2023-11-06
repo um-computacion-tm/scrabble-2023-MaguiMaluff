@@ -2,6 +2,275 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-06-11
+
+### Change
+
+- Dockerfile
+
+- Translated to english
+
+
+2023-01-11
+ 
+### Added
+
+- check_white
+
+- Tests
+
+### Fixed
+
+- change_tiles
+
+2023-31-10
+
+### Added
+
+- Dockerfile
+ 
+### Fixed
+
+- take_to_seven
+
+- validate_word_inside_board
+
+- validate_word_place_board
+
+- scrabble_main
+
+2023-30-10
+
+### Fixed 
+
+- change_tiles in Player
+
+### Added
+
+- Game's rules to readme.md
+
+### Change
+
+- Deleted RR, CH and LL from tiles, added 2 L, 2 R, 1 C, 1 H
+
+2023-25-10
+
+### Change
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum, if the list is empty it returns None.
+
+- add_word, added the calculation of points
+
+- get_player_info
+
+- change_tile
+
+- validate_word_place_board
+
+### Added
+
+- change_player_tiles
+
+2023-23-10
+
+### Fixed
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum. There was an error when the word was crossing another, fixed it.
+
+### Change
+
+- validate_word_place_board is now in ScrabbleGame. This fixes the problem where a word crosses another word, and there's a letter that's already on the board, so the player shouldn't have that letter.
+
+2023-22-10
+
+### Added
+
+- File back.py, and moved get_word_main, get_location, get_orientation and get_task
+
+- test_back.py
+
+### Change
+
+- add_word
+- main
+- board, print_board
+
+2023-20-10
+
+- Tried to fix add_word
+
+
+2023-18-10
+
+### Added
+
+- File test_scrabble_game_for_main
+- Exceptions to validate_word
+- Added take_to_7, player_tiles_list, printbb, get_player_info
+
+### Fixed
+
+- Fixed calculated_word_value and tests
+- add_word, get_word_main, get_orientation
+
+2023-14-10
+
+### Added
+
+- To scrabble_game, functions, get_word_main, get_location, get_orientation, add_word and get_task
+
+### Change
+
+- scrabble_main
+
+- calculate_word_value
+
+2023-12-10
+
+### Change
+
+- horizontal_word_check_for_sum, vertical_word_check_for_sum
+- get_horizontal_word, get_vertical_word
+
+2023-10-10
+
+### Change
+
+- function print_board
+
+2023-06-11
+
+### Added
+
+- horizontal_word_check_for_sum
+- Test for horizontal_word_check_for_sum
+
+### Deleted
+
+- playing from scrabble_game
+
+
+2023-05-10
+
+### Change
+
+- get_horizontal_word
+
+- vertical_word_check_for_sum, almost done
+
+
+2023-04-10
+
+### Change
+
+- get_word, now it doesnt show on the terminal
+
+- vertical_word_check_for_sum_1 to vertical_word_check_for_sum
+
+- vertical_word_check_for_sum now works. But not done yet
+
+
+2023-02-10
+
+### Change 
+
+- Function get_word, now if theres an error it returns an exception
+
+### Deleted
+
+- case_of_sum
+
+### Added
+
+- vertical_word_check_for_sum_1, not done yet
+
+- get_horizontal_word
+
+- get_word_from_cell
+
+2023-29-09
+
+### Fixed
+
+- Function list_of_words
+
+### Change
+
+- Tried to make function case_of_sum, still can't
+- list_of_words
+
+2023-28-09
+
+### Added
+
+- Function change_tiles to class Player and a test for it
+- Function playing
+
+### Change
+
+- Change name main.py to scrabble.main.py
+- Added some things to scrabble_main.py
+
+2023-27-09
+
+### Change
+
+- Function player_tiles moved to file models
+
+2023-26-09
+
+### Soon to be delete
+
+- validate_word_when_not_empty
+
+### Added
+
+- case_1_sum, not done yet
+
+
+
+2023-25-09
+
+### Added
+
+- Function calculate_word_without_any_multiplier
+
+- Dictionary cell_values to ScrabbleGame
+
+
+2023-21-09
+
+### Fixed 
+
+- validate word_when not_empty (I don't like it, will probably change it again)
+
+2023-19-09
+
+
+### Change 
+
+- Player Class now has a point counter.
+
+- Function calculate_word_value now assigns points to the player
+
+- Function validate_word uses other functions
+
+- Realized validate_word_when_not_empty was wrong and tried to fixed it
+
+### Added
+
+- Test for the changes
+
+- player_tiles to Class ScrabbleGame, it validates if a player has the same tiles as the word they put.
+
+2023-17-09
+
+### Added
+
+- Function words_on_board and tests
+
+- validate_word_when_not_empty, now the game can validate if when adding a word, the word is adding letters to an existing word.
+
 2023-15-09
 
 ### Fixed

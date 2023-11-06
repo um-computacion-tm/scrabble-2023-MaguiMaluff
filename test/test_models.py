@@ -1,5 +1,6 @@
 import unittest
 from game.models import Tiles, BagTiles, Player, Cell
+from game.scrabble_game import ScrabbleGame
 from game.board import Board
 from unittest.mock import patch
 
@@ -15,7 +16,7 @@ class TestBagTiles(unittest.TestCase):
         bag = BagTiles ()
         self.assertEqual(
             len(bag.tiles),
-            100,
+            103,
         )
         self.assertEqual(
             patch_shuffle.call_count,
@@ -30,7 +31,7 @@ class TestBagTiles(unittest.TestCase):
         tiles = bag.take(2)
         self.assertEqual(
             len(bag.tiles),
-            98,)
+            101,)
         self.assertEqual(
             len(tiles),
             2,)
@@ -41,13 +42,94 @@ class TestBagTiles(unittest.TestCase):
         bag.put(put_tiles)
         self.assertEqual(
             len(bag.tiles), 
-            102,)
-        
+            105,)
+    
+    def test_change_tiles(self):
+        bag_tiles_player = BagTiles()
+        bag_tiles = BagTiles()
+        bag_tiles.tiles = [Tiles('A', 1), Tiles('B', 1), Tiles('C', 1), Tiles('D', 1),]
+        player = Player(7 , bag_tiles_player)
+        player.bag_tiles.tiles = [Tiles('A', 1), Tiles('B', 1), Tiles('C', 1), Tiles('D', 1),]
+        player.change_tiles([1 , 2])
+        self.assertEqual(len(bag_tiles.tiles), 4)
+        self.assertEqual(len(player.bag_tiles.tiles), 4)
+
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         bag_tiles = BagTiles()
         player_1 = Player(1, bag_tiles)
         self.assertEqual(len(player_1.tiles),7,)
+
+    def test_point_exists(self):
+            bag_tiles = BagTiles()
+            player_1 = Player(1, bag_tiles)
+            player_1.points = 18
+            self.assertEqual(player_1.points,18,)
+    
+    def test_point_from_calculation(self):
+        scrabble_game = ScrabbleGame(players_count = 3)
+        bag_tiles = BagTiles()
+        scrabble_game.current_player = Player(1, bag_tiles)
+        scrabble_game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        scrabble_game.put_word("CASA", (7,7), "V")
+        scrabble_game.calculate_word_value("CASA", (7,7), "V")
+        self.assertEqual(scrabble_game.current_player.points, 5,)
+    
+    def test_validate_user_has_letters(self):
+        bag_tile = BagTiles()
+        bag_tile.tiles = [
+            Tiles(letter='H', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),
+            Tiles(letter='C', value=1),
+            Tiles(letter='U', value=1),
+            Tiles(letter='M', value=1),
+        ]
+        player = Player(4, bag_tile)
+        is_valid = player.player_tiles("HOLA")
+
+        self.assertEqual(is_valid, True)
+
+    def test_validate_fail_when_user_has_not_letters(self):
+        bag_tiles = BagTiles()
+        bag_tiles.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),
+            Tiles(letter='C', value=1),
+            Tiles(letter='U', value=1),
+            Tiles(letter='M', value=1),
+        ]
+        player = Player(7 , bag_tiles)
+        is_valid = player.player_tiles("MAYONESA")
+
+        self.assertEqual(is_valid, False)
+
+    def test_change_tiles(self):
+        bag_tiles = BagTiles()
+        player = Player(1, bag_tiles)
+        player.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),]
+        change = [2, 3]
+        player.change_tiles(change)
+        self.assertEqual(len(player.tiles), 4)
+        self.assertEqual(player.tiles[0].letter, "P")
+    
+    def test_take_to_seven(self):
+        bag_tiles = BagTiles()
+        player = Player(1, bag_tiles)
+        player.tiles = [
+            Tiles(letter='P', value=1),
+            Tiles(letter='O', value=1),
+            Tiles(letter='L', value=1),
+            Tiles(letter='A', value=1),]
+        player.take_to_seven()
+        self.assertEqual(len(player.tiles), 7)
 
 class TestCell(unittest.TestCase):
     def test_init(self):

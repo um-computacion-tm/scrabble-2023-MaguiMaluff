@@ -1,9 +1,10 @@
 from game.models import Cell, Player, BagTiles, Tiles
 
+
 class Board:
     def __init__(self):
         self.grid =[[Cell(1, 'letter') for _ in range(15)] for _ in range (15)]
-
+        self.words_on_board = []
     def set_word_multiplier(self):
         word_multi = [
             (0,0), (7,0), (14,0), (0,7), (0,14), (7,14), (14,14)
@@ -51,56 +52,96 @@ class Board:
         self.set_word_multiplier()
     
     def validate_word_inside_board(self, word, location, orientation):
-        word_list = []
-        for letra in word:
-            word_list.append(letra)
-        
+        lenght = len(word)
+
         i = location[0]
         j = location[1]
 
         if orientation == "V":
-            j += len(word_list)
+            i = i + lenght
         if orientation == "H":
-            i += len(word_list)
+            j = j + lenght
 
-        if i > 14 or j > 14:
+        if i > 14:
+            return False
+        elif j > 14:
             return False
         else:
             return True
 
     def print_board(self):
-        for row in self.grid:
-            row_str = ""
-            for cell in row:
+        print("  ")
+        first_row = "x\y    "
+        for i in range(15):
+            if i <= 9:
+                first_row += str(i) + "    "
+            else:
+                first_row += str(i) + "   "
+        print(first_row)
+        for row in range(len(self.grid)):
+            if row >= 10:
+                row_str = "   "
+            else:
+                row_str = "    "
+            for cell in self.grid[row]:
                 if cell.letter == None:
-                    row_str += str(cell.multiplier) + " "
+                    row_str += "[" + str(cell.multiplier)
+                    if cell.multiplier_type == "letter":
+                        row_str +=  "L] "
+                    else:
+                        row_str +=  "W] "
                 if cell.letter != None:
-                    row_str += str(cell.letter.letter) + " "
-            print(row_str)
+                    row_str += "  " + str(cell.letter.letter) + "  "
+            print(row, row_str)
 
     def is_empty(self):
         if self.grid[7][7].letter == None:
             return True
         else:
             return False
-
-    def validate_word_place_board(self, word, location, orientation):
-        f = location[0]
-        c = location[1]
-        good = self.is_empty()
+    
+    def list_of_words(self, word, location, orientation):
+        word_info = [word, orientation]
         celdas = []
-
         for i in range(len(word)):
+            f = location[0]
+            c = location[1]
             if orientation == "H":
-                cell = self.grid[f][c + i]
+                c += i
             elif orientation == "V":
-                cell = self.grid[f + i][c]
-            if good == True:
-                celdas.append(cell)
-                if self.grid[7][7] in celdas:
-                    return True
-            elif good == False:
-                if cell.letter != None and cell.letter.letter == word[i]:
-                    return True
-        return False
-            
+                f += i
+            celdas.append((f , c))
+        word_info.extend(celdas)
+        self.words_on_board.append(word_info)
+        return self.words_on_board
+    
+    def validate_word_when_not_empty(self, word, location, orientation):
+        count = 0
+        for i in range(len(word)):
+            f = location[0]
+            c = location[1]
+            if orientation == "H":
+                c = c + i
+            elif orientation == "V":
+                f = f + i
+            if 0 <= f < 14 and 0 <= c < 14:
+                tiles = [ self.grid[f + 1][c],  ###Arriba
+                          self.grid[f - 1][c],  ###Abajo
+                          self.grid[f][c + 1],  ###Derecha
+                          self.grid[f][c - 1],] ###Izquierda
+                for t in tiles:
+                    if t.letter is not None:
+                        count += 1
+        if count != 0:
+            return True
+        else:
+            return False
+    
+    def get_word_from_cell(self, list):
+        words = []
+        for i in list:
+            for j in range(len(self.words_on_board)):
+                if i in self.words_on_board[j]:
+                    words.append([self.words_on_board[j][0], j, self.words_on_board[j][1]])
+        return words
+        

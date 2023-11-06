@@ -1,6 +1,7 @@
 import unittest
 from game.models import Player, BagTiles, Cell, Tiles
 from game.board import Board
+from game.scrabble_game import ScrabbleGame
 
 class TestBoard(unittest.TestCase):
     def test_init(self):
@@ -52,10 +53,9 @@ class TestBoard(unittest.TestCase):
     def test_word_out_of_board(self):
         board = Board()
         word = "Facultad"
-        location = (14, 4)
+        location = (4, 14)
         orientation = "H"
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
-        
         assert word_is_valid == False
 
     def test_board_is_empty(self):
@@ -68,83 +68,33 @@ class TestBoard(unittest.TestCase):
         board.grid[7][7].add_letter(Tiles('C', 1))
         assert board.is_empty() == False
         
-    def test_place_word_empty_board_horizontal_fine(self):
+    
+    def test_words_on_board(self):
         board = Board()
-        word = "Facultad"
-        location = (7, 4)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_empty_board_horizontal_wrong(self):
-        board = Board()
-        word = "Facultad"
-        location = (2, 4)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_empty_board_vertical_fine(self):
-        board = Board()
-        word = "Facultad"
-        location = (4, 7)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_empty_board_vertical_wrong(self):
-        board = Board()
-        word = "Facultad"
-        location = (2, 4)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_not_empty_board_horizontal_fine(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[8][7].add_letter(Tiles('A', 1)) 
-        board.grid[9][7].add_letter(Tiles('S', 1)) 
-        board.grid[10][7].add_letter(Tiles('A', 1)) 
-        word = "FACULTAD"
-        location = (8, 6)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
-
-    def test_place_word_not_empty_board_horizontal_wrong(self):
-        board = Board()
-        board.grid[5][7].add_letter(Tiles('S', 1)) 
-        board.grid[6][7].add_letter(Tiles('A', 1))
-        board.grid[7][7].add_letter(Tiles('L', 1))
-        word = "FACULTAD"
-        location = (8, 6)
-        orientation = "H"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
-
-    def test_place_word_not_empty_board_vertical_fine(self):
-        board = Board()
-        board.grid[7][7].add_letter(Tiles('C', 1))
-        board.grid[7][8].add_letter(Tiles('A', 1)) 
-        board.grid[7][9].add_letter(Tiles('S', 1)) 
-        board.grid[7][10].add_letter(Tiles('A', 1)) 
         word = "PAZ"
         location = (6, 8)
         orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == True
+        words = board.list_of_words(word, location, orientation)
+        self.assertEqual(words, [["PAZ", "V", (6, 8), (7, 8), (8, 8)]])
 
-    def test_place_word_not_empty_board_vertical_wrong(self):
+    def test_words_on_board(self):
         board = Board()
-        board.grid[7][5].add_letter(Tiles('S', 1)) 
-        board.grid[7][6].add_letter(Tiles('A', 1))
-        board.grid[7][7].add_letter(Tiles('L', 1))
-        word = "PAZ"
-        location = (8, 6)
-        orientation = "V"
-        word_is_valid = board.validate_word_place_board(word, location, orientation)
-        assert word_is_valid == False
+        word = "CASITA"
+        location = (6, 8)
+        orientation = "H"
+        words = board.list_of_words(word, location, orientation)
+        self.assertEqual(words, [["CASITA", "H", (6, 8), (6, 9), (6, 10), (6 , 11), (6 , 12), (6 , 13)]])
+    
+
+class TestGetWordCell(unittest.TestCase):
+    def test_get_word(self):
+        game = ScrabbleGame(2)
+        game.current_player = game.players[0]
+        players_tiles = game.current_player.tiles = [Tiles("C", 1), Tiles("A", 1), Tiles("S", 2), Tiles("A", 1)]
+        game.put_word("CASA", (7, 7), "H")
+        look = game.board.get_word_from_cell([(7, 7)])
+        self.assertEqual(look, [["CASA", 0, 'H']])
+
 
 if __name__ == '__main__':
     unittest.main()
