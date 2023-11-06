@@ -7,11 +7,11 @@ def main():
     while True:
             try:
                 players_count = input('Number of players:')
-                if players_count < 1 or players_count > 4:
-                    raise ValueError
-                elif not players_count.isnumeric():
+                if not players_count.isnumeric():
                      raise ValueError
                 players_count = int(players_count)
+                if players_count < 1 or players_count > 4:
+                    raise ValueError
                 break
             except ValueError:
                 print("Invalid value")

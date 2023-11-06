@@ -27,7 +27,10 @@ Final del juego:
 El juego continúa hasta que todas las fichas se han agotado, hasta que los jugadores decidan que no pueden formar más palabras válidas o cuando todos los jugadores han pasado 2 veces.
 El jugador con la puntuación más alta al final del juego gana.
 
-En docker se ejecuta con el comando: docker run -it my_game
+To play you need to have Docker installed, and the dockerfile.
+Once you have that, you need to build an image on docker using: docker build -t my_game .
+To play run: docker run -it my_game
+my_game is the name of the image, you can use another one.
 
 
 # Author
