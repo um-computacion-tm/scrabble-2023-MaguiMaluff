@@ -381,6 +381,10 @@ class ScrabbleGame:
     def is_playing(self):
         return self.playing
     
+    def end_game(self):
+        print(self.winner())
+        self.playing == False
+    
     def printbb(self):
         self.board.print_board()
 
@@ -474,6 +478,15 @@ class ScrabbleGame:
             else:
                 pass
 
+    def winner(self):
+        winner = None
+        highest_score = 0
+        for player in self.players:
+            if player.points > highest_score:
+                highest_score == player.points
+                winner == player
+        print('The winner is player ', winner, 'with', highest_score, 'points')
 
+    
 
 
