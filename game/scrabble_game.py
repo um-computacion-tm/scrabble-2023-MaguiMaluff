@@ -462,7 +462,7 @@ class ScrabbleGame:
         invalid_letters = ['K', 'W']
         for tile in player_tiles:
             if tile.letter == "White":
-                print("You have a white tile. Would you like tp use it?")
+                print("You have a white tile. Would you like to use it?")
                 choice = input("Y/N: ")
                 choice = choice.upper()
                 if choice == "Y":
@@ -483,9 +483,9 @@ class ScrabbleGame:
         highest_score = 0
         for player in self.players:
             if player.points > highest_score:
-                highest_score == player.points
-                winner == player
-        print('The winner is player ', winner, 'with', highest_score, 'points')
+                highest_score = player.points
+                winner = player
+        print('The winner is player ', winner.id, 'with', highest_score, 'points')
 
     
 
