@@ -769,10 +769,12 @@ class ChangeTiles(unittest.TestCase):
     def test_check_white(self, mock_input, mock_print):
         game = ScrabbleGame(2)
         game.next_turn()
-        game.current_player.tiles = [Tiles("White", 1), Tiles("C", 2)]
+        tile_1 = Tiles("White", 1)
+        tile_2 = Tiles("C", 2)
+        game.current_player.tiles = [tile_1, tile_2 ]
         game.change_tiles_player()
-        self.assertNotEqual(game.current_player.tiles[0].letter, "White")
-        self.assertNotEqual(game.current_player.tiles[1].letter, "C")
+        self.assertNotEqual(game.current_player.tiles[0], tile_1)
+        self.assertNotEqual(game.current_player.tiles[1], tile_2)
         self.assertEqual(len(game.current_player.tiles), 2)
 
 if __name__ == '__main__':
