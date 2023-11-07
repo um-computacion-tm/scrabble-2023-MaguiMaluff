@@ -2,6 +2,16 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+2023-07-11
+
+### Added
+
+- end_game and check_ending
+
+### Change
+
+- Readme, rules now in english
+
 2023-06-11
 
 ### Change

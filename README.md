@@ -1,31 +1,46 @@
 # Scrabble
 
-Objetivo del juego:
-El objetivo principal del Scrabble es obtener la puntuación más alta al final de la partida, ganando puntos al formar palabras en el tablero.
+- Objective:
 
-Juego:
+The main objective of Scrabble is to score the most points at the end of the game by forming words on the board.
 
-Cada jugador elige siete fichas al azar. Pueden jugar hasta 4 jugadores.
+- Gameplay:
 
-En cada turno, un jugador debe formar una palabra en el tablero.
-Las palabras se forman colocando las fichas en el tablero de manera horizontal o vertical, conectándolas con otras.
-Se pueden formar múltiples palabras en un solo turno, siempre y cuando todas las palabras sean válidas.
-Al final del turno el jugador obtiene fichas nuevas, las necesarias para llegar a 7.
+Each player chooses seven tiles at random. Up to four players can play.
 
-Reglas de puntuación:
+On each turn, a player must form a word on the board.
 
-Cada letra tiene un valor y las casillas del tablero pueden multiplicar el valor de la letra o palabra.
+Words are formed by placing tiles on the board horizontally or vertically, connecting them to other tiles.
 
-La puntuación de una palabra se calcula sumando los valores de las letras y los multiplicadores del tablero.
+Multiple words can be formed in a single turn, as long as all words are valid.
 
-Si la palabra nueva solo cruza a una ya existente, solo se puntua la nueva palabra.
-Si la palabra nueva agrega letras a otra ya existente, se cuenta en puntaje de la palabra nueva y se le suma el puntaje de la palabra ya existente( solo la suma del valor de sus letras, no se vuelven a tomar los multiplicadores)
-Si la palabra nueva crea palabras con las ya existentes, se cuenta la palabra nueva y las creadas con ella.
+At the end of the turn, the player receives new tiles, enough to reach 7.
 
-Final del juego:
+- Scoring:
 
-El juego continúa hasta que todas las fichas se han agotado, hasta que los jugadores decidan que no pueden formar más palabras válidas o cuando todos los jugadores han pasado 2 veces.
-El jugador con la puntuación más alta al final del juego gana.
+Each letter has a point value, and the squares on the board can multiply the point value of the letter or word.
+
+The point value of a word is calculated by adding the point values of the letters and the board multipliers.
+
+If the new word only crosses an existing word, only the new word is scored.
+
+If the new word adds letters to an existing word, it counts towards the point value of the new word and is added to the point value of the existing word (only the sum of the point values of its letters, the multipliers are not taken again).
+
+If the new word creates words with the existing ones, the new word and the ones created with it are counted.
+
+- End of the Game:
+
+The game continues until all the tiles have been used, until the players decide that they cannot form any more valid words, or when all the players have passed twice.
+
+The player with the highest point value at the end of the game wins.
+
+- Explanations:
+
+"Only crosses an existing word" means that the new word only touches the existing word at one point.
+"Adds letters to an existing word" means that the new word touches the existing word at two or more points.
+"Creates words with the existing ones" means that the new word creates two or more new words by connecting to existing words.
+
+- How to run on Docker:
 
 To play you need to have Docker installed, and the dockerfile.
 Once you have that, you need to build an image on docker using: docker build -t my_game .

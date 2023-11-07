@@ -1,6 +1,9 @@
 from game.scrabble_game import ScrabbleGame, InvalidTask, IsNotNumber, OutOfRange, OutOfTiles
 
 class Back:
+    def __init__(self):
+        self.end_count = 0
+
     def get_task(self):
         while True:
             try:
@@ -62,6 +65,14 @@ class Back:
             except ValueError:
                 print("Please enter V o H")
 
+
+    def check_ending(self, task, people):
+        if task == "P":
+            self.end_count += 1
+        elif task != "P":
+            self.end_count == 0
+        if self.end_count == (people * 2):
+            ScrabbleGame().end_game()
 
 
 

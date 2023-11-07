@@ -9,8 +9,7 @@ def main():
                 players_count = input('Number of players:')
                 if not players_count.isnumeric():
                      raise ValueError
-                players_count = int(players_count)
-                if players_count < 1 or players_count > 4:
+                if int(players_count) < 1 or int(players_count) > 4:
                     raise ValueError
                 break
             except ValueError:
@@ -22,6 +21,7 @@ def main():
         game.printbb()
         game.get_player_info()
         task = back.get_task()
+        back.check_ending(task, players_count)
         if task == "A":
                 try:
                     word = back.get_word_main()
@@ -36,7 +36,7 @@ def main():
         elif task == "P":
             pass
         elif task == 'E':
-            pass
+            game.end_game()
 
             
 
