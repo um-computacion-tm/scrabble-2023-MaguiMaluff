@@ -72,7 +72,7 @@ class Back:
         elif task != "P":
             self.end_count == 0
         if self.end_count == (people * 2):
-            ScrabbleGame().end_game()
+            return True
 
 
 

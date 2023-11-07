@@ -9,25 +9,29 @@ def main():
                 players_count = input('Number of players:')
                 if not players_count.isnumeric():
                      raise ValueError
-                if int(players_count) < 1 or int(players_count) > 4:
+                count = int(players_count)
+                if count < 1 or count > 4:
                     raise ValueError
                 break
             except ValueError:
                 print("Invalid value")
-    game = ScrabbleGame(players_count)
+    game = ScrabbleGame(count)
     back = Back()
-    while(game.is_playing()):
+    while(game.is_playing() == True):
         game.next_turn()
         game.printbb()
         game.get_player_info()
         task = back.get_task()
-        back.check_ending(task, players_count)
+        ending = back.check_ending(task, count)
+        if ending == True:
+            game.end_game()
+            break
         if task == "A":
                 try:
+                    game.check_white()
                     word = back.get_word_main()
                     location = back.get_location()
                     orientation = back.get_orientation()
-                    game.check_white()
                     game.add_word(word, location, orientation)
                 except Exception as e:
                     print(e)
@@ -37,6 +41,7 @@ def main():
             pass
         elif task == 'E':
             game.end_game()
+            break
 
             
 

@@ -16,6 +16,8 @@ Multiple words can be formed in a single turn, as long as all words are valid.
 
 At the end of the turn, the player receives new tiles, enough to reach 7.
 
+If an invalid word is added, the player lose the turn.
+
 - Scoring:
 
 Each letter has a point value, and the squares on the board can multiply the point value of the letter or word.
