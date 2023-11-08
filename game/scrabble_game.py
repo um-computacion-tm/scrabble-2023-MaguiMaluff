@@ -485,7 +485,10 @@ class ScrabbleGame:
             if player.points > highest_score:
                 highest_score = player.points
                 winner = player
-        print('The winner is player ', winner.id, 'with', highest_score, 'points')
+        if winner != None:
+            print('The winner is player ', winner.id, 'with', highest_score, 'points')
+        else:
+            print('No one wins')
 
     
 
