@@ -70,7 +70,7 @@ class Back:
         if task == "P":
             self.end_count += 1
         elif task != "P":
-            self.end_count == 0
+            self.end_count = 0
         if self.end_count == (people * 2):
             return True
 
